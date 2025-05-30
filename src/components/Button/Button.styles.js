@@ -1,39 +1,8 @@
-/** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import styled from "@emotion/styled";
-import {
-  btnFontSizeMap,
-  btnFontWeightMap,
-  btnPaddingMap,
-  btnIconTextGapMap,
-  btnMinWidthMap,
-  btnHeightMap,
-} from "../constants/stylesMap";
-import AddEmojiIconBlack from "../assets/images/ic-add-emoji-black.svg";
-import AddEmojiIconWhite from "../assets/images/ic-add-emoji-white.svg";
+import * as styleMapper from "./btnStylesMap";
 
-export const Button = ({ variant = "primary", children, ...props }) => (
-  <StyledButton variant={variant} {...props}>
-    {children}
-  </StyledButton>
-);
-
-export const AddEmojiButton = ({
-  variant = "outlined",
-  children,
-  ...props
-}) => (
-  <StyledEmojiButton variant={variant} {...props}>
-    <img
-      src={props.disabled ? AddEmojiIconWhite : AddEmojiIconBlack}
-      alt=""
-      className="btn-icon"
-    />
-    {children}
-  </StyledEmojiButton>
-);
-
-const variantStyles = {
+export const variantStyles = {
   primary: css`
     background-color: var(--primary);
     color: white;
@@ -80,33 +49,33 @@ const variantStyles = {
   `,
 };
 
-const StyledButton = styled.button`
+export const StyledButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: ${({ size }) => btnMinWidthMap[size]};
-  height: ${({ size }) => btnHeightMap[size]};
-  padding: ${({ size }) => btnPaddingMap[size]};
-  font-size: ${({ size }) => btnFontSizeMap[size]};
-  font-weight: ${({ size }) => btnFontWeightMap[size]};
-  border-radius: var(--radius-sm);
+  width: ${({ size }) => styleMapper.btnMinWidthMap[size]};
+  height: ${({ size }) => styleMapper.btnHeightMap[size]};
+  padding: ${({ size }) => styleMapper.btnPaddingMap[size]};
+  font-size: ${({ size }) => styleMapper.btnFontSizeMap[size]};
+  font-weight: ${({ size }) => styleMapper.btnFontWeightMap[size]};
+  border-radius: ${({ size }) => styleMapper.btnRadiusMap[size]};
 
   ${({ variant }) => variantStyles[variant]};
   ${({ disabled }) => disabled && variantStyles["disabled"]};
 `;
 
-const StyledEmojiButton = styled.button`
+export const StyledEmojiButton = styled.button`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: ${({ size }) => btnIconTextGapMap[size]};
-  padding: ${({ size }) => btnPaddingMap[size]};
-  font-size: ${({ size }) => btnFontSizeMap[size]};
-  font-weight: ${({ size }) => btnFontWeightMap[size]};
+  gap: ${({ size }) => styleMapper.btnIconTextGapMap[size]};
+  padding: ${({ size }) => styleMapper.btnPaddingMap[size]};
+  font-size: ${({ size }) => styleMapper.btnFontSizeMap[size]};
+  font-weight: ${({ size }) => styleMapper.btnFontWeightMap[size]};
   border-radius: var(--radius-sm);
 
   .btn-icon {
-    width: 24px;
+    width: ${({ size }) => styleMapper.btnIconSizeMap[size]};
     aspect-ratio: 1/1;
   }
 

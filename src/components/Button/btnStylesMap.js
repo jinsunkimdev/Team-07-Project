@@ -39,3 +39,17 @@ export const btnIconTextGapMap = {
   sm: "4px",
   xs: "4px",
 };
+
+export const btnRadiusMap = {
+  lg: "12px",
+  md: "6px",
+  sm: "6px",
+  xs: "6px",
+};
+
+export const btnIconSizeMap = {
+  lg: "24px",
+  md: "24px",
+  sm: "20px",
+  xs: "20px",
+};
