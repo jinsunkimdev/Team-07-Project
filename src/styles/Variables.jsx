@@ -74,6 +74,22 @@ export const Variables = () => (
         /* border-radius */
         --radius-sm: 6px;
         --radius-lg: 12px;
+
+        /* font-size */
+        --font-size-12: 12px;
+        --font-size-14: 14px;
+        --font-size-15: 15px;
+        --font-size-16: 16px;
+        --font-size-18: 18px;
+        --font-size-20: 20px;
+        --font-size-24: 24px;
+        --font-size-28: 28px;
+        
+        /* font-weight */
+        --font-weight-regular: 400;
+        --font-weight-medium: 500;
+        --font-weight-bold: 700;
+
       }
     `}
   />
