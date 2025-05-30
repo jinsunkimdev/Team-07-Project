@@ -66,10 +66,13 @@ export const Variables = () => (
         --secondary-focus: var(--gray-700);
 
         /* disabled color */
-        --disabled: var(--gray-300);
+        --disabled-bgColor: var(--gray-300);
 
         /* surfaces */
         --surface-0: #f6f8ff;
+
+        /* border */
+        --border-color: var(--gray-300);
 
         /* border-radius */
         --radius-sm: 6px;
