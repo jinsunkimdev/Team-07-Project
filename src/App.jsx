@@ -1,6 +1,6 @@
 import Router from "./routes/Router";
 import GlobalStyle from "./styles/GlobalStyle";
-import { Variables } from "./styles/Vaiables";
+import { Variables } from "./styles/Variables";
 
 function App() {
   return (
