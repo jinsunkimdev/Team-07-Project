@@ -74,6 +74,7 @@ export const Variables = () => (
         /* border-radius */
         --radius-sm: 6px;
         --radius-lg: 12px;
+        --radius-xlg: 100px;
 
         /* font-size */
         --font-size-12: 12px;
