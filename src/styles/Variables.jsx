@@ -1,4 +1,5 @@
 import { css, Global } from "@emotion/react";
+import { BREAKPOINTS } from "../constants/constants";
 
 // Variables.jsx
 export const Variables = () => (
@@ -90,6 +91,31 @@ export const Variables = () => (
         --font-weight-regular: 400;
         --font-weight-medium: 500;
         --font-weight-bold: 700;
+
+        /* layout */
+        --content-width: 100%;
+        --content-padding: 24px 20px;
+
+        /* header */
+        --header-padding: 16px;
+      }
+
+      @media (min-width: ${BREAKPOINTS.md}px) {
+        :root {
+          /* header */
+          --header-padding: 16px 24px;
+        }
+      }
+
+      @media (min-width: ${BREAKPOINTS.lg}px) {
+        :root {
+          /* layout */
+          --content-width: 1200px;
+          --content-padding: 0;
+
+          /* header */
+          --header-padding: 16px 0;
+        }
       }
     `}
   />
