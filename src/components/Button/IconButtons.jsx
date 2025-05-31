@@ -1,13 +1,13 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 
-import iconPlus from "../../../assets/iconPlus.svg";
-import iconDelete from "../../../assets/iconDeleted.svg";
-import iconArrowLeft from "../../../assets/iconArrowLeft.svg";
-import iconArrowRight from "../../../assets/iconArrowRight.svg";
-import iconCheck from "../../../assets/iconCheck.svg";
-import iconShare20 from "../../../assets/iconShare20.svg";
-import iconShare24 from "../../../assets/iconShare24.svg";
+import iconPlus from "../../assets/images/iconPlus.svg";
+import iconDelete from "../../assets/images/iconDeleted.svg";
+import iconArrowLeft from "../../assets/images/iconArrowLeft.svg";
+import iconArrowRight from "../../assets/images/iconArrowRight.svg";
+import iconCheck from "../../assets/images/iconCheck.svg";
+import iconShare20 from "../../assets/images/iconShare20.svg";
+import iconShare24 from "../../assets/images/iconShare24.svg";
 
 import { useNavigate } from "react-router-dom";
 
@@ -21,24 +21,23 @@ export const IconPlusButton = ({ to, ...props }) => {
   );
 };
 
-export const IconDeleteButton = (
-  { onClick, ...props } //리스트 로직 보고 판단.
-) => (
+export const IconDeleteButton = ({ onClick, ...props }) => (
+  //리스트 로직 보고 판단.
   <button css={deleteButton} onClick={onClick} {...props}>
     <img src={iconDelete} alt="delete button" />
   </button>
 );
 
 export const ScrollArrowButton = ({
-  direction = left, //dirction 으로 알맞은 방향 표시
+  direction = "left", //direction 으로 알맞은 방향 표시
   onClick,
   visible = true, //visible 프롭은 boolean으로 받고, false일 경우 null을 반환, 렌더x
   ...props
 }) => {
   if (!visible) return null;
 
-  const iconSrc = direction === left ? iconArrowLeft : iconArrowRight;
-  const altText = direction === left ? "scroll left" : "scroll right";
+  const iconSrc = direction === "left" ? iconArrowLeft : iconArrowRight;
+  const altText = direction === "left" ? "scroll left" : "scroll right";
 
   return (
     <button css={arrowButton} onClick={onClick} {...props}>
@@ -84,7 +83,6 @@ const whiteButton = css`
 
   &:disabled {
     background-color: var(--gray-300);
-    color: var(--white);
   }
 
   &:focus:not(:active) {
