@@ -65,11 +65,11 @@ export const Variables = () => (
         --secondary-pressed: var(--gray-700);
         --secondary-focus: var(--gray-700);
 
-        /* disabled color */
-        --disabled: var(--gray-300);
-
         /* surfaces */
         --surface-0: #f6f8ff;
+
+        /* border */
+        --border-color: var(--gray-300);
 
         /* border-radius */
         --radius-sm: 6px;
@@ -84,12 +84,11 @@ export const Variables = () => (
         --font-size-20: 20px;
         --font-size-24: 24px;
         --font-size-28: 28px;
-        
+
         /* font-weight */
         --font-weight-regular: 400;
         --font-weight-medium: 500;
         --font-weight-bold: 700;
-
       }
     `}
   />
