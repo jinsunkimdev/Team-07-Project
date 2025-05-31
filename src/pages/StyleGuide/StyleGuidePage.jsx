@@ -10,40 +10,72 @@ const StyleGuidePage = () => {
         <h2>Button</h2>
         <div className="sub-section">
           <h3>Primary</h3>
-          <Button size="lg" variant="primary">
+          <Button size="lg" variant="primary" onClick={() => alert("clicked")}>
             Enabled
           </Button>
-          <Button size="lg" variant="primary" disabled>
+          <Button
+            size="lg"
+            variant="primary"
+            disabled
+            onClick={() => alert("clicked")}
+          >
             Disabled
           </Button>
-          <Button size="md" variant="primary">
+          <Button size="md" variant="primary" onClick={() => alert("clicked")}>
             Enabled
           </Button>
-          <Button size="md" variant="primary" disabled>
+          <Button
+            size="md"
+            variant="primary"
+            onClick={() => alert("clicked")}
+            disabled
+          >
             Enabled
           </Button>
-          <Button size="sm" variant="primary">
+          <Button size="sm" variant="primary" onClick={() => alert("clicked")}>
             Enabled
           </Button>
-          <Button size="xs" variant="primary">
+          <Button size="xs" variant="primary" onClick={() => alert("clicked")}>
             Enabled
           </Button>
         </div>
         <div className="sub-section">
           <h3>Secondary</h3>
-          <Button size="lg" variant="secondary">
+          <Button
+            size="lg"
+            variant="secondary"
+            onClick={() => alert("clicked")}
+          >
             Enabled
           </Button>
-          <Button size="lg" variant="secondary" disabled>
+          <Button
+            size="lg"
+            variant="secondary"
+            onClick={() => alert("clicked")}
+            disabled
+          >
             Disabled
           </Button>
-          <Button size="md" variant="secondary">
+          <Button
+            size="md"
+            variant="secondary"
+            onClick={() => alert("clicked")}
+          >
             Enabled
           </Button>
-          <Button size="md" variant="secondary" disabled>
+          <Button
+            size="md"
+            variant="secondary"
+            onClick={() => alert("clicked")}
+            disabled
+          >
             Enabled
           </Button>
-          <Button size="sm" variant="secondary">
+          <Button
+            size="sm"
+            variant="secondary"
+            onClick={() => alert("clicked")}
+          >
             Enabled
           </Button>
           <Button size="xs" variant="secondary">
@@ -52,22 +84,32 @@ const StyleGuidePage = () => {
         </div>
         <div className="sub-section">
           <h3>Outlined</h3>
-          <Button size="lg" variant="outlined">
+          <Button size="lg" variant="outlined" onClick={() => alert("clicked")}>
             Enabled
           </Button>
-          <Button size="lg" variant="outlined" disabled>
+          <Button
+            size="lg"
+            variant="outlined"
+            onClick={() => alert("clicked")}
+            disabled
+          >
             Disabled
           </Button>
-          <Button size="md" variant="outlined">
+          <Button size="md" variant="outlined" onClick={() => alert("clicked")}>
             Enabled
           </Button>
-          <Button size="md" variant="outlined" disabled>
+          <Button
+            size="md"
+            variant="outlined"
+            onClick={() => alert("clicked")}
+            disabled
+          >
             Enabled
           </Button>
-          <Button size="sm" variant="outlined">
+          <Button size="sm" variant="outlined" onClick={() => alert("clicked")}>
             Enabled
           </Button>
-          <Button size="xs" variant="outlined">
+          <Button size="xs" variant="outlined" onClick={() => alert("clicked")}>
             Enabled
           </Button>
         </div>
@@ -75,16 +117,24 @@ const StyleGuidePage = () => {
       <section css={sectionStyle}>
         <h2>AddEmojiButton</h2>
         <div className="sub-section">
-          <AddEmojiButton size="lg">Enabled</AddEmojiButton>
-          <AddEmojiButton size="lg" disabled>
+          <AddEmojiButton size="lg" onClick={() => alert("clicked")}>
+            Enabled
+          </AddEmojiButton>
+          <AddEmojiButton size="lg" onClick={() => alert("clicked")} disabled>
             Disabled
           </AddEmojiButton>
-          <AddEmojiButton size="md">Enabled</AddEmojiButton>
-          <AddEmojiButton size="md" disabled>
+          <AddEmojiButton size="md" onClick={() => alert("clicked")}>
+            Enabled
+          </AddEmojiButton>
+          <AddEmojiButton size="md" onClick={() => alert("clicked")} disabled>
             Disabled
           </AddEmojiButton>
-          <AddEmojiButton size="sm">Enabled</AddEmojiButton>
-          <AddEmojiButton size="xs">Enabled</AddEmojiButton>
+          <AddEmojiButton size="sm" onClick={() => alert("clicked")}>
+            Enabled
+          </AddEmojiButton>
+          <AddEmojiButton size="xs" onClick={() => alert("clicked")}>
+            Enabled
+          </AddEmojiButton>
         </div>
       </section>
     </div>

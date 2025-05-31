@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 import { StyledButton } from "./Button.styles";
 
-const Button = ({ variant = "primary", children, ...props }) => (
-  <StyledButton variant={variant} {...props}>
+const Button = ({ variant = "primary", children, onClick, ...props }) => (
+  <StyledButton variant={variant} onClick={onClick} {...props}>
     {children}
   </StyledButton>
 );
