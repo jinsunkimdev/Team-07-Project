@@ -30,7 +30,7 @@ export const variantStyles = {
   `,
   outlined: css`
     background-color: var(--white);
-    color: var(--black);
+    color: var(--gray-900);
     border: 1px solid var(--border-color);
 
     &:hover,
