@@ -1,7 +1,10 @@
 import { useState } from "react";
 import DropdownSelect from "../../../components/Dropdown";
 import {
+  IconCheckButton,
   IconDeleteButton,
+  IconPlusButton,
+  IconShare20Button,
   IconShare24Button,
 } from "../../../components/Button/IconButtons";
 
@@ -19,7 +22,14 @@ const TestPage = () => {
           { label: "나눔손글씨 손편지체", value: "나눔손글씨 손편지체" },
         ]}
         controlled={true}
+      />
+
+      <DropdownSelect
         trigger={<IconShare24Button />}
+        options={[
+          { label: "카카오톡 공유", value: "kakaoTalk" },
+          { label: "URL 공유", value: "URL" },
+        ]}
       />
     </div>
   );

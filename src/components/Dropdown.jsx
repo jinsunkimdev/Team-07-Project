@@ -1,3 +1,6 @@
+/** @jsxImportSource @emotion/react */
+import { css } from "@emotion/react";
+
 import { useEffect, useRef, useState } from "react";
 
 import iconArrowDown from "../assets/images/iconArrowDown.svg";
@@ -42,21 +45,25 @@ const DropdownSelect = ({
   };
 
   return (
-    <div ref={ref}>
+    <div ref={ref} css={wrapper}>
       <div onClick={() => setIsOpen(!isOpen)}>
         {trigger ? (
           trigger
         ) : (
-          <button>
+          <button css={selectedTrigger} disabled={false}>
             {selectedValue?.label}
             <img src={isOpen ? iconArrowTop : iconArrowDown} alt="toggle" />
           </button>
         )}
       </div>
       {isOpen && ( //isOpen이 true일 때만 렌더링
-        <ul>
+        <ul css={dropdownStyle}>
           {options.map((option, index) => (
-            <li key={index} onClick={() => handleSelect(option)}>
+            <li
+              key={index}
+              onClick={() => handleSelect(option)}
+              css={dropdownOption}
+            >
               {option.label}
             </li>
           ))}
@@ -67,3 +74,66 @@ const DropdownSelect = ({
 };
 
 export default DropdownSelect;
+
+const wrapper = css`
+  position: relative;
+  display: inline-block;
+`;
+
+const selectedTrigger = css`
+  width: 320px;
+  height: 50px;
+  padding: 12px 16px;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+  color: var(--gray-500);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    border: 1px solid var(--gray-500);
+    color: var(--gray-900);
+  }
+
+  &:focus,
+  :active {
+    border: 2px solid var(--gray-500);
+    color: var(--gray-900);
+  }
+
+  &:disabled,
+  :disabled:hover,
+  :disabled:focus,
+  :disabled:active {
+    border: 1px solid var(--gray-300);
+    background-color: var(--gray-100);
+    color: var(--gray-400);
+    cursor: default;
+  }
+`;
+
+const dropdownStyle = css`
+  position: absolute;
+  /* width: 100%; */
+  background-color: var(--white);
+  margin-top: 4px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  z-index: 10;
+  padding: 4px 0;
+`;
+
+const dropdownOption = css`
+  padding: 12px 16px;
+  font-size: var(--font-size-16);
+  font-weight: var(--font-weight-regular);
+
+  &:hover {
+    background-color: var(--gray-100);
+  }
+`;
