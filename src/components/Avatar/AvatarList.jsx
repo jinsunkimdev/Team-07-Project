@@ -2,11 +2,14 @@ import { css } from "@emotion/react";
 import Avatar from "./Avatar";
 
 const AvatarList = ({ items }) => {
-  if (items === null) return;
+  if (!items || items.length === 0) return null;
+
+  const visibleItems = items.slice(0, 3);
+  const extraCount = items.length - 3;
 
   return (
     <div css={AvatarListStyle}>
-      {items.slice(0, 3).map((item) => (
+      {visibleItems.slice(0, 3).map((item) => (
         <Avatar
           key={item.id}
           imgSrc={item.profileImageURL}
@@ -14,7 +17,7 @@ const AvatarList = ({ items }) => {
           className="avatar-li"
         />
       ))}
-      {items.length >= 4 && (
+      {extraCount > 0 && (
         <div className="avatar-li avatar-more">+{items.length - 3}</div>
       )}
     </div>
