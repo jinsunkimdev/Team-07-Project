@@ -77,7 +77,7 @@ const ListPageHeaderStyle = css`
         background-color: var(--gray-200);
       }
 
-      &:first-child:before {
+      &:first-of-type:before {
         display: none;
       }
     }
