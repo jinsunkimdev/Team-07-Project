@@ -27,6 +27,7 @@ const AvatarListStyle = css`
   .avatar-li {
     border: 1.4px solid var(--white);
     border-radius: 50%;
+    pointer-events: none;
   }
 
   .avatar-li + .avatar-li {
