@@ -22,7 +22,7 @@ export const btnPaddingMap = {
 export const btnFontSizeMap = {
   lg: "var(--font-size-18)",
   md: "var(--font-size-16)",
-  sm: "var(--font-size-16)",
+  sm: "var(--font-size-15)",
   xs: "var(--font-size-14)",
 };
 
