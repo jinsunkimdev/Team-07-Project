@@ -10,7 +10,16 @@ const Avatar = ({
 }) => {
   return (
     <div css={AvatarStyle({ size })} className={className} onClick={onClick}>
-      <img src={imgSrc} alt="프로필 사진" />
+      <img
+        src={imgSrc}
+        alt="프로필 사진"
+        width={avatarSizeMap[size]}
+        height={avatarSizeMap[size]}
+        onError={(e) => {
+          e.target.onerror = null;
+          e.target.src = avatarDefaultImg;
+        }}
+      />
     </div>
   );
 };
