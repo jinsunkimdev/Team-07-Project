@@ -1,12 +1,15 @@
 import { css } from "@emotion/react";
-import logoImg from "../../assets/images/logo.svg";
+import { Link } from "react-router-dom";
 import { BREAKPOINTS } from "../../constants/constants";
+import logoImg from "../../assets/images/logo.svg";
 
 const GlobalHeader = () => {
   return (
     <header css={GlobalHeaderStyle}>
       <div className="header-container">
-        <img src={logoImg} alt="롤링 로고" width="106" height="30" />
+        <Link to="/">
+          <img src={logoImg} alt="롤링 로고" width="106" height="30" />
+        </Link>
       </div>
     </header>
   );
