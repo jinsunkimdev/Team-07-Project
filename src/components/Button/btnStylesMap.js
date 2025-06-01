@@ -20,10 +20,10 @@ export const btnPaddingMap = {
 };
 
 export const btnFontSizeMap = {
-  lg: "18px",
-  md: "16px",
-  sm: "16px",
-  xs: "14px",
+  lg: "var(--font-size-18)",
+  md: "var(--font-size-16)",
+  sm: "var(--font-size-16)",
+  xs: "var(--font-size-14)",
 };
 
 export const btnFontWeightMap = {
@@ -41,10 +41,10 @@ export const btnIconTextGapMap = {
 };
 
 export const btnRadiusMap = {
-  lg: "12px",
-  md: "6px",
-  sm: "6px",
-  xs: "6px",
+  lg: "var(--radius-lg)",
+  md: "var(--radius-sm)",
+  sm: "var(--radius-sm)",
+  xs: "var(--radius-sm)",
 };
 
 export const btnIconSizeMap = {
