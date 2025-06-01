@@ -7,7 +7,9 @@ import avatarSampleImg from "../../assets/images/img-avatar-sample.jpg";
 import GlobalHeader from "../../components/Header/GlobalHeader";
 import ListPageHeader from "../List/ListPageHeader";
 import MessageCard from "../../components/MessageCard/MessageCard";
-import AddMessageCard from "../../components/MessageCard/AddMessageCard";
+import AddMessageCardButton from "../../components/MessageCard/AddMessageCardButton";
+import MessageCardList from "../../components/MessageCard/MessageCardList";
+import MessageCardListStyle from "../../components/MessageCard/MessageCardListStyle";
 
 const mockMessage = {
   sender: "강미나",
@@ -17,6 +19,75 @@ const mockMessage = {
     "코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요!",
   createdAt: "2025.06.01",
 };
+
+const mockMessages = [
+  {
+    id: 1,
+    recipientId: 1,
+    sender: "김하은",
+    profileImageURL:
+      "https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
+    relationship: "가족",
+    content: "열심히 일하는 모습 멋있습니다.",
+    font: "Pretendard",
+    createdAt: "2023-11-01T08:05:25.399056Z",
+  },
+  {
+    id: 2,
+    recipientId: 1,
+    sender: "이영준",
+    profileImageURL:
+      "https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
+    relationship: "지인",
+    content: "항상 응원합니다",
+    font: "Noto Sans KR",
+    createdAt: "2023-11-01T08:04:12.852691Z",
+  },
+  {
+    id: 3,
+    recipientId: 1,
+    sender: "김하은",
+    profileImageURL:
+      "https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
+    relationship: "가족",
+    content: "열심히 일하는 모습 멋있습니다.",
+    font: "Pretendard",
+    createdAt: "2023-11-01T08:05:25.399056Z",
+  },
+  {
+    id: 4,
+    recipientId: 1,
+    sender: "이영준",
+    profileImageURL:
+      "https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
+    relationship: "지인",
+    content: "항상 응원합니다",
+    font: "Noto Sans KR",
+    createdAt: "2023-11-01T08:04:12.852691Z",
+  },
+  {
+    id: 5,
+    recipientId: 1,
+    sender: "김하은",
+    profileImageURL:
+      "https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
+    relationship: "가족",
+    content: "열심히 일하는 모습 멋있습니다.",
+    font: "Pretendard",
+    createdAt: "2023-11-01T08:05:25.399056Z",
+  },
+  {
+    id: 6,
+    recipientId: 1,
+    sender: "이영준",
+    profileImageURL:
+      "https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
+    relationship: "지인",
+    content: "항상 응원합니다",
+    font: "Noto Sans KR",
+    createdAt: "2023-11-01T08:04:12.852691Z",
+  },
+];
 
 const StyleGuidePage = () => {
   return (
@@ -181,9 +252,36 @@ const StyleGuidePage = () => {
       </section>
       {/* Cards */}
       <section css={sectionStyle}>
-        <h2>MessageCard</h2>
-        <AddMessageCard />
-        <MessageCard messageData={mockMessage} isRecipient={true} />
+        <h2>Cards</h2>
+        <div className="sub-section">
+          <h3>MessageCard</h3>
+          <div css={MessageCardListStyle}>
+            <MessageCard messageData={mockMessage} isRecipient={true} />
+          </div>
+        </div>
+        <div className="sub-section">
+          <h3>AddMessageCard</h3>
+          <p className="tip">클릭 시 '/post' 페이지로 임시 이동</p>
+          <div css={MessageCardListStyle}>
+            <AddMessageCardButton />
+          </div>
+        </div>
+        <div className="sub-section">
+          <h3>MessageCardList (readOnly)</h3>
+          <MessageCardList messages={mockMessages} editMode={false} />
+        </div>
+        <div className="sub-section">
+          <h3>MessageCardList (editMode)</h3>
+          <MessageCardList messages={mockMessages} editMode={true} />
+        </div>
+        <div className="sub-section">
+          <h3>MessageCardListEmpty (readOnly)</h3>
+          <MessageCardList messages={[]} editMode={false} />
+        </div>
+        <div className="sub-section">
+          <h3>MessageCardListEmpty (editMode)</h3>
+          <MessageCardList messages={[]} editMode={true} />
+        </div>
       </section>
     </div>
   );
@@ -202,7 +300,8 @@ const sectionStyle = css`
   border-bottom: 1px solid var(--border-color);
 
   h2,
-  h3 {
+  h3,
+  .tip {
     margin-bottom: 1rem;
   }
 
