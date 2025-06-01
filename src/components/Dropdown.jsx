@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { css } from "@emotion/react";
 
 import iconArrowDown from "../assets/images/iconArrowDown.svg";
 import iconArrowTop from "../assets/images/iconArrowTop.svg";
@@ -28,7 +27,7 @@ const DropdownSelect = ({
 
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.addEventListener("mousedown", handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     }; //메모리 누수 방지
   }, []);
 
@@ -49,7 +48,7 @@ const DropdownSelect = ({
           trigger
         ) : (
           <button>
-            {selectedValue?.label || placeholder}
+            {selectedValue?.label}
             <img src={isOpen ? iconArrowTop : iconArrowDown} alt="toggle" />
           </button>
         )}

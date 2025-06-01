@@ -10,7 +10,7 @@ const TestPage = () => {
   return (
     <div>
       <DropdownSelect
-        selectedOption={font}
+        value={font}
         onChange={setFont}
         options={[
           { label: "Noto Sans", value: "noto" },
@@ -19,6 +19,7 @@ const TestPage = () => {
           { label: "나눔손글씨 손편지체", value: "나눔손글씨 손편지체" },
         ]}
         controlled={true}
+        trigger={<IconShare24Button />}
       />
     </div>
   );
