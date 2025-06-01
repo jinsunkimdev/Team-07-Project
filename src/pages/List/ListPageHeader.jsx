@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import { GlobalHeaderStyle } from "../../components/Header/GlobalHeader";
 import { IconShare24Button } from "../../components/Button/IconButtons";
 import AddEmojiButton from "../../components/Button/AddEmojiButton";
-import MessageAuthors from "../../components/MessageAuthors";
+import MessageAuthorCount from "../../components/MessageAuthorCount";
 
 // MessageAuthors 컴포넌트용 mockData
 import avatarSampleImg1 from "../../assets/images/img-avatar-sample.jpg";
@@ -31,7 +31,7 @@ const ListPageHeader = ({ recipient }) => {
         <h2 className="recipient-name">To. {recipient}</h2>
         <ul className="recipient-panel">
           <li className="sender-counts-area">
-            <MessageAuthors items={mockAvatarData} />
+            <MessageAuthorCount items={mockAvatarData} />
           </li>
           <li className="reaction-area">
             {/* Badges 컴포넌트 생성 이후 추가 예정 */}
