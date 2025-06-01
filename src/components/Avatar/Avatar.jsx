@@ -29,6 +29,7 @@ export default Avatar;
 const AvatarStyle = ({ size }) => css`
   display: inline-block;
   width: ${avatarSizeMap[size]};
+  height: ${avatarSizeMap[size]};
   aspect-ratio: 1/1;
   cursor: pointer;
 
