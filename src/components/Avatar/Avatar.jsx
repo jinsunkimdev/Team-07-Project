@@ -2,9 +2,14 @@ import { css } from "@emotion/react";
 import { avatarSizeMap } from "./avatarStylesMap";
 import avatarDefaultImg from "../../assets/images/img-avatar-default.png";
 
-const Avatar = ({ imgSrc = avatarDefaultImg, size = "md", onClick }) => {
+const Avatar = ({
+  imgSrc = avatarDefaultImg,
+  size = "md",
+  onClick,
+  className,
+}) => {
   return (
-    <div css={AvatarStyle({ size })} onClick={onClick}>
+    <div css={AvatarStyle({ size })} className={className} onClick={onClick}>
       <img src={imgSrc} alt="프로필 사진" />
     </div>
   );
