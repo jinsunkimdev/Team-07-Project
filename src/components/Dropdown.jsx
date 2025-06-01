@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { css } from "@emotion/react";
 
 import iconArrowDown from "../assets/images/iconArrowDown.svg";
 import iconArrowTop from "../assets/images/iconArrowTop.svg";
@@ -7,13 +8,16 @@ const DropdownSelect = ({
   value, //선택된 항목
   onChange, //선택시 실행할 함수
   options = [
-    /**{label:..., value:..., ...형식} */
+    /**{label:..., value:..., ...} */
   ],
-  placeholder,
-  renderOption, //이걸 이용해 커스텀 가능
+  trigger, //버튼 커스텀?
+  controlled = false, //state관리를 여기서 하느냐 부모에서 하느냐 |기본은 여기
 }) => {
+  const [internalVlaue, setInternalValue] = useState(options[0]);
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
+
+  const selectedValue = value ? value : internalVlaue;
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -29,23 +33,32 @@ const DropdownSelect = ({
   }, []);
 
   const handleSelect = (option) => {
-    onChange(option);
+    if (controlled) {
+      onChange?.(option);
+    } else {
+      setInternalValue(option);
+      onChange?.(option);
+    }
     setIsOpen(false);
   };
 
   return (
     <div ref={ref}>
-      <button onClick={() => setIsOpen(!isOpen)}>
-        <div>
-          {value?.label || placeholder}
-          <img src={isOpen ? iconArrowTop : iconArrowDown} alt="toggle" />
-        </div>
-      </button>
+      <div onClick={() => setIsOpen(!isOpen)}>
+        {trigger ? (
+          trigger
+        ) : (
+          <button>
+            {selectedValue?.label || placeholder}
+            <img src={isOpen ? iconArrowTop : iconArrowDown} alt="toggle" />
+          </button>
+        )}
+      </div>
       {isOpen && ( //isOpen이 true일 때만 렌더링
         <ul>
           {options.map((option, index) => (
             <li key={index} onClick={() => handleSelect(option)}>
-              {renderOption ? renderOption(option) : option.label}
+              {option.label}
             </li>
           ))}
         </ul>
