@@ -6,6 +6,17 @@ import Avatar from "../../components/Avatar";
 import avatarSampleImg from "../../assets/images/img-avatar-sample.jpg";
 import GlobalHeader from "../../components/Header/GlobalHeader";
 import ListPageHeader from "../List/ListPageHeader";
+import MessageCard from "../../components/MessageCard/MessageCard";
+import AddMessageCard from "../../components/MessageCard/AddMessageCard";
+
+const mockMessage = {
+  sender: "강미나",
+  profileImg: avatarSampleImg,
+  relationship: "가족",
+  content:
+    "코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요!",
+  createdAt: "2025.06.01",
+};
 
 const StyleGuidePage = () => {
   return (
@@ -156,6 +167,7 @@ const StyleGuidePage = () => {
         <Avatar size="sm" imgSrc={avatarSampleImg} />
         <Avatar size="xs" imgSrc={avatarSampleImg} />
       </section>
+      {/* Headers */}
       <section css={sectionStyle}>
         <h2>Headers</h2>
         <div className="sub-section">
@@ -166,6 +178,12 @@ const StyleGuidePage = () => {
           <h3>ListPageHeader</h3>
           <ListPageHeader recipient="Ashley Kim" />
         </div>
+      </section>
+      {/* Cards */}
+      <section css={sectionStyle}>
+        <h2>MessageCard</h2>
+        <AddMessageCard />
+        <MessageCard messageData={mockMessage} isRecipient={true} />
       </section>
     </div>
   );
