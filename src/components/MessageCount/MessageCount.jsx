@@ -2,6 +2,8 @@ import { css } from "@emotion/react";
 import AvatarList from "../Avatar/AvatarList";
 
 const MessageCount = ({ items }) => {
+  if (items === null) return;
+
   return (
     <div css={MessageCountStyle}>
       <AvatarList items={items} />

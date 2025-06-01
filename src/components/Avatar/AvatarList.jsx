@@ -2,6 +2,8 @@ import { css } from "@emotion/react";
 import Avatar from "./Avatar";
 
 const AvatarList = ({ items }) => {
+  if (items === null) return;
+
   return (
     <div css={AvatarListStyle}>
       {items.slice(0, 3).map((item) => (
