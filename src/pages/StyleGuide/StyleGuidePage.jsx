@@ -2,10 +2,15 @@
 import { css } from "@emotion/react";
 import Button from "../../components/Button";
 import AddEmojiButton from "../../components/Button/AddEmojiButton";
+import Avatar from "../../components/Avatar";
+import avatarSampleImg from "../../assets/images/img-avatar-sample.jpg";
+import GlobalHeader from "../../components/Header/GlobalHeader";
+import ListPageHeader from "../List/ListPageHeader";
 
 const StyleGuidePage = () => {
   return (
     <div css={pageStyle}>
+      {/* Buttons */}
       <section css={sectionStyle}>
         <h2>Button</h2>
         <div className="sub-section">
@@ -114,6 +119,7 @@ const StyleGuidePage = () => {
           </Button>
         </div>
       </section>
+      {/* AddEmojiButton */}
       <section css={sectionStyle}>
         <h2>AddEmojiButton</h2>
         <div className="sub-section">
@@ -137,13 +143,39 @@ const StyleGuidePage = () => {
           </AddEmojiButton>
         </div>
       </section>
+      {/* Avatar */}
+      <section css={sectionStyle}>
+        <h2>Avatar</h2>
+        <Avatar size="lg" onClick={() => alert("avatar clicked")} />
+        <Avatar
+          size="lg"
+          imgSrc={avatarSampleImg}
+          onClick={() => alert("avatar clicked")}
+        />
+        <Avatar size="md" imgSrc={avatarSampleImg} />
+        <Avatar size="sm" imgSrc={avatarSampleImg} />
+        <Avatar size="xs" imgSrc={avatarSampleImg} />
+      </section>
+      <section css={sectionStyle}>
+        <h2>Headers</h2>
+        <div className="sub-section">
+          <h3>GlobalHeader</h3>
+          <GlobalHeader />
+        </div>
+        <div className="sub-section">
+          <h3>ListPageHeader</h3>
+          <ListPageHeader recipient="Ashley Kim" />
+        </div>
+      </section>
     </div>
   );
 };
 export default StyleGuidePage;
 
 const pageStyle = css`
-  padding: 24px;
+  width: var(--content-width);
+  padding: var(--content-padding);
+  margin: 30px auto;
 `;
 
 const sectionStyle = css`
