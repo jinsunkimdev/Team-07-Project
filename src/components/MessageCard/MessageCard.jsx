@@ -13,6 +13,11 @@ const MessageCard = ({ messageData = {}, isEditable = false }) => {
     createdAt,
   } = messageData;
 
+  const handleDelete = (e) => {
+    e.stopPropagation(); // 이벤트 버블링 방지
+    alert("delete button clicked");
+  };
+
   return (
     <div
       css={MessageCardStyle}
@@ -31,7 +36,7 @@ const MessageCard = ({ messageData = {}, isEditable = false }) => {
             </span>
           </div>
         </div>
-        {isEditable && <IconDeleteButton onClick={() => alert("delete")} />}
+        {isEditable && <IconDeleteButton onClick={handleDelete} />}
       </div>
       <div className="card-body">
         <p className="content">{content}</p>
