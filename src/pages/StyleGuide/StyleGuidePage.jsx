@@ -94,9 +94,9 @@ const StyleGuidePage = () => {
     <div css={pageStyle}>
       {/* Buttons */}
       <section css={sectionStyle}>
-        <h2>Button</h2>
+        <h2 className="section-title">Button</h2>
         <div className="sub-section">
-          <h3>Primary</h3>
+          <h3 className="section-sub-title">Primary</h3>
           <Button size="lg" variant="primary" onClick={() => alert("clicked")}>
             Enabled
           </Button>
@@ -127,7 +127,7 @@ const StyleGuidePage = () => {
           </Button>
         </div>
         <div className="sub-section">
-          <h3>Secondary</h3>
+          <h3 className="section-sub-title">Secondary</h3>
           <Button
             size="lg"
             variant="secondary"
@@ -170,7 +170,7 @@ const StyleGuidePage = () => {
           </Button>
         </div>
         <div className="sub-section">
-          <h3>Outlined</h3>
+          <h3 className="section-sub-title">Outlined</h3>
           <Button size="lg" variant="outlined" onClick={() => alert("clicked")}>
             Enabled
           </Button>
@@ -203,7 +203,7 @@ const StyleGuidePage = () => {
       </section>
       {/* AddEmojiButton */}
       <section css={sectionStyle}>
-        <h2>AddEmojiButton</h2>
+        <h2 className="section-title">AddEmojiButton</h2>
         <div className="sub-section">
           <AddEmojiButton size="lg" onClick={() => alert("clicked")}>
             Enabled
@@ -227,7 +227,7 @@ const StyleGuidePage = () => {
       </section>
       {/* Avatar */}
       <section css={sectionStyle}>
-        <h2>Avatar</h2>
+        <h2 className="section-title">Avatar</h2>
         <Avatar size="lg" onClick={() => alert("avatar clicked")} />
         <Avatar
           size="lg"
@@ -240,46 +240,46 @@ const StyleGuidePage = () => {
       </section>
       {/* Headers */}
       <section css={sectionStyle}>
-        <h2>Headers</h2>
+        <h2 className="section-title">Headers</h2>
         <div className="sub-section">
-          <h3>GlobalHeader</h3>
+          <h3 className="section-sub-title">GlobalHeader</h3>
           <GlobalHeader />
         </div>
         <div className="sub-section">
-          <h3>ListPageHeader</h3>
+          <h3 className="section-sub-title">ListPageHeader</h3>
           <ListPageHeader recipient="Ashley Kim" />
         </div>
       </section>
       {/* Cards */}
       <section css={sectionStyle}>
-        <h2>Cards</h2>
+        <h2 className="section-title">Cards</h2>
         <div className="sub-section">
-          <h3>MessageCard</h3>
+          <h3 className="section-sub-title">MessageCard</h3>
           <div css={MessageCardListStyle}>
             <MessageCard messageData={mockMessage} isRecipient={true} />
           </div>
         </div>
         <div className="sub-section">
-          <h3>AddMessageCard</h3>
+          <h3 className="section-sub-title">AddMessageCard</h3>
           <p className="tip">클릭 시 '/post' 페이지로 임시 이동</p>
           <div css={MessageCardListStyle}>
             <AddMessageCardButton />
           </div>
         </div>
         <div className="sub-section">
-          <h3>MessageCardList (readOnly)</h3>
+          <h3 className="section-sub-title">MessageCardList (readOnly)</h3>
           <MessageCardList messages={mockMessages} editMode={false} />
         </div>
         <div className="sub-section">
-          <h3>MessageCardList (editMode)</h3>
+          <h3 className="section-sub-title">MessageCardList (editMode)</h3>
           <MessageCardList messages={mockMessages} editMode={true} />
         </div>
         <div className="sub-section">
-          <h3>MessageCardListEmpty (readOnly)</h3>
+          <h3 className="section-sub-title">MessageCardListEmpty (readOnly)</h3>
           <MessageCardList messages={[]} editMode={false} />
         </div>
         <div className="sub-section">
-          <h3>MessageCardListEmpty (editMode)</h3>
+          <h3 className="section-sub-title">MessageCardListEmpty (editMode)</h3>
           <MessageCardList messages={[]} editMode={true} />
         </div>
       </section>
@@ -299,8 +299,8 @@ const sectionStyle = css`
   padding-bottom: 30px;
   border-bottom: 1px solid var(--border-color);
 
-  h2,
-  h3,
+  .section-title,
+  .section-sub-title,
   .tip {
     margin-bottom: 1rem;
   }

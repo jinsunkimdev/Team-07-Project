@@ -7,6 +7,7 @@ import MessageAuthorCount from "../../components/MessageAuthorCount";
 // MessageAuthors 컴포넌트용 mockData
 import avatarSampleImg1 from "../../assets/images/img-avatar-sample.jpg";
 import avatarSampleImg2 from "../../assets/images/img-avatar-default.png";
+import { BREAKPOINTS } from "../../constants/constants";
 const mockAvatarData = [
   { id: "avatar1", profileImageURL: avatarSampleImg1 },
   { id: "avatar2", profileImageURL: avatarSampleImg2 },
@@ -30,17 +31,17 @@ const ListPageHeader = ({ recipient }) => {
       <div className="header-container">
         <h2 className="recipient-name">To. {recipient}</h2>
         <ul className="recipient-panel">
-          <li className="sender-counts-area">
+          <li className="li-message-author-count">
             <MessageAuthorCount items={mockAvatarData} />
           </li>
-          <li className="reaction-area">
+          <li className="li-action-reaction-badges">
             {/* Badges 컴포넌트 생성 이후 추가 예정 */}
             {/* <ReactionBadges /> */}
             <AddEmojiButton size="sm" onClick={showAddReactionPopover}>
               추가
             </AddEmojiButton>
           </li>
-          <li className="share-area">
+          <li className="li-action-share">
             <IconShare24Button onClick={shareRollingPaper} />
           </li>
         </ul>
@@ -53,6 +54,16 @@ export default ListPageHeader;
 
 const ListPageHeaderStyle = css`
   ${GlobalHeaderStyle};
+
+  .li-message-author-count {
+    display: none;
+  }
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    .li-message-author-count {
+      display: block;
+    }
+  }
 
   .recipient-name {
     margin-right: auto;
