@@ -6,7 +6,7 @@ import formatDate from "../../utils/formatDate";
 const MessageCard = ({ messageData = {}, isEditable = false }) => {
   const {
     sender,
-    profileImg,
+    profileImageURL,
     relationship = "친구",
     content,
     font = "Pretendard",
@@ -25,7 +25,7 @@ const MessageCard = ({ messageData = {}, isEditable = false }) => {
     >
       <div className="card-header">
         <div className="sender-profile-wrap">
-          <Avatar imgSrc={profileImg} size="md" />
+          <Avatar imgSrc={profileImageURL} size="md" />
           <div className="sender-profile" style={{ fontFamily: font }}>
             <span className="name">
               From. <b>{sender}</b>

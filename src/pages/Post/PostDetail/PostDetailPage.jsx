@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getMessages } from "../../../api/post/fetchMessages";
-import { loader, messageItem, messageList } from "./PostDetailPage.styles";
 import { useParams } from "react-router-dom";
-import Avatar from "../../../components/Avatar";
+import MessageCardList from "../../../components/MessageCard/MessageCardList";
+import { loader } from "./PostDetailPage.styles";
 
 const PostDetailPage = () => {
   const { id } = useParams();
@@ -63,27 +63,7 @@ const PostDetailPage = () => {
 
   return (
     <>
-      <ul css={messageList}>
-        {messages.map((msg) => (
-          <li css={messageItem} key={msg.id}>
-            <Avatar imgSrc={msg.profileImageURL} />
-            <div className="message-content">
-              <div className="sender">
-                <div className="cardTitle">
-                  <span className="titlePrefix">From.</span> {msg.sender}
-                </div>
-                {msg.relationship && (
-                  <span className="badge">{msg.relationship}</span>
-                )}
-              </div>
-              <div className="content">{msg.content}</div>
-              <div className="date">
-                {new Date(msg.createdAt).toLocaleDateString()}
-              </div>
-            </div>
-          </li>
-        ))}
-      </ul>
+      <MessageCardList messages={messages} editMode={false} />
       {hasMore && (
         <div ref={observerRef} css={loader}>
           {isLoading ? "불러오는 중..." : "더 불러오기..."}
