@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getMessages } from "../../../api/post/getMessages";
+import { getMessages } from "../../../api/post/fetchMessages";
 import { loader, messageItem, messageList } from "./PostDetailPage.styles";
 import { useParams } from "react-router-dom";
 import Avatar from "../../../components/Avatar";
