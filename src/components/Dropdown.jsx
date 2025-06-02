@@ -7,20 +7,19 @@ import iconArrowDown from "../assets/images/iconArrowDown.svg";
 import iconArrowTop from "../assets/images/iconArrowTop.svg";
 
 const DropdownSelect = ({
-  value, // 선택된 항목
+  selectedOption, // 선택된 항목
   onChange, // 선택시 실행할 함수
-  options = [
-    /**{label:..., value:..., ...} */
-  ],
+  options = [], //[{label:..., value:..., onClick:...},{...}]
   trigger, // 버튼 커스텀?
-  controlled = false, //state관리를 여기서 하느냐 부모에서 하느냐 | 기본은 여기
-  dropdownWidth = "140px", //trigger를 사용한 dropdown의 너비, 기본값은 ShereButton 일 때.
+  dropdownWidth = "140px", //trigger를 사용한 dropdown의 너비, 기본값인 140px은 ShereButton 일 때
 }) => {
-  const [internalVlaue, setInternalValue] = useState(options[0]);
+  const [internalValue, setInternalValue] = useState(
+    () => (options?.length > 0 ? options[0] : null) //오류방지
+  );
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef();
 
-  const selectedValue = value ? value : internalVlaue;
+  const selectedValue = selectedOption ? selectedOption : internalValue; //
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -36,12 +35,13 @@ const DropdownSelect = ({
   }, []);
 
   const handleSelect = (option) => {
-    if (controlled) {
+    if (selectedValue != null) {
       onChange?.(option);
     } else {
       setInternalValue(option);
       onChange?.(option);
     }
+    option.onClick?.(option);
     setIsOpen(false);
   };
 

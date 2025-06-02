@@ -8,12 +8,16 @@ import {
   IconShare24Button,
 } from "../../../components/Button/IconButtons";
 
+const handleOptionClick = (option) => {
+  alert(`${option.value} 공유`);
+};
+
 const TestPage = () => {
   const [font, setFont] = useState(null);
   return (
     <div>
       <DropdownSelect
-        value={font}
+        selectedOption={font}
         onChange={setFont}
         options={[
           { label: "Noto Sans", value: "noto" },
@@ -27,8 +31,12 @@ const TestPage = () => {
       <DropdownSelect
         trigger={<IconShare24Button />}
         options={[
-          { label: "카카오톡 공유", value: "kakaoTalk" },
-          { label: "URL 공유", value: "URL" },
+          {
+            label: "카카오톡 공유",
+            value: "kakaoTalk",
+            onClick: handleOptionClick,
+          },
+          { label: "URL 공유", value: "URL", onClick: handleOptionClick },
         ]}
       />
     </div>
