@@ -7,13 +7,14 @@ import iconArrowDown from "../assets/images/iconArrowDown.svg";
 import iconArrowTop from "../assets/images/iconArrowTop.svg";
 
 const DropdownSelect = ({
-  value, //선택된 항목
-  onChange, //선택시 실행할 함수
+  value, // 선택된 항목
+  onChange, // 선택시 실행할 함수
   options = [
     /**{label:..., value:..., ...} */
   ],
-  trigger, //버튼 커스텀?
-  controlled = false, //state관리를 여기서 하느냐 부모에서 하느냐 |기본은 여기
+  trigger, // 버튼 커스텀?
+  controlled = false, //state관리를 여기서 하느냐 부모에서 하느냐 | 기본은 여기
+  dropdownWidth = "140px", //trigger를 사용한 dropdown의 너비, 기본값은 ShereButton 일 때.
 }) => {
   const [internalVlaue, setInternalValue] = useState(options[0]);
   const [isOpen, setIsOpen] = useState(false);
@@ -57,7 +58,7 @@ const DropdownSelect = ({
         )}
       </div>
       {isOpen && ( //isOpen이 true일 때만 렌더링
-        <ul css={dropdownStyle}>
+        <ul css={dropdownStyle({ trigger, width: dropdownWidth })}>
           {options.map((option, index) => (
             <li
               key={index}
@@ -74,6 +75,8 @@ const DropdownSelect = ({
 };
 
 export default DropdownSelect;
+
+/** <-----Style-----> */
 
 const wrapper = css`
   position: relative;
@@ -116,9 +119,10 @@ const selectedTrigger = css`
   }
 `;
 
-const dropdownStyle = css`
+const dropdownStyle = ({ trigger, width }) => css`
   position: absolute;
-  /* width: 100%; */
+  right: 0;
+  width: ${trigger ? width : "100%"};
   background-color: var(--white);
   margin-top: 4px;
   border: 1px solid var(--gray-300);
