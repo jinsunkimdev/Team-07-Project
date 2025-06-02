@@ -1,11 +1,11 @@
 import { css } from "@emotion/react";
 import AvatarList from "../Avatar/AvatarList";
 
-const MessageAuthors = ({ items }) => {
+const MessageAuthorCount = ({ items }) => {
   if (!items || items.length === 0) return null;
 
   return (
-    <div css={MessageAuthorsStyle}>
+    <div css={MessageAuthorCountStyle}>
       <AvatarList items={items} />
       <span>
         <b>{items.length}</b>명이 작성했어요!
@@ -14,9 +14,9 @@ const MessageAuthors = ({ items }) => {
   );
 };
 
-export default MessageAuthors;
+export default MessageAuthorCount;
 
-const MessageAuthorsStyle = css`
+const MessageAuthorCountStyle = css`
   display: flex;
   align-items: center;
   gap: 10px;
