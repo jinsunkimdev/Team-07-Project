@@ -29,7 +29,7 @@ const TestPage = () => {
       />
 
       <DropdownSelect
-        trigger={<IconShare24Button />}
+        customButton={<IconShare24Button />}
         options={[
           {
             label: "카카오톡 공유",
