@@ -1,11 +1,11 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
-import styled from "@emotion/styled";
 import cardPreview from "../../../assets/images/card_preview.png";
 import emojiPreview from "../../../assets/images/emoji_preview.png";
 import Button from "../../../components/Button/Button";
 import { Link } from "react-router-dom";
 import GlobalHeader from "../../../components/Header/GlobalHeader";
+import { BREAKPOINTS } from "../../../constants/constants";
 
 const MainPage = () => {
   return (
@@ -13,13 +13,18 @@ const MainPage = () => {
       <GlobalHeader>
         <div
           css={css`
-            width: 142px;
+            width: 157px;
             height: 40px;
 
+            @media (max-width: ${BREAKPOINTS.sm}px) {
+              width: 142px;
+            }
             button {
               width: 100% !important;
               height: 100% !important;
-              font-size: var(--font-size-14) !important;
+              @media (max-width: ${BREAKPOINTS.sm}px) {
+                font-size: var(--font-size-14) !important;
+              }
             }
           `}
         >
@@ -29,7 +34,7 @@ const MainPage = () => {
         </div>
       </GlobalHeader>
       <div css={pageWrapper}>
-        <section css={pointSection}>
+        <section css={[pointSection, responsiveBox]}>
           <div css={pointContent}>
             <span css={pointBadge}>Point. 01</span>
             <h2 css={pointTitle}>
@@ -42,7 +47,7 @@ const MainPage = () => {
           </div>
         </section>
 
-        <section css={pointSection}>
+        <section css={[pointSection, responsiveBox]}>
           <div css={pointContent}>
             <span css={pointBadge}>Point. 02</span>
             <h2 css={pointTitle}>
@@ -55,31 +60,19 @@ const MainPage = () => {
               src={emojiPreview}
               alt="이모지 감정 표현 예시 이미지"
               css={css`
-                width: 320px;
-                height: auto;
-                max-height: 113px;
+                width: 100%;
+                height: 113px;
                 object-fit: cover;
-                margin: 0 auto;
+                object-position: center;
+
+                @media (min-width: ${BREAKPOINTS.md}px) {
+                  height: 204px;
+                }
               `}
             />
           </div>
         </section>
-
-        <div
-          css={css`
-            max-width: 320px;
-            width: 100%;
-            height: 56px;
-            margin-top: 24px;
-
-            button {
-              width: 100% !important;
-              height: 100% !important;
-              font-size: var(--font-size-18) !important;
-              font-weight: 700 !important;
-            }
-          `}
-        >
+        <div css={[customButtonWrapper, responsiveBox]}>
           <Button as={Link} to="/list" variant="primary" size="lg">
             구경해보기
           </Button>
@@ -98,12 +91,13 @@ const pageWrapper = css`
   background-color: var(--bg-light);
   padding: var(--content-padding);
   margin-top: 24px;
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    gap: 30px;
+  }
 `;
 
 /** 각 Point 섹션 공통 스타일 */
 const pointSection = css`
-  max-width: 320px;
-  width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -113,6 +107,9 @@ const pointSection = css`
   gap: 48px;
   flex-direction: column;
   overflow: hidden;
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    padding: 40px;
+  }
 `;
 
 /** 텍스트 쪽 영역 */
@@ -144,6 +141,10 @@ const pointTitle = css`
   font-weight: var(--font-weight-bold);
   color: var(--gray-900);
   letter-spacing: -1px;
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    font-size: var(--font-size-24);
+  }
 `;
 
 /** 설명 텍스트 */
@@ -151,6 +152,10 @@ const pointDesc = css`
   font-size: var(--font-size-15);
   font-weight: var(--font-weight-regular);
   color: var(--gray-500);
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    font-size: var(--font-size-18);
+  }
 `;
 
 /** 카드 미리보기나 이모지 드롭다운이 들어가는 영역 */
@@ -160,8 +165,40 @@ const pointPreview = css`
   justify-content: flex-end;
   width: 395px;
   padding-bottom: 24px;
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    width: 100%;
+    max-width: 640px;
+    height: auto;
+  }
 `;
 
 const breakLine = css`
   display: block;
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    display: inline;
+  }
+`;
+
+export const responsiveBox = css`
+  width: 100%;
+  max-width: 320px;
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    max-width: 720px;
+  }
+`;
+
+const customButtonWrapper = css`
+  max-width: 320px;
+  width: 100%;
+  height: 56px;
+  margin-top: 24px;
+
+  button {
+    width: 100% !important;
+    height: 100% !important;
+    font-size: var(--font-size-18) !important;
+    font-weight: 700 !important;
+  }
 `;
