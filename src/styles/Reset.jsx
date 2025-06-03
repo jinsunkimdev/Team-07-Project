@@ -8,6 +8,7 @@ export const Reset = () => (
         margin: 0;
         padding: 0;
         color: inherit;
+        box-sizing: border-box;
       }
       *,
       :after,
@@ -34,6 +35,7 @@ export const Reset = () => (
       html,
       body {
         height: 100%;
+        font-family: var(--main-font);
       }
       img,
       picture,
@@ -54,13 +56,14 @@ export const Reset = () => (
         border: 0;
         cursor: pointer;
         line-height: 1;
+        transition: 0.2s;
       }
       button:disabled {
-        cursor: default;
-        background-color: var(--gray400);
+        background-color: var(--gray-300);
+        border-color: var(--gray-300);
       }
       button:disabled:hover {
-        background-color: var(--gray400);
+        background-color: var(--gray-300);
       }
       a {
         text-decoration: none;
