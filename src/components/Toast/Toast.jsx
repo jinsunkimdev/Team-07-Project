@@ -2,9 +2,9 @@ import { css } from "@emotion/react";
 import IconSuccess from "../../assets/images/ic-success.svg";
 import IconClose from "../../assets/images/ic-close-gray.svg";
 
-const Toast = ({ id, state = "success", message, onClose }) => {
+const Toast = ({ id, state = "success", message, visible, onClose }) => {
   return (
-    <div css={ToastStyle}>
+    <div css={ToastStyle} className={visible ? "visible" : ""}>
       <div className="toast-content">
         {state === "success" && (
           <img src={IconSuccess} alt="처리 완료" className="status-icon" />
@@ -32,6 +32,14 @@ const ToastStyle = css`
   box-shadow: var(--box-shadow);
   border-radius: var(--radius-md);
   font-size: var(--font-size-16);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.3s ease-in-out;
+
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
 
   .toast-content {
     display: flex;

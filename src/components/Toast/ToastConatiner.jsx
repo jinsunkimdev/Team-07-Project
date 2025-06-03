@@ -13,6 +13,7 @@ const ToastContainer = ({ toasts, hideToast }) => {
           key={toast.id}
           id={toast.id}
           message={toast.message}
+          visible={toast.visible}
           onClose={() => hideToast(toast.id)}
         />
       ))}
@@ -31,4 +32,8 @@ const ToastContainerStyle = css`
   width: 100%;
   max-width: 524px;
   height: 64px;
+  display: flex;
+  flex-direction: column-reverse; // 토스트 역순으로 쌓기
+  gap: 12px;
+  pointer-events: none;
 `;
