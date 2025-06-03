@@ -65,19 +65,25 @@ const MainPage = () => {
           </div>
         </section>
 
-        <Button
-          as={Link}
-          to="/post"
-          variant="primary"
-          size="lg"
+        <div
           css={css`
-            width: 320px;
+            max-width: 320px;
+            width: 100%;
             height: 56px;
             margin-top: 24px;
+
+            button {
+              width: 100% !important;
+              height: 100% !important;
+              font-size: var(--font-size-18) !important;
+              font-weight: 700 !important;
+            }
           `}
         >
-          구경해보기
-        </Button>
+          <Button as={Link} to="/list" variant="primary" size="lg">
+            구경해보기
+          </Button>
+        </div>
       </div>
     </>
   );
