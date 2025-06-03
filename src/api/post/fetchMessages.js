@@ -16,7 +16,6 @@ export const getMessages = async ({
   const sortedResults = data.results.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
-  console.log(sortedResults);
 
   return sortedResults;
 };
