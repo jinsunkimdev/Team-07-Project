@@ -7,7 +7,7 @@ const TOAST_DELETE_DOM_MS = 1000;
 const TOAST_ANIM_READY_MS = 10;
 
 const ToastProvider = ({ children }) => {
-  const [toasts, setToasts] = useState([]); // 토스트 리스트 (토스트를 여러개 담기 위함)
+  const [toasts, setToasts] = useState([]);
 
   const setToastFn = ({ id, visible }) => {
     return setToasts((prev) =>
