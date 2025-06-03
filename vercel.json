@@ -1,5 +1,9 @@
 {
   "rewrites": [
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/assets/:path*", "destination": "/assets/:path*" },
+    { "source": "/api/:path*", "destination": "/api/:path*" },
+    { "source": "/team/:path*", "destination": "/team/:path*" },
+    { "source": "/recipients/:path*", "destination": "/recipients/:path*" },
+    { "source": "/:path*", "destination": "/" }
   ]
 }
