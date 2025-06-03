@@ -20,16 +20,21 @@ import { useCallback, useEffect, useRef, useState } from "react";
  *   observerRef: React.MutableRefObject<null>
  * }}
  */
-export function useInfiniteScroll(fetcher, baseLimit) {
+export function useInfiniteScroll(fetcher, baseLimit, options = {}) {
   const [items, setItems] = useState([]);
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const observerRef = useRef(null);
 
+  const { adjustFirstCount = 0 } = options;
+
   // 실제로 한 번에 fetch할 개수를 계산하는 함수
-  const calcFetchCount = (currentOffset) =>
-    currentOffset === 0 ? baseLimit - 1 : baseLimit;
+  const calcFetchCount = (currentOffset) => {
+    // 맨 처음 로드할 때 offset = 0
+    const isFirstLoad = currentOffset === 0;
+    return isFirstLoad ? baseLimit + adjustFirstCount : baseLimit;
+  };
 
   // 데이터를 가져오는 함수 (useCallback으로 묶어서 의존성 관리)
   const loadMore = useCallback(async () => {
@@ -65,7 +70,6 @@ export function useInfiniteScroll(fetcher, baseLimit) {
   // ── (1) 컴포넌트 마운트 직후 첫 번째 로드
   useEffect(() => {
     loadMore();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // ── (2) IntersectionObserver로 추가 로드
@@ -93,7 +97,7 @@ export function useInfiniteScroll(fetcher, baseLimit) {
     return () => {
       if (ele) observer.unobserve(ele);
     };
-  }, [loadMore, isLoading, hasMore]);
+  }, [loadMore, isLoading, hasMore, adjustFirstCount]);
 
   return { items, isLoading, hasMore, observerRef };
 }

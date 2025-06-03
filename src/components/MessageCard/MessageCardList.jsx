@@ -15,13 +15,10 @@ const MessageCardList = ({ messages = [], editMode = false }) => {
 };
 
 function CardListResult({ messages, editMode }) {
-  // 무한스크롤 구현을 위해서 전체 표시
-  const displayMessages = messages;
-
   return (
     <div css={MessageCardListStyle}>
       {!editMode && <AddMessageCardButton />}
-      {displayMessages.map((message) => (
+      {messages.map((message) => (
         <MessageCard
           key={message.id}
           messageData={message}
