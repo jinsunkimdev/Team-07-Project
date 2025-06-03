@@ -3,6 +3,7 @@ import { getMessages } from "../../../api/post/fetchMessages";
 import { useParams } from "react-router-dom";
 import MessageCardList from "../../../components/MessageCard/MessageCardList";
 import { loader } from "./PostDetailPage.styles";
+import { TEAM } from "../../../constants/constants";
 
 const PostDetailPage = () => {
   const { id } = useParams();
@@ -12,25 +13,33 @@ const PostDetailPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const observerRef = useRef();
 
-  const LIMIT = 10;
+  const LIMIT = 12;
 
   const loadMessages = useCallback(async () => {
+    // 로딩 중이거나 더 불러올 게 없으면 중단
     if (isLoading || !hasMore) return;
 
     setIsLoading(true);
 
     try {
+      // 2) offset이 0(첫번째 fetch)일 때는 LIMIT - 1(=9) 만큼만 가져옴
+      const currentLimit = offset === 0 ? LIMIT - 1 : LIMIT;
+
       const newMessages = await getMessages({
         id,
-        team: "1",
-        limit: LIMIT,
+        team: TEAM,
+        limit: currentLimit,
         offset,
       });
 
+      // 3) 기존 메시지 뒤에 붙이기
       setMessages((prev) => [...prev, ...newMessages]);
-      setOffset((prev) => prev + LIMIT);
 
-      if (newMessages.length < LIMIT) setHasMore(false);
+      // 4) offset 증가: 첫 호출에는 LIMIT - 1, 이후에는 LIMIT
+      setOffset((prev) => prev + currentLimit);
+
+      // 5) 받아온 개수가 요청한 개수보다 적으면 더 이상 불러올 게 없음
+      if (newMessages.length < currentLimit) setHasMore(false);
     } catch (err) {
       console.error("불러오기 실패", err);
     } finally {
@@ -42,7 +51,7 @@ const PostDetailPage = () => {
     const observer = new IntersectionObserver(
       (entries) => {
         const [entry] = entries;
-        if (entry.isIntersecting && !isLoading && hasMore) {
+        if (!isLoading && hasMore && entry.isIntersecting) {
           loadMessages();
         }
       },

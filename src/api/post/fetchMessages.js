@@ -1,9 +1,10 @@
+import { TEAM } from "../../constants/constants";
 import { BASE_URL } from "../../constants/env";
 
 export const getMessages = async ({
   id,
-  team = "1",
-  limit = 10,
+  team = TEAM,
+  limit = 12,
   offset = 0,
 }) => {
   const res = await fetch(

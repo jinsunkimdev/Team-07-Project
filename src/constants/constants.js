@@ -3,3 +3,5 @@ export const BREAKPOINTS = {
   md: 768,
   sm: 360,
 };
+
+export const TEAM = "7";

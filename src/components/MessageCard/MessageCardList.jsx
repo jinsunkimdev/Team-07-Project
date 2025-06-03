@@ -15,8 +15,7 @@ const MessageCardList = ({ messages = [], editMode = false }) => {
 };
 
 function CardListResult({ messages, editMode }) {
-  // const displayMessages = editMode ? messages : messages.slice(0, 5);
-  // 💥 slice 없애고 전체 표시
+  // 무한스크롤 구현을 위해서 전체 표시
   const displayMessages = messages;
 
   return (
