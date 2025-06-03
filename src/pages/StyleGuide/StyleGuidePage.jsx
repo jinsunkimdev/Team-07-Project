@@ -91,8 +91,6 @@ const mockMessages = [
 ];
 
 const StyleGuidePage = () => {
-  // const context = useToast();
-  // const showToast = context.showToast;
   const { showToast } = useToast();
 
   return (
