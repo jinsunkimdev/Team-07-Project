@@ -2,7 +2,7 @@ import { useState } from "react";
 import ToastContext from "./ToastContext";
 import ToastContainer from "./ToastConatiner";
 
-const TOAST_FADEOUT_MS = 2000;
+const TOAST_VISIBLE_MS = 5000;
 const TOAST_DELETE_DOM_MS = 1000;
 const TOAST_ANIM_READY_MS = 10;
 
@@ -35,12 +35,12 @@ const ToastProvider = ({ children }) => {
           toast.id === id ? { ...toast, visible: false } : toast
         )
       );
-    }, TOAST_FADEOUT_MS);
+    }, TOAST_VISIBLE_MS);
 
     // Step 4: 퇴장 애니메이션 후 DOM 제거
     setTimeout(() => {
       setToasts((prev) => prev.filter((toast) => toast.id !== id));
-    }, TOAST_FADEOUT_MS + TOAST_DELETE_DOM_MS);
+    }, TOAST_VISIBLE_MS + TOAST_DELETE_DOM_MS);
   };
 
   const hideToast = (id) => {
