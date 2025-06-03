@@ -7,6 +7,7 @@ import {
   IconShare20Button,
   IconShare24Button,
 } from "../../../components/Button/IconButtons";
+import Badge from "../../../components/Badge";
 
 const handleOptionClick = (option) => {
   alert(`${option.value} 공유`);
@@ -14,6 +15,8 @@ const handleOptionClick = (option) => {
 
 const TestPage = () => {
   const [font, setFont] = useState(null);
+  const [relationship, setRelationship] = useState(null);
+
   return (
     <div>
       <DropdownSelect
@@ -37,6 +40,21 @@ const TestPage = () => {
             onClick: handleOptionClick,
           },
           { label: "URL 공유", value: "URL", onClick: handleOptionClick },
+        ]}
+      />
+      <Badge relationshipLabel={"친구"}></Badge>
+      <Badge relationshipLabel={"동료"}></Badge>
+      <Badge relationshipLabel={"가족"}></Badge>
+      <Badge relationshipLabel={"지인"}></Badge>
+
+      <DropdownSelect
+        selectedOption={relationship}
+        onChange={setRelationship}
+        options={[
+          { label: "친구", value: "친구" },
+          { label: "지인", value: "지인" },
+          { label: "동료", value: "동료" },
+          { label: "가족", value: "가족" },
         ]}
       />
     </div>
