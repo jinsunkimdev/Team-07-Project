@@ -44,7 +44,11 @@ export function useInfiniteScroll(fetcher, baseLimit, options = {}) {
     setIsLoading(true);
     try {
       const countToFetch = calcFetchCount(offset);
-      const newItems = await fetcher(countToFetch, offset);
+      const data = await fetcher(countToFetch, offset);
+      const newItems = data.results;
+      const total = data.count;
+
+      const nextOffset = offset + newItems.length;
 
       // 백엔드에서 ordering이 없어서 중복 요소들이 생김 - filter이용해서 중복요소 제거하고 기존 items뒤에 붙임.
       setItems((prev) => {
@@ -53,12 +57,11 @@ export function useInfiniteScroll(fetcher, baseLimit, options = {}) {
         return [...prev, ...deduped];
       });
 
-      // offset을 증가시킨다
-      setOffset((prev) => prev + countToFetch);
+      setOffset(nextOffset); // 상태만 업데이트
 
       // 받아온 개수가 요청한 개수보다 적으면 더 이상 불러올 게 없다.
-      if (newItems.length < countToFetch) {
-        setHasMore(false);
+      if (nextOffset >= total) {
+        setHasMore(false); // 실제 offset을 기준으로 판단!
       }
     } catch (err) {
       console.error("useInfiniteScroll: 데이터 로드 실패", err);

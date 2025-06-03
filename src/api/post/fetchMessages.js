@@ -11,11 +11,16 @@ export const getMessages = async ({
     `${BASE_URL}/${team}/recipients/${id}/messages/?limit=${limit}&offset=${offset}`
   );
 
+
   const data = await res.json();
-  // 최신순 (createdAt 내림차순)
+
+  // 정렬은 하지만, 원본 구조는 보존
   const sortedResults = data.results.sort(
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
 
-  return sortedResults;
+  return {
+    ...data,
+    results: sortedResults,
+  };
 };
