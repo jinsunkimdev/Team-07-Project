@@ -7,7 +7,8 @@ import {
   IconShare20Button,
   IconShare24Button,
 } from "../../../components/Button/IconButtons";
-import Badge from "../../../components/Badge";
+import Badge from "../../../components/Badge/Badge";
+import EmojiBadge from "../../../components/Badge/EmojiBadge";
 
 const handleOptionClick = (option) => {
   alert(`${option.value} 공유`);
@@ -57,6 +58,8 @@ const TestPage = () => {
           { label: "가족", value: "가족" },
         ]}
       />
+
+      <EmojiBadge emoji={"😍"} count={"4"} />
     </div>
   );
 };

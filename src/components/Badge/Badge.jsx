@@ -31,6 +31,7 @@ const badgeStyle = css`
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: var(--font-size-14);
   width: 41px;
   height: 20px;
   border-radius: 4px;
