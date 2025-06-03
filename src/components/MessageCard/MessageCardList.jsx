@@ -15,12 +15,10 @@ const MessageCardList = ({ messages = [], editMode = false }) => {
 };
 
 function CardListResult({ messages, editMode }) {
-  const displayMessages = editMode ? messages : messages.slice(0, 5);
-
   return (
     <div css={MessageCardListStyle}>
       {!editMode && <AddMessageCardButton />}
-      {displayMessages.map((message) => (
+      {messages.map((message) => (
         <MessageCard
           key={message.id}
           messageData={message}
