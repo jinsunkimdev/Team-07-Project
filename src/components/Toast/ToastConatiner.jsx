@@ -35,5 +35,4 @@ const ToastContainerStyle = css`
   display: flex;
   flex-direction: column-reverse; // 토스트 역순으로 쌓기
   gap: 12px;
-  pointer-events: none;
 `;
