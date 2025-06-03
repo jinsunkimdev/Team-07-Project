@@ -55,7 +55,7 @@ const MainPage = () => {
               src={emojiPreview}
               alt="이모지 감정 표현 예시 이미지"
               css={css`
-                width: 260px;
+                width: 320px;
                 height: auto;
                 max-height: 113px;
                 object-fit: cover;
@@ -158,7 +158,7 @@ const pointPreview = css`
   display: flex;
   flex: 1;
   justify-content: flex-end;
-  width: 354px;
+  width: 395px;
   padding-bottom: 24px;
 `;
 
