@@ -10,20 +10,23 @@ const DropdownSelect = ({
   selectedOption, // 선택된 항목
   onChange, // 선택시 실행할 함수
   options = [], //[{label:..., value:..., onClick:...},{...}]
-  trigger, // 버튼 커스텀?
+  customButton, // 버튼 커스텀?
   dropdownWidth = "140px", //trigger를 사용한 dropdown의 너비, 기본값인 140px은 ShereButton 일 때
 }) => {
   const [internalValue, setInternalValue] = useState(
     () => (options?.length > 0 ? options[0] : null) //오류방지
   );
   const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef();
+  const dropdownSelectRef = useRef();
 
-  const selectedValue = selectedOption ? selectedOption : internalValue; //
+  const selectedValue = selectedOption ? selectedOption : internalValue;
 
   useEffect(() => {
     const handleClickOutside = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
+      if (
+        dropdownSelectRef.current &&
+        !dropdownSelectRef.current.contains(e.target)
+      ) {
         setIsOpen(false);
       }
     };
@@ -33,6 +36,23 @@ const DropdownSelect = ({
       document.removeEventListener("mousedown", handleClickOutside);
     }; //메모리 누수 방지
   }, []);
+
+  //value 중복검사 일단 추가는 했는데 아직 이해 못 함..
+  useEffect(() => {
+    const seen = new Set(); //set 집합
+    const duplicates = options.filter((opt) => {
+      if (seen.has(opt.value)) return true;
+      seen.add(opt.value);
+      return false;
+    });
+
+    if (duplicates.length > 0) {
+      console.warn(
+        `[DropdownSelect] ⚠️ Duplicate option.value(s) detected:) value 겹쳐요 고쳐주세요 :(`,
+        duplicates.map((d) => d.value)
+      );
+    }
+  }, [options]);
 
   const handleSelect = (option) => {
     if (selectedValue != null) {
@@ -46,10 +66,10 @@ const DropdownSelect = ({
   };
 
   return (
-    <div ref={ref} css={wrapper}>
+    <div ref={dropdownSelectRef} css={dropdownSelectWrapper}>
       <div onClick={() => setIsOpen(!isOpen)}>
-        {trigger ? (
-          trigger
+        {customButton ? (
+          customButton
         ) : (
           <button css={selectedTrigger} disabled={false}>
             {selectedValue?.label}
@@ -58,10 +78,12 @@ const DropdownSelect = ({
         )}
       </div>
       {isOpen && ( //isOpen이 true일 때만 렌더링
-        <ul css={dropdownStyle({ trigger, width: dropdownWidth })}>
-          {options.map((option, index) => (
+        <ul
+          css={dropdownStyle({ trigger: customButton, width: dropdownWidth })}
+        >
+          {options.map((option) => (
             <li
-              key={index}
+              key={option.value}
               onClick={() => handleSelect(option)}
               css={dropdownOption}
             >
@@ -78,7 +100,7 @@ export default DropdownSelect;
 
 /** <-----Style-----> */
 
-const wrapper = css`
+const dropdownSelectWrapper = css`
   position: relative;
   display: inline-block;
 `;
