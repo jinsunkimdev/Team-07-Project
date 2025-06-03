@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
+import styled from "@emotion/styled";
 import cardPreview from "../../../assets/images/card_preview.png";
 import emojiPreview from "../../../assets/images/emoji_preview.png";
 import Button from "../../../components/Button/Button";
@@ -10,23 +11,22 @@ const MainPage = () => {
   return (
     <>
       <GlobalHeader>
-        <Link
-          to="/post"
+        <div
           css={css`
-            text-decoration: none;
+            width: 142px;
+            height: 40px;
+
+            button {
+              width: 100% !important;
+              height: 100% !important;
+              font-size: var(--font-size-14) !important;
+            }
           `}
         >
-          <Button
-            variant="primary"
-            size="md" /* btnHeightMap.md = "40px" */
-            css={css`
-              width: 142px; /* 너비만 142px로 오버라이드 */
-              margin-left: 16px; /* 원하는 여백 */
-            `}
-          >
+          <Button variant="outlined" size="md" as={Link} to="/post">
             롤링 페이퍼 만들기
           </Button>
-        </Link>
+        </div>
       </GlobalHeader>
       <div css={pageWrapper}>
         <section css={pointSection}>

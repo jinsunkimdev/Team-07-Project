@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import { BREAKPOINTS } from "../../constants/constants";
 import logoImg from "../../assets/images/logo.svg";
 
-const GlobalHeader = () => {
+const GlobalHeader = ({ children }) => {
   return (
     <header css={GlobalHeaderStyle}>
       <div className="header-container">
         <Link to="/">
           <img src={logoImg} alt="롤링 로고" width="106" height="30" />
         </Link>
+        {children}
       </div>
     </header>
   );
@@ -27,6 +28,7 @@ export const GlobalHeaderStyle = css`
   .header-container {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: var(--content-width);
   }
 
