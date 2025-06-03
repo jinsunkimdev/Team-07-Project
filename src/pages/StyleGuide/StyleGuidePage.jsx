@@ -10,6 +10,7 @@ import MessageCard from "../../components/MessageCard/MessageCard";
 import AddMessageCardButton from "../../components/MessageCard/AddMessageCardButton";
 import MessageCardList from "../../components/MessageCard/MessageCardList";
 import MessageCardListStyle from "../../components/MessageCard/MessageCardListStyle";
+import Toast from "../../components/Toast/Toast";
 
 const mockMessage = {
   sender: "강미나",
@@ -282,6 +283,10 @@ const StyleGuidePage = () => {
           <h3 className="section-sub-title">MessageCardListEmpty (editMode)</h3>
           <MessageCardList messages={[]} editMode={true} />
         </div>
+      </section>
+      <section css={sectionStyle}>
+        <h2>Toast</h2>
+        <Toast message="URL이 복사되었습니다." />
       </section>
     </div>
   );
