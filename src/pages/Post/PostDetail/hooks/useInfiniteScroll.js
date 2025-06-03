@@ -25,8 +25,9 @@ export function useInfiniteScroll(fetcher, baseLimit, options = {}) {
   const [offset, setOffset] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const observerRef = useRef(null);
+  const [error, setError] = useState(null);
 
+  const observerRef = useRef(null);
   const { adjustFirstCount = 0 } = options;
 
   // 실제로 한 번에 fetch할 개수를 계산하는 함수
@@ -42,6 +43,7 @@ export function useInfiniteScroll(fetcher, baseLimit, options = {}) {
     if (isLoading || !hasMore) return;
 
     setIsLoading(true);
+
     try {
       const countToFetch = calcFetchCount(offset);
       const data = await fetcher(countToFetch, offset);
@@ -63,8 +65,11 @@ export function useInfiniteScroll(fetcher, baseLimit, options = {}) {
       if (nextOffset >= total) {
         setHasMore(false); // 실제 offset을 기준으로 판단!
       }
+      setError(null);
     } catch (err) {
       console.error("useInfiniteScroll: 데이터 로드 실패", err);
+      setError("데이터를 불러오는 데 실패했습니다.");
+      setHasMore(false); // ❗ 무한스크롤 중지
     } finally {
       setIsLoading(false);
     }
@@ -102,5 +107,5 @@ export function useInfiniteScroll(fetcher, baseLimit, options = {}) {
     };
   }, [loadMore, isLoading, hasMore, adjustFirstCount]);
 
-  return { items, isLoading, hasMore, observerRef };
+  return { items, isLoading, hasMore, observerRef,error };
 }

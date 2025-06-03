@@ -38,6 +38,7 @@ const PostDetailPage = () => {
     isLoading,
     hasMore,
     observerRef,
+    error,
   } = useInfiniteScroll(fetchMessages, baseLimit, { adjustFirstCount });
 
   return (
@@ -48,6 +49,7 @@ const PostDetailPage = () => {
           {isLoading ? "불러오는 중..." : "더 불러오기..."}
         </div>
       )}
+      {error && <div style={{ color: "red", textAlign: "center" }}>{error}</div>}
     </>
   );
 };
