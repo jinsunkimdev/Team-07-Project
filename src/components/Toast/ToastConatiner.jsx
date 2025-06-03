@@ -26,6 +26,7 @@ export default ToastContainer;
 
 const ToastContainerStyle = css`
   position: fixed;
+  z-index: 9;
   bottom: 70px;
   left: 50%;
   transform: translateX(-50%);

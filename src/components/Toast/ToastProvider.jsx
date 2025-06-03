@@ -9,8 +9,18 @@ const TOAST_ANIM_READY_MS = 10;
 const ToastProvider = ({ children }) => {
   const [toasts, setToasts] = useState([]); // 토스트 리스트 (토스트를 여러개 담기 위함)
 
+  const setToastFn = ({ id, visible }) => {
+    return setToasts((prev) =>
+      prev.map((toast) => (toast.id === id ? { ...toast, visible } : toast))
+    );
+  };
+
+  const deleteToastFn = (id) => {
+    return setToasts((prev) => prev.filter((toast) => toast.id !== id));
+  };
+
   const showToast = ({ message }) => {
-    // message만 파라미터로 받고, id는 여기서 직접 생성 (여러 토스트가 동시에 떴을 때, 삭제할 토스트 구분용 임의 id)
+    // message만 파라미터로 받고, id는 여기서 직접 생성 (삭제할 토스트 구분용 임의 id)
     const id = Math.random().toString(36).substr(2, 9);
 
     /*
@@ -21,39 +31,27 @@ const ToastProvider = ({ children }) => {
 
     // Step 2: visible: true로 변경 → 등장 애니메이션 시작
     setTimeout(() => {
-      setToasts((prev) =>
-        prev.map((toast) =>
-          toast.id === id ? { ...toast, visible: true } : toast
-        )
-      );
+      setToastFn({ id, visible: true });
     }, TOAST_ANIM_READY_MS);
 
     // Step 3: 일정 시간 후 퇴장 애니메이션 시작
     setTimeout(() => {
-      setToasts((prev) =>
-        prev.map((toast) =>
-          toast.id === id ? { ...toast, visible: false } : toast
-        )
-      );
+      setToastFn({ id, visible: false });
     }, TOAST_VISIBLE_MS);
 
     // Step 4: 퇴장 애니메이션 후 DOM 제거
     setTimeout(() => {
-      setToasts((prev) => prev.filter((toast) => toast.id !== id));
+      deleteToastFn(id);
     }, TOAST_VISIBLE_MS + TOAST_DELETE_DOM_MS);
   };
 
   const hideToast = (id) => {
     // Step 1: 토스트 닫기 클릭 → visible: false → 퇴장 애니메이션 시작
-    setToasts((prev) =>
-      prev.map((toast) =>
-        toast.id === id ? { ...toast, visible: false } : toast
-      )
-    );
+    setToastFn({ id, visible: false });
 
     // Step 2: 퇴장 애니메이션 후 DOM 제거
     setTimeout(() => {
-      setToasts((prev) => prev.filter((toast) => toast.id !== id));
+      deleteToastFn(id);
     }, TOAST_DELETE_DOM_MS);
   };
 
