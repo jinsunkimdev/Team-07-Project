@@ -29,7 +29,6 @@ const ToastStyle = css`
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.8);
   color: var(--white);
-  box-shadow: var(--box-shadow);
   border-radius: var(--radius-md);
   font-size: var(--font-size-16);
   opacity: 0;
