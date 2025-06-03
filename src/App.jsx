@@ -1,9 +1,12 @@
 import Router from "./routes/Router";
+import ToastProvider from "./components/Toast/ToastProvider";
 
 function App() {
   return (
     <>
-      <Router />
+      <ToastProvider>
+        <Router />
+      </ToastProvider>
     </>
   );
 }

@@ -10,7 +10,7 @@ import MessageCard from "../../components/MessageCard/MessageCard";
 import AddMessageCardButton from "../../components/MessageCard/AddMessageCardButton";
 import MessageCardList from "../../components/MessageCard/MessageCardList";
 import MessageCardListStyle from "../../components/MessageCard/MessageCardListStyle";
-import Toast from "../../components/Toast/Toast";
+import { useToast } from "../../components/Toast/useToast";
 
 const mockMessage = {
   sender: "강미나",
@@ -91,6 +91,10 @@ const mockMessages = [
 ];
 
 const StyleGuidePage = () => {
+  // const context = useToast();
+  // const showToast = context.showToast;
+  const { showToast } = useToast();
+
   return (
     <div css={pageStyle}>
       {/* Buttons */}
@@ -286,7 +290,12 @@ const StyleGuidePage = () => {
       </section>
       <section css={sectionStyle}>
         <h2>Toast</h2>
-        <Toast message="URL이 복사되었습니다." />
+        <Button
+          variant="outlined"
+          onClick={() => showToast({ message: "식곤증 미쳤다...😪" })}
+        >
+          토스트 열기
+        </Button>
       </section>
     </div>
   );

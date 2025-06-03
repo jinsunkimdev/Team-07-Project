@@ -1,0 +1,34 @@
+import { css } from "@emotion/react";
+import ReactDOM from "react-dom";
+import Toast from "./Toast";
+
+const ToastContainer = ({ toasts, hideToast }) => {
+  const containerEl = document.getElementById("toast-div");
+  if (!containerEl) return null;
+
+  return ReactDOM.createPortal(
+    <ul css={ToastContainerStyle}>
+      {toasts?.map((toast) => (
+        <Toast
+          key={toast.id}
+          id={toast.id}
+          message={toast.message}
+          onClose={() => hideToast(toast.id)}
+        />
+      ))}
+    </ul>,
+    containerEl
+  );
+};
+
+export default ToastContainer;
+
+const ToastContainerStyle = css`
+  position: fixed;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 524px;
+  height: 64px;
+`;

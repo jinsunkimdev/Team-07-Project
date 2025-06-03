@@ -1,13 +1,8 @@
 import { css } from "@emotion/react";
 import IconSuccess from "../../assets/images/ic-success.svg";
 import IconClose from "../../assets/images/ic-close-gray.svg";
-import { useState } from "react";
 
-const Toast = ({ state = "success", message }) => {
-  const closeToast = () => {
-    setOpenToast(false); // 전역에서 상태 관리
-  };
-
+const Toast = ({ id, state = "success", message, onClose }) => {
   return (
     <div css={ToastStyle}>
       <div className="toast-content">
@@ -17,7 +12,7 @@ const Toast = ({ state = "success", message }) => {
         {message}
       </div>
       <div className="toast-actions">
-        <button className="btn-close" onClick={closeToast}>
+        <button className="btn-close" onClick={() => onClose(id)}>
           <img src={IconClose} alt="닫기" />
         </button>
       </div>
@@ -31,8 +26,6 @@ const ToastStyle = css`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  max-width: 524px;
-  height: 64px;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.8);
   color: var(--white);
