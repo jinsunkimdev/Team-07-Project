@@ -297,6 +297,14 @@ const StyleGuidePage = () => {
           토스트 열기
         </Button>
       </section>
+      <section css={sectionStyle}>
+        <h2>Modal</h2>
+        <MessageCardList
+          messages={mockMessages}
+          editMode={false}
+          openMessageCardModal={(data) => showModal({ data })}
+        />
+      </section>
     </div>
   );
 };

@@ -5,24 +5,36 @@ import AddMessageCardButton from "./AddMessageCardButton";
 /**
  * @param {boolean} editMode - 편집 모드
  */
-const MessageCardList = ({ messages = [], editMode = false }) => {
+const MessageCardList = ({
+  messages = [],
+  editMode = false,
+  openMessageCardModal,
+}) => {
   if (!messages || messages.length === 0) {
     return <EmptyMessageCardList editMode={editMode} />;
   }
 
   // 메시지가 1개 이상이고, 편집 모드가 아니면 메시지 리스트 보여주기
-  return <CardListResult messages={messages} editMode={editMode} />;
+  return (
+    <CardListResult
+      messages={messages}
+      editMode={editMode}
+      openModal={openMessageCardModal}
+    />
+  );
 };
 
-function CardListResult({ messages, editMode }) {
+function CardListResult({ messages, editMode, openModal }) {
   return (
     <div css={MessageCardListStyle}>
       {!editMode && <AddMessageCardButton />}
       {messages.map((message) => (
         <MessageCard
           key={message.id}
+          id={message.id}
           messageData={message}
           isEditable={editMode}
+          openModal={openModal}
         />
       ))}
     </div>
