@@ -7,7 +7,11 @@ import Avatar from "../Avatar";
 import { IconDeleteButton } from "./../Button/IconButtons";
 import formatDate from "../../utils/formatDate";
 
-const MessageCard = ({ messageData = {}, isEditable = false, openModal }) => {
+const MessageCard = ({
+  messageData = {},
+  isEditable = false,
+  openModal = () => {},
+}) => {
   const {
     sender,
     profileImageURL,
