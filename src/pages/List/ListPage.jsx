@@ -1,12 +1,11 @@
 import GlobalHeader from "../../components/Header/GlobalHeader";
-import ListPageHeader from "./ListPageHeader";
+import Slider from "./Slider";
 
 function ListPage() {
   return (
     <div>
       <GlobalHeader />
-      <ListPageHeader recipient="Ashley Kim" />
-      ListPage
+      <Slider />
     </div>
   );
 }
