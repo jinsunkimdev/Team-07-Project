@@ -5,6 +5,7 @@ import {
   MessageCardContent,
   MessageCardCreatedAt,
 } from "../MessageCard/MessageCard";
+import { BREAKPOINTS } from "../../constants/constants";
 
 const Modal = ({ data, visible, onClose }) => {
   const { profileImageURL, sender, relationship, content, font, createdAt } =
@@ -19,11 +20,22 @@ const Modal = ({ data, visible, onClose }) => {
           relationship={relationship}
           font={font}
         />
-        <MessageCardCreatedAt createdAt={createdAt} />
+        <MessageCardCreatedAt
+          createdAt={createdAt}
+          customCss={css`
+            font-size: var(--font-size-14);
+          `}
+        />
       </Modal.header>
       <Modal.divider />
       <Modal.body>
-        <MessageCardContent content={content} />
+        <MessageCardContent
+          content={content}
+          customCss={css`
+            overflow: visible;
+            -webkit-line-clamp: initial;
+          `}
+        />
       </Modal.body>
       <Modal.actions>
         <Button variant="primary" size="md" onClick={onClose}>
@@ -61,11 +73,10 @@ const ModalStyle = css`
   position: relative;
   width: 100%;
   max-width: calc(100% - 40px);
-  padding: 40px;
+  padding: 30px 24px;
   background-color: var(--white);
   box-shadow: var(--box-shadow);
   border-radius: 16px;
-  max-width: calc(100% - 40px);
   opacity: 0;
   transform: translateY(20px);
   transition: 0.3s ease-in-out;
@@ -78,10 +89,35 @@ const ModalStyle = css`
   @media (min-width: 640px) {
     width: var(--modal-width);
     max-width: var(--modal-width);
+    padding: 40px;
   }
 `;
 
-const ModalHeaderStyle = css``;
-const ModalBodyStyle = css``;
-const ModalActionsStyle = css``;
-const ModalDividerStyle = css``;
+const ModalHeaderStyle = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const ModalDividerStyle = css`
+  height: 1px;
+  margin: 20px 0 4px;
+  background: var(--gray-200);
+  border: 0;
+`;
+
+const ModalBodyStyle = css`
+  height: 180px;
+  margin-bottom: 24px;
+  overflow: auto;
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    height: 240px;
+  }
+`;
+
+const ModalActionsStyle = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;

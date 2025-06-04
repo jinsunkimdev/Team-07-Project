@@ -65,6 +65,13 @@ const ModalContainerStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
+
+  .modal-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
 `;
 
 const ModalLayerStyle = css`

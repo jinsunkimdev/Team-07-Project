@@ -1,4 +1,8 @@
-import MessageCardStyle from "./MessageCardStyle";
+import MessageCardStyle, {
+  MessageCardCreatedAtStyle,
+  MessageCardContentStyle,
+  MessageCardProfileStyle,
+} from "./MessageCardStyle";
 import Avatar from "../Avatar";
 import { IconDeleteButton } from "./../Button/IconButtons";
 import formatDate from "../../utils/formatDate";
@@ -21,28 +25,68 @@ const MessageCard = ({ messageData = {}, isEditable = false, openModal }) => {
   return (
     <div css={MessageCardStyle} onClick={() => openModal(messageData)}>
       <div className="card-header">
-        <div className="sender-profile-wrap">
-          <Avatar imgSrc={profileImageURL} size="md" />
-          <div className="sender-profile" style={{ fontFamily: font }}>
-            <span className="name">
-              From. <b>{sender}</b>
-            </span>
-            <span className="relationship">
-              {/* badge 컴포넌트로 교체 예정 */}
-              {relationship}
-            </span>
-          </div>
-        </div>
+        <MessageCard.profile
+          sender={sender}
+          profileImageURL={profileImageURL}
+          relationship={relationship}
+          font={font}
+        />
         {isEditable && <IconDeleteButton onClick={handleDelete} />}
       </div>
       <div className="card-body">
-        <p className="content">{content}</p>
+        <MessageCardContent content={content} />
       </div>
       <div className="card-footer">
-        <span className="date">{formatDate(createdAt)}</span>
+        <MessageCard.createdAt createdAt={createdAt} />
       </div>
     </div>
   );
 };
 
 export default MessageCard;
+
+export const MessageCardProfile = ({
+  profileImageURL,
+  sender,
+  relationship,
+  font,
+  customCss,
+}) => {
+  return (
+    <div
+      className="sender-profile-wrap"
+      css={[MessageCardProfileStyle, customCss]}
+    >
+      <Avatar imgSrc={profileImageURL} size="md" />
+      <div className="sender-profile" style={{ fontFamily: font }}>
+        <span className="sender-name">
+          From. <b>{sender}</b>
+        </span>
+        <span className="relationship">
+          {/* badge 컴포넌트로 교체 예정 */}
+          {relationship}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+export const MessageCardContent = ({ content, customCss }) => {
+  return (
+    <p className="content" css={[MessageCardContentStyle, customCss]}>
+      {content}
+    </p>
+  );
+};
+
+export const MessageCardCreatedAt = ({ createdAt, customCss }) => {
+  return (
+    <span className="createdAt" css={[MessageCardCreatedAtStyle, customCss]}>
+      {formatDate(createdAt)}
+    </span>
+  );
+};
+
+MessageCard.profile = MessageCardProfile;
+MessageCard.content = MessageCardContent;
+MessageCard.createdAt = MessageCardCreatedAt;
