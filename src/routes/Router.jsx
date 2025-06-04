@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import MainPage from "../pages/Main/components/MainPage.jsx";
 import ListPage from "../pages/List/ListPage";
 import StyleGuidePage from "../pages/StyleGuide/StyleGuidePage";
+import PostCreatePage from "../pages/Post/PostCreatePage.jsx";
 
 function Router() {
   return (
@@ -9,8 +10,8 @@ function Router() {
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/list" element={<ListPage />} />
-        {/* <Route path="/post" element={<PostCreatePage />} />
-        <Route path="/post/:id" element={<PostDetailPage />} />
+        <Route path="/post" element={<PostCreatePage />} />
+        {/* <Route path="/post/:id" element={<PostDetailPage />} />
         <Route path="/post/:id/edit" element={<PostEditPage />} />
         <Route path="/post/:id/message" element={<PostMessagePage />} /> */}
 
