@@ -1,0 +1,53 @@
+import { useState } from "react";
+import ModalContext from "./ModalContext";
+import ModalContainer from "../Modal/ModalContainer";
+
+const MODAL_VISIBLE_MS = 300;
+const MODAL_DELETE_DOM_MS = 300;
+const MODAL_ANIM_READY_MS = 10;
+
+const ModalProvider = ({ children }) => {
+  const [modals, setModals] = useState([]);
+
+  const setModalsVisibleFn = ({ id, visible }) => {
+    return setModals((prev) =>
+      prev.map((modal) => (modal.id === id ? { ...modal, visible } : modal))
+    );
+  };
+
+  const showModal = (modal) => {
+    const id = Math.random().toString(36).substr(2, 9);
+    const newModal = { ...modal, id, visible: false }; // visible 기본값 false: 등장 애니메이션 준비
+
+    // Step 1: 모달 추가
+    setModals((prev) => [...prev, newModal]);
+
+    // Step 2: visible 상태만 true로 업데이트 → 등장 애니메이션 트리거
+    setTimeout(() => {
+      setModalsVisibleFn({ id, visible: true });
+    }, MODAL_ANIM_READY_MS);
+  };
+
+  const hideModal = (id) => {
+    // Step 1: visible 상태만 false로 업데이트 → 퇴장 애니메이션 트리거
+    setModalsVisibleFn({ id, visible: false });
+
+    // Step 2: 애니메이션 끝나고 DOM에서 제거
+    setTimeout(() => {
+      setModals((prev) => prev.filter((modal) => modal.id !== id));
+    }, MODAL_VISIBLE_MS + MODAL_DELETE_DOM_MS);
+  };
+
+  return (
+    <ModalContext.Provider value={{ modals, showModal, hideModal }}>
+      {children}
+      <ModalContainer
+        modals={modals}
+        hideModal={hideModal}
+        visible={modals.some((modal) => modal.visible)}
+      />
+    </ModalContext.Provider>
+  );
+};
+
+export default ModalProvider;

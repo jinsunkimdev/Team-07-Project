@@ -10,7 +10,8 @@ import MessageCard from "../../components/MessageCard/MessageCard";
 import AddMessageCardButton from "../../components/MessageCard/AddMessageCardButton";
 import MessageCardList from "../../components/MessageCard/MessageCardList";
 import MessageCardListStyle from "../../components/MessageCard/MessageCardListStyle";
-import { useToast } from "../../components/Toast/useToast";
+import useToast from "../../components/Toast/useToast";
+import useModal from "../../components/Modal/useModal";
 
 const mockMessage = {
   sender: "강미나",
@@ -92,6 +93,7 @@ const mockMessages = [
 
 const StyleGuidePage = () => {
   const { showToast } = useToast();
+  const { showModal } = useModal();
 
   return (
     <div css={pageStyle}>
