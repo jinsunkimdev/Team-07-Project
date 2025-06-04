@@ -1,12 +1,37 @@
-# React + Vite
+### 🧩 파트2 7팀 프로젝트: 롤링 (Rolling)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### 배포 링크
 
-Currently, two official plugins are available:
+https://team-07-project.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+#### 📁 폴더 구조
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+📦src  
+┣ 📂assets # font, image 파일 등  
+┣ 📂components # 공통 컴포넌트  
+┣ 📂constants # 상수  
+┣ 📂pages # 페이지 및 페이지 관련 컴포넌트  
+┣ 📂routes # 라우팅  
+┣ 📂styles # 전역 스타일  
+┣ 📂utils # debounce, formatDate 등의 유틸 함수  
+┣ 📜App.jsx  
+┗ 📜main.jsx
+
+---
+
+#### 📖 페이지 구조
+
+📄 메인 페이지 `/`  
+┣━━👀 구경해보기 클릭  
+┣━━ 🎁 롤링페이퍼 만들기 클릭  
+┃ ┗━━ 📝 롤링페이퍼 생성 페이지 `/post`  
+┃ ┣━━ ✏️ To. 입력, 컬러 선택, 이미지 선택  
+┃ ┗━━ ✅ 생성하기 클릭 → 생성된 롤링페이퍼 `/post/{id}`  
+┃ ┣━━ ➕ 메시지 작성 (+ 버튼) → 메시지 작성 페이지 `/post/{id}/message`  
+┃ ┣━━ 🛠️ 수정하기 → 수정 페이지 `/post/{id}/edit`  
+┃ ┣━━ 📤 공유 → 카카오톡, URL 복사  
+┃ ┗━━ 🔍 카드 클릭 → 카드 확대 (모달)  
+┗━━ 📚 롤링페이퍼 목록 페이지 `/list`  
+┗━━ 🃏 카드 선택 → 생성된 롤링페이퍼 `/post/{id}`
