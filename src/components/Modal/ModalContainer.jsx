@@ -11,31 +11,64 @@ const ModalContainer = ({ modals, visible, hideModal }) => {
   useEffect(() => {
     if (modals.length === 0) return;
 
+    // 모달 외부 클릭: 모달 닫기
     const handleOutsideClick = (e) => {
       if (modalNode && !modalNode.contains(e.target)) {
         hideModal(modals[modals.length - 1].id);
       }
     };
 
-    const handleEscKeyDown = (e) => {
+    const focusableElementsSelector =
+      'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])';
+
+    const focusableEls = modalRef.current.querySelectorAll(
+      focusableElementsSelector
+    );
+    const firstEl = focusableEls[0];
+    const lastEl = focusableEls[focusableEls.length - 1];
+
+    const handleKeyDown = (e) => {
+      // esc로 모달 닫기
       if (e.key === "Escape") {
         hideModal(modals[modals.length - 1].id);
+      }
+
+      /* 포커스 트랩 */
+      if (e.key === "Tab") {
+        if (e.shiftKey) {
+          // Shift + Tab키 눌렀을 때
+          if (document.activeElement === firstEl) {
+            e.preventDefault();
+            lastEl.focus();
+          }
+        } else {
+          // Tab키 눌렀을 때
+          if (document.activeElement === lastEl) {
+            e.preventDefault();
+            firstEl.focus();
+          }
+        }
       }
     };
 
     document.addEventListener("mousedown", handleOutsideClick);
-    document.addEventListener("keydown", handleEscKeyDown);
+    document.addEventListener("keydown", handleKeyDown);
 
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
-      document.removeEventListener("keydown", handleEscKeyDown);
+      document.removeEventListener("keydown", handleKeyDown);
     };
   }, [modals, modalNode, hideModal]);
 
   if (!containerEl || modals.length === 0) return null;
 
   return ReactDOM.createPortal(
-    <div role="dialog" aria-modal={`${visible}`} css={ModalContainerStyle}>
+    <div
+      role="dialog"
+      aria-modal={`${visible}`}
+      tabIndex="-1"
+      css={ModalContainerStyle}
+    >
       <div css={ModalLayerStyle} className={visible && "visible"}></div>
       <div ref={modalRef} className="modal-area">
         {modals?.map((modal) => (
