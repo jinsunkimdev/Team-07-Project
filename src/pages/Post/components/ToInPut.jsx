@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
 
+//스타일 컴포넌트//
 const Label = styled.span`
   font-size: 24px;
   font-weight: bold;

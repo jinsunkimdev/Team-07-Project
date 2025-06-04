@@ -1,4 +1,3 @@
-// Select Function //
 import styled from "@emotion/styled";
 import { css } from "@emotion/react";
 import { useEffect, useState } from "react";

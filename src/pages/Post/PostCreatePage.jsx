@@ -6,7 +6,6 @@ import GlobalHeader from "../../components/Header/GlobalHeader";
 import Button from "../../components/Button";
 import styled from "@emotion/styled";
 
-// 컨테이너 스타일
 const Container = styled.div`
   max-width: 600px;
   margin: 57px auto 340px;
@@ -18,7 +17,6 @@ const Background = styled.div`
   margin: 50px 0px;
 `;
 
-// ✅ 모바일 화면에서 GlobalHeader 숨기기
 const HeaderWrapper = styled.div`
   @media (max-width: 768px) {
     display: none;
@@ -63,7 +61,6 @@ const PostCreatePage = () => {
 
   return (
     <div>
-      {/* ✅ 모바일에서 숨길 헤더 */}
       <HeaderWrapper>
         <GlobalHeader />
       </HeaderWrapper>

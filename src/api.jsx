@@ -1,6 +1,6 @@
 const BASE_URL = "https://rolling-api.vercel.app";
 
-// 컬러 데이터 POST 요청 함수
+// 백그라운드 컬러 POST 요청 함수
 export const getColors = async () => {
   try {
     const response = await fetch(`${BASE_URL}/background-colors/`, {
@@ -24,7 +24,7 @@ export const getColors = async () => {
   }
 };
 
-// 이미지 데이터 GET 요청 함수
+// 백그라운드 이미지 GET 요청 함수
 export const getImages = async () => {
   try {
     const response = await fetch(`${BASE_URL}/background-images/`);
