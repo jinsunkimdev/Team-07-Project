@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalContext from "./ModalContext";
 import ModalContainer from "../Modal/ModalContainer";
 
@@ -37,6 +37,18 @@ const ModalProvider = ({ children }) => {
       setModals((prev) => prev.filter((modal) => modal.id !== id));
     }, MODAL_VISIBLE_MS + MODAL_DELETE_DOM_MS);
   };
+
+  useEffect(() => {
+    if (modals.some((modal) => modal.visible)) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [modals]);
 
   return (
     <ModalContext.Provider value={{ modals, showModal, hideModal }}>
