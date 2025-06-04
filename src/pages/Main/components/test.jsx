@@ -1,5 +1,6 @@
 import { useState } from "react";
-import DropdownSelect from "../../../components/Dropdown";
+import { css } from "@emotion/react";
+import DropdownSelect from "../../../components/Dropdown/Dropdown";
 import {
   IconCheckButton,
   IconDeleteButton,
@@ -19,7 +20,7 @@ const TestPage = () => {
   const [relationship, setRelationship] = useState(null);
 
   return (
-    <div>
+    <div css={all}>
       <DropdownSelect
         selectedOption={font}
         onChange={setFont}
@@ -43,10 +44,6 @@ const TestPage = () => {
           { label: "URL 공유", value: "URL", onClick: handleOptionClick },
         ]}
       />
-      <Badge relationshipLabel={"친구"}></Badge>
-      <Badge relationshipLabel={"동료"}></Badge>
-      <Badge relationshipLabel={"가족"}></Badge>
-      <Badge relationshipLabel={"지인"}></Badge>
 
       <DropdownSelect
         selectedOption={relationship}
@@ -58,9 +55,19 @@ const TestPage = () => {
           { label: "가족", value: "가족" },
         ]}
       />
+      <Badge relationshipLabel={"친구"}></Badge>
+      <Badge relationshipLabel={"동료"}></Badge>
+      <Badge relationshipLabel={"가족"}></Badge>
+      <Badge relationshipLabel={"지인"}></Badge>
 
       <EmojiBadge emoji={"😍"} count={"4"} />
+      <EmojiBadge emoji={"😎"} count={"23"} />
+      <EmojiBadge emoji={"⚽️"} count={"17"} />
     </div>
   );
 };
 export default TestPage;
+
+const all = css`
+  margin: 20px;
+`;
