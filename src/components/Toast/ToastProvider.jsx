@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { nanoid } from "nanoid";
 import ToastContext from "./ToastContext";
 import ToastContainer from "./ToastConatiner";
 
@@ -21,7 +22,7 @@ const ToastProvider = ({ children }) => {
 
   const showToast = ({ message }) => {
     // message만 파라미터로 받고, id는 여기서 직접 생성 (삭제할 토스트 구분용 임의 id)
-    const id = Math.random().toString(36).substr(2, 9); // 🎯 id 생성 방식 개선 예정(nanoid)
+    const id = nanoid();
     const newToast = { id, message, visible: false };
 
     // Step 1: visible: false로 토스트 등장 애니메이션 준비

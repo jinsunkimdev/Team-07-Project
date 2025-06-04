@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { nanoid } from "nanoid";
 import ModalContext from "./ModalContext";
 import ModalContainer from "../Modal/ModalContainer";
 
@@ -16,7 +17,7 @@ const ModalProvider = ({ children }) => {
   };
 
   const showModal = (modal) => {
-    const id = Math.random().toString(36).substr(2, 9);
+    const id = nanoid();
     const newModal = { ...modal, id, visible: false }; // visible 기본값 false: 등장 애니메이션 준비
 
     // Step 1: 모달 추가
