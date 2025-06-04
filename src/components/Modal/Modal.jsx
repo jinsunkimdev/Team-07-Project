@@ -11,7 +11,7 @@ const Modal = ({ data, visible, onClose }) => {
     data;
 
   return (
-    <div css={ModalStyle} className={visible && "visible"}>
+    <div css={ModalStyle} className={`${visible && "visible"} modal`}>
       <Modal.header>
         <MessageCardProfile
           sender={sender}
