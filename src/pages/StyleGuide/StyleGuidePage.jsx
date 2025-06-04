@@ -6,15 +6,100 @@ import Avatar from "../../components/Avatar";
 import avatarSampleImg from "../../assets/images/img-avatar-sample.jpg";
 import GlobalHeader from "../../components/Header/GlobalHeader";
 import ListPageHeader from "../List/ListPageHeader";
+import MessageCard from "../../components/MessageCard/MessageCard";
+import AddMessageCardButton from "../../components/MessageCard/AddMessageCardButton";
+import MessageCardList from "../../components/MessageCard/MessageCardList";
+import MessageCardListStyle from "../../components/MessageCard/MessageCardListStyle";
+import { useToast } from "../../components/Toast/useToast";
+
+const mockMessage = {
+  sender: "강미나",
+  profileImg: avatarSampleImg,
+  relationship: "가족",
+  content:
+    "코로나가 또다시 기승을 부리는 요즘이네요. 건강, 체력 모두 조심 또 하세요!",
+  createdAt: "2025.06.01",
+};
+
+const mockMessages = [
+  {
+    id: 1,
+    recipientId: 1,
+    sender: "김하은",
+    profileImageURL:
+      "https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
+    relationship: "가족",
+    content: "열심히 일하는 모습 멋있습니다.",
+    font: "Pretendard",
+    createdAt: "2023-11-01T08:05:25.399056Z",
+  },
+  {
+    id: 2,
+    recipientId: 1,
+    sender: "이영준",
+    profileImageURL:
+      "https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
+    relationship: "지인",
+    content: "항상 응원합니다",
+    font: "Noto Sans KR",
+    createdAt: "2023-11-01T08:04:12.852691Z",
+  },
+  {
+    id: 3,
+    recipientId: 1,
+    sender: "김하은",
+    profileImageURL:
+      "https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
+    relationship: "가족",
+    content: "열심히 일하는 모습 멋있습니다.",
+    font: "Pretendard",
+    createdAt: "2023-11-01T08:05:25.399056Z",
+  },
+  {
+    id: 4,
+    recipientId: 1,
+    sender: "이영준",
+    profileImageURL:
+      "https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
+    relationship: "지인",
+    content: "항상 응원합니다",
+    font: "Noto Sans KR",
+    createdAt: "2023-11-01T08:04:12.852691Z",
+  },
+  {
+    id: 5,
+    recipientId: 1,
+    sender: "김하은",
+    profileImageURL:
+      "https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
+    relationship: "가족",
+    content: "열심히 일하는 모습 멋있습니다.",
+    font: "Pretendard",
+    createdAt: "2023-11-01T08:05:25.399056Z",
+  },
+  {
+    id: 6,
+    recipientId: 1,
+    sender: "이영준",
+    profileImageURL:
+      "https://fastly.picsum.photos/id/311/200/200.jpg?hmac=CHiYGYQ3Xpesshw5eYWH7U0Kyl9zMTZLQuRDU4OtyH8",
+    relationship: "지인",
+    content: "항상 응원합니다",
+    font: "Noto Sans KR",
+    createdAt: "2023-11-01T08:04:12.852691Z",
+  },
+];
 
 const StyleGuidePage = () => {
+  const { showToast } = useToast();
+
   return (
     <div css={pageStyle}>
       {/* Buttons */}
       <section css={sectionStyle}>
-        <h2>Button</h2>
+        <h2 className="section-title">Button</h2>
         <div className="sub-section">
-          <h3>Primary</h3>
+          <h3 className="section-sub-title">Primary</h3>
           <Button size="lg" variant="primary" onClick={() => alert("clicked")}>
             Enabled
           </Button>
@@ -45,7 +130,7 @@ const StyleGuidePage = () => {
           </Button>
         </div>
         <div className="sub-section">
-          <h3>Secondary</h3>
+          <h3 className="section-sub-title">Secondary</h3>
           <Button
             size="lg"
             variant="secondary"
@@ -88,7 +173,7 @@ const StyleGuidePage = () => {
           </Button>
         </div>
         <div className="sub-section">
-          <h3>Outlined</h3>
+          <h3 className="section-sub-title">Outlined</h3>
           <Button size="lg" variant="outlined" onClick={() => alert("clicked")}>
             Enabled
           </Button>
@@ -121,7 +206,7 @@ const StyleGuidePage = () => {
       </section>
       {/* AddEmojiButton */}
       <section css={sectionStyle}>
-        <h2>AddEmojiButton</h2>
+        <h2 className="section-title">AddEmojiButton</h2>
         <div className="sub-section">
           <AddEmojiButton size="lg" onClick={() => alert("clicked")}>
             Enabled
@@ -145,7 +230,7 @@ const StyleGuidePage = () => {
       </section>
       {/* Avatar */}
       <section css={sectionStyle}>
-        <h2>Avatar</h2>
+        <h2 className="section-title">Avatar</h2>
         <Avatar size="lg" onClick={() => alert("avatar clicked")} />
         <Avatar
           size="lg"
@@ -156,16 +241,59 @@ const StyleGuidePage = () => {
         <Avatar size="sm" imgSrc={avatarSampleImg} />
         <Avatar size="xs" imgSrc={avatarSampleImg} />
       </section>
+      {/* Headers */}
       <section css={sectionStyle}>
-        <h2>Headers</h2>
+        <h2 className="section-title">Headers</h2>
         <div className="sub-section">
-          <h3>GlobalHeader</h3>
+          <h3 className="section-sub-title">GlobalHeader</h3>
           <GlobalHeader />
         </div>
         <div className="sub-section">
-          <h3>ListPageHeader</h3>
+          <h3 className="section-sub-title">ListPageHeader</h3>
           <ListPageHeader recipient="Ashley Kim" />
         </div>
+      </section>
+      {/* Cards */}
+      <section css={sectionStyle}>
+        <h2 className="section-title">Cards</h2>
+        <div className="sub-section">
+          <h3 className="section-sub-title">MessageCard</h3>
+          <div css={MessageCardListStyle}>
+            <MessageCard messageData={mockMessage} isRecipient={true} />
+          </div>
+        </div>
+        <div className="sub-section">
+          <h3 className="section-sub-title">AddMessageCard</h3>
+          <p className="tip">클릭 시 '/post' 페이지로 임시 이동</p>
+          <div css={MessageCardListStyle}>
+            <AddMessageCardButton />
+          </div>
+        </div>
+        <div className="sub-section">
+          <h3 className="section-sub-title">MessageCardList (readOnly)</h3>
+          <MessageCardList messages={mockMessages} editMode={false} />
+        </div>
+        <div className="sub-section">
+          <h3 className="section-sub-title">MessageCardList (editMode)</h3>
+          <MessageCardList messages={mockMessages} editMode={true} />
+        </div>
+        <div className="sub-section">
+          <h3 className="section-sub-title">MessageCardListEmpty (readOnly)</h3>
+          <MessageCardList messages={[]} editMode={false} />
+        </div>
+        <div className="sub-section">
+          <h3 className="section-sub-title">MessageCardListEmpty (editMode)</h3>
+          <MessageCardList messages={[]} editMode={true} />
+        </div>
+      </section>
+      <section css={sectionStyle}>
+        <h2>Toast</h2>
+        <Button
+          variant="outlined"
+          onClick={() => showToast({ message: "식곤증 미쳤다...😪" })}
+        >
+          토스트 열기
+        </Button>
       </section>
     </div>
   );
@@ -183,8 +311,9 @@ const sectionStyle = css`
   padding-bottom: 30px;
   border-bottom: 1px solid var(--border-color);
 
-  h2,
-  h3 {
+  .section-title,
+  .section-sub-title,
+  .tip {
     margin-bottom: 1rem;
   }
 

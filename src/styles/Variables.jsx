@@ -21,11 +21,11 @@ export const Variables = () => (
         --purple-800: #6e0ad1;
         --purple-900: #5603a7;
 
-        --orange-100: #fff0d6;
-        --orange-200: #ffe2ad;
-        --orange-300: #ffc583;
-        --orange-400: #ffae65;
-        --orange-500: #ff8832;
+        --beige-100: #fff0d6;
+        --beige-200: #ffe2ad;
+        --beige-300: #ffc583;
+        --beige-400: #ffae65;
+        --beige-500: #ff8832;
 
         --blue-100: #e2f5ff;
         --blue-200: #b1e4ff;
@@ -74,6 +74,7 @@ export const Variables = () => (
 
         /* border-radius */
         --radius-sm: 6px;
+        --radius-md: 8px;
         --radius-lg: 12px;
         --radius-xlg: 100px;
 
