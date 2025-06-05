@@ -8,7 +8,7 @@ import AddMessageCardButton from "./AddMessageCardButton";
 const MessageCardList = ({
   messages = [],
   editMode = false,
-  openMessageCardModal,
+  openMessageCardModal = () => {},
 }) => {
   if (!messages || messages.length === 0) {
     return <EmptyMessageCardList editMode={editMode} />;
