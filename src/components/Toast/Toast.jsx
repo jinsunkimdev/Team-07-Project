@@ -4,7 +4,12 @@ import IconClose from "../../assets/images/ic-close-gray.svg";
 
 const Toast = ({ id, state = "success", message, visible, onClose }) => {
   return (
-    <li css={ToastStyle} className={visible && "visible"}>
+    <li
+      role="status"
+      aria-live="polite"
+      css={ToastStyle}
+      className={visible && "visible"}
+    >
       <div className="toast-content">
         {state === "success" && (
           <img src={IconSuccess} alt="처리 완료" className="status-icon" />
