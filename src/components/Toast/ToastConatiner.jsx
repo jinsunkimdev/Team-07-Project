@@ -9,7 +9,7 @@ const ToastContainer = ({ toasts, hideToast }) => {
   if (toasts.length === 0) return null; // 토스트 없을 때 빈 ul 태그 렌더링 방지
 
   return ReactDOM.createPortal(
-    <ul css={ToastContainerStyle}>
+    <ol css={ToastContainerStyle}>
       {toasts?.map((toast) => (
         <Toast
           key={toast.id}
@@ -19,7 +19,7 @@ const ToastContainer = ({ toasts, hideToast }) => {
           onClose={() => hideToast(toast.id)}
         />
       ))}
-    </ul>,
+    </ol>,
     containerEl
   );
 };
