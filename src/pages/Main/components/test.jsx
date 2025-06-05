@@ -10,6 +10,7 @@ import {
 } from "../../../components/Button/IconButtons";
 import Badge from "../../../components/Badge/Badge";
 import EmojiBadge from "../../../components/Badge/EmojiBadge";
+import ReactionBadges from "../../../components/Dropdown/ReactionBadges";
 
 const handleOptionClick = (option) => {
   alert(`${option.value} 공유`);
@@ -63,6 +64,7 @@ const TestPage = () => {
       <EmojiBadge emoji={"😍"} count={"4"} />
       <EmojiBadge emoji={"😎"} count={"23"} />
       <EmojiBadge emoji={"⚽️"} count={"17"} />
+      <ReactionBadges />
     </div>
   );
 };

@@ -1,3 +1,5 @@
+import { css } from "@emotion/react";
+import { BREAKPOINTS } from "../../constants/constants";
 import useDropdown from "./useDropdown";
 import EmojiBadge from "../Badge/EmojiBadge";
 import iconArrowTop from "../../assets/images/iconArrowTop.svg";
@@ -12,7 +14,7 @@ const MockReactionOptions = [
   { id: 6, emoji: "😎", count: "51" },
   { id: 7, emoji: "⚽️", count: "10" },
   { id: 8, emoji: "🏍️", count: "6" },
-  { id: 9, emoji: "🍎", count: "99" },
+  { id: 9, emoji: "🍎", count: "120" },
 ];
 
 const ReactionBadges = ({ options = MockReactionOptions }) => {
@@ -25,27 +27,27 @@ const ReactionBadges = ({ options = MockReactionOptions }) => {
   );
 
   return (
-    <div ref={dropdownSelectRef}>
+    <div ref={dropdownSelectRef} css={ReactionsWrapper}>
       <div onClick={() => setIsOpen(!isOpen)}>
-        <button>
+        <div css={topCountReaction}>
           {sortReactions.slice(0, 3).map((reaction) => (
             <EmojiBadge
               key={reaction.id}
               id={reaction.id}
               emoji={reaction.emoji}
-              count={reaction.count}
+              count={Number(reaction.count) > 99 ? "99+" : reaction.count}
             />
           ))}
           <img src={isOpen ? iconArrowTop : iconArrowDown} alt="toggle" />
-        </button>
+        </div>
         {isOpen && (
-          <div>
+          <div css={reactionDropdown}>
             {sortReactions.slice(0, 8).map((reaction) => (
               <EmojiBadge
                 key={reaction.id}
                 id={reaction.id}
                 emoji={reaction.emoji}
-                count={reaction.count}
+                count={Number(reaction.count) > 99 ? "99+" : reaction.count}
               />
             ))}
           </div>
@@ -56,3 +58,44 @@ const ReactionBadges = ({ options = MockReactionOptions }) => {
 };
 
 export default ReactionBadges;
+
+/**     Style     */
+const ReactionsWrapper = css`
+  display: inline-block;
+  position: relative;
+  padding: 0 6px 0 6px;
+`;
+
+const topCountReaction = css`
+  display: flex;
+  gap: 8px;
+  font-size: var(--font-size-14) img {
+    width: 24px;
+    padding: 2px;
+  }
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    font-size: var(--font-size-16);
+  }
+`;
+
+const reactionDropdown = css`
+  position: absolute;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  right: 0;
+  margin-top: 12px;
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  padding: 24px;
+  gap: 10px;
+  z-index: 100;
+  background-color: var(--white);
+  font-size: var(--font-size-14);
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    grid-template-columns: repeat(4, 1fr);
+    font-size: var(--font-size-16);
+  }
+`;
