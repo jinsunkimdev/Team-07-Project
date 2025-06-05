@@ -28,7 +28,7 @@ const ReactionBadges = ({ options = MockReactionOptions }) => {
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      setVisibleCount(width < 768 ? 6 : 8);
+      setVisibleCount(width < 769 ? 6 : 8);
     };
 
     handleResize();
