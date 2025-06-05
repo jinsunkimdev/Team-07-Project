@@ -6,6 +6,7 @@ import AddEmojiIconBlack from "../../assets/images/ic-add-emoji-black.svg";
 import AddEmojiIconWhite from "../../assets/images/ic-add-emoji-white.svg";
 
 const AddEmojiButton = ({
+  type = "button",
   variant = "outlined",
   size = "md",
   children,
@@ -14,6 +15,7 @@ const AddEmojiButton = ({
 }) => (
   <button
     css={AddEmojiButtonStyle({ variant, size, disabled })}
+    type={type}
     onClick={onClick}
     disabled={disabled}
   >
