@@ -69,7 +69,7 @@ const ModalContainer = ({ modals, visible, hideModal }) => {
   return ReactDOM.createPortal(
     <div
       role="dialog"
-      aria-modal={`${visible}`}
+      aria-modal={visible}
       tabIndex="-1"
       css={ModalContainerStyle}
     >
