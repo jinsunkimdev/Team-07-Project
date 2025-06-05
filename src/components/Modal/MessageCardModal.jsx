@@ -17,7 +17,7 @@ const MessageCardModal = ({ data }) => {
   const currentModal = modals.find(
     (modal) =>
       modal.element?.type === MessageCardModal &&
-      modal.element?.props?.data === data
+      modal.element?.props?.data.id === data.id
   );
 
   const handleClose = () => {
