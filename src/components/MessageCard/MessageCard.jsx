@@ -20,7 +20,7 @@ const MessageCard = ({
     content,
     font = "Pretendard",
     createdAt,
-  } = messageData;
+  } = messageData || {};
 
   const handleDelete = (e) => {
     e.stopPropagation(); // 이벤트 버블링 방지
