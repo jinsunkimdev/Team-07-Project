@@ -3,7 +3,7 @@ import { BREAKPOINTS } from "../../constants/constants";
 
 const Modal = ({ children, visible }) => {
   return (
-    <div css={ModalStyle} className={`${visible && "visible"} modal`}>
+    <div css={ModalStyle} className={`modal ${visible ? "visible" : ""}`}>
       <div className="modal-content">{children}</div>
     </div>
   );
