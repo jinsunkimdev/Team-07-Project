@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { css } from "@emotion/react";
 import Button from "../../components/Button";
 import AddEmojiButton from "../../components/Button/AddEmojiButton";
@@ -91,7 +90,7 @@ const mockMessages = [
 ];
 
 const StyleGuidePage = () => {
-  const { showToast } = useToast();
+  const { showToast, showModal } = useToast();
 
   return (
     <div css={pageStyle}>
@@ -293,6 +292,15 @@ const StyleGuidePage = () => {
           onClick={() => showToast({ message: "식곤증 미쳤다...😪" })}
         >
           토스트 열기
+        </Button>
+      </section>
+      <section css={sectionStyle}>
+        <h2>Modal</h2>
+        <Button
+          variant="outlined"
+          onClick={() => showModal({ data: mockMessage })}
+        >
+          모달 열기
         </Button>
       </section>
     </div>
