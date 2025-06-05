@@ -1,38 +1,10 @@
 import { css } from "@emotion/react";
-import Button from "../Button";
-import {
-  MessageCardProfile,
-  MessageCardContent,
-  MessageCardCreatedAt,
-} from "../MessageCard/MessageCard";
+import { BREAKPOINTS } from "../../constants/constants";
 
-const Modal = ({ data, visible, onClose }) => {
-  const { profileImageURL, sender, relationship, content, font, createdAt } =
-    data;
-
+const Modal = ({ children, visible }) => {
   return (
-    <div role="dialog" aria-modal={`${visible}`} css={ModalContainerStyle}>
-      <div css={ModalLayerStyle}></div>
-      <div css={ModalStyle}>
-        <Modal.header>
-          <MessageCardProfile
-            sender={sender}
-            profileImageURL={profileImageURL}
-            relationship={relationship}
-            font={font}
-          />
-          <MessageCardCreatedAt createdAt={createdAt} />
-        </Modal.header>
-        <Modal.divider />
-        <Modal.body>
-          <MessageCardContent content={content} />
-        </Modal.body>
-        <Modal.actions>
-          <Button variant="primary" size="md" onClick={onClose}>
-            확인
-          </Button>
-        </Modal.actions>
-      </div>
+    <div css={ModalStyle} className={`modal ${visible ? "visible" : ""}`}>
+      {children}
     </div>
   );
 };
@@ -58,46 +30,57 @@ Modal.body = ModalBody;
 Modal.actions = ModalActions;
 Modal.divider = ModalDivider;
 
-export default Modal;
+const ModalStyle = css`
+  position: relative;
+  width: 100%;
+  max-width: calc(100% - 40px);
+  padding: 30px 24px;
+  background-color: var(--white);
+  box-shadow: var(--box-shadow);
+  border-radius: 16px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: 0.3s ease-in-out;
 
-const ModalContainerStyle = css`
-  position: fixed;
-  left: 0;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 9;
+  &.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (min-width: 640px) {
+    width: var(--modal-width);
+    max-width: var(--modal-width);
+    padding: 40px;
+  }
+`;
+
+const ModalHeaderStyle = css`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const ModalDividerStyle = css`
+  height: 1px;
+  margin: 20px 0 4px;
+  background: var(--gray-200);
+  border: 0;
+`;
+
+const ModalBodyStyle = css`
+  height: 180px;
+  margin-bottom: 24px;
+  overflow: auto;
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    height: 240px;
+  }
+`;
+
+const ModalActionsStyle = css`
   display: flex;
   align-items: center;
   justify-content: center;
 `;
 
-const ModalLayerStyle = css`
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-`;
-
-const ModalStyle = css`
-  position: relative;
-  width: 100%;
-  max-width: calc(100% - 40px);
-  padding: 40px;
-  background-color: var(--white);
-  box-shadow: var(--box-shadow);
-  border-radius: 16px;
-  max-width: calc(100% - 40px);
-
-  @media (min-width: 640px) {
-    width: var(--modal-width);
-    max-width: var(--modal-width);
-  }
-`;
-
-const ModalHeaderStyle = css``;
-const ModalBodyStyle = css``;
-const ModalActionsStyle = css``;
-const ModalDividerStyle = css``;
+export default Modal;

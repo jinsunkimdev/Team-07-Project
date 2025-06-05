@@ -1,9 +1,17 @@
-import MessageCardStyle from "./MessageCardStyle";
+import MessageCardStyle, {
+  MessageCardCreatedAtStyle,
+  MessageCardContentStyle,
+  MessageCardProfileStyle,
+} from "./MessageCardStyle";
 import Avatar from "../Avatar";
 import { IconDeleteButton } from "./../Button/IconButtons";
 import formatDate from "../../utils/formatDate";
 
-const MessageCard = ({ messageData = {}, isEditable = false }) => {
+const MessageCard = ({
+  messageData = {},
+  isEditable = false,
+  openModal = () => {},
+}) => {
   const {
     sender,
     profileImageURL,
@@ -19,12 +27,9 @@ const MessageCard = ({ messageData = {}, isEditable = false }) => {
   };
 
   return (
-    <div
-      css={MessageCardStyle}
-      onClick={() => alert("CardViewModal will be opened")}
-    >
+    <div css={MessageCardStyle} onClick={() => openModal(messageData)}>
       <div className="card-header">
-        <MessageCard.profile
+        <MessageCard.Profile
           sender={sender}
           profileImageURL={profileImageURL}
           relationship={relationship}
@@ -33,10 +38,10 @@ const MessageCard = ({ messageData = {}, isEditable = false }) => {
         {isEditable && <IconDeleteButton onClick={handleDelete} />}
       </div>
       <div className="card-body">
-        <MessageCardContent content={content} />
+        <MessageCard.Content content={content} />
       </div>
       <div className="card-footer">
-        <MessageCard.createdAt createdAt={createdAt} />
+        <MessageCard.CreatedAt createdAt={createdAt} />
       </div>
     </div>
   );
@@ -49,12 +54,17 @@ export const MessageCardProfile = ({
   sender,
   relationship,
   font,
+  customCss,
 }) => {
+  const profileStyles = customCss
+    ? [MessageCardProfileStyle, customCss]
+    : [MessageCardProfileStyle];
+
   return (
-    <div className="sender-profile-wrap">
+    <div className="sender-profile-wrap" css={profileStyles}>
       <Avatar imgSrc={profileImageURL} size="md" />
       <div className="sender-profile" style={{ fontFamily: font }}>
-        <span className="name">
+        <span className="sender-name">
           From. <b>{sender}</b>
         </span>
         <span className="relationship">
@@ -66,14 +76,30 @@ export const MessageCardProfile = ({
   );
 };
 
-export const MessageCardContent = ({ content }) => {
-  return <p className="content">{content}</p>;
+export const MessageCardContent = ({ content, customCss }) => {
+  const contentStyles = customCss
+    ? [MessageCardContentStyle, customCss]
+    : [MessageCardContentStyle];
+
+  return (
+    <p className="content" css={contentStyles}>
+      {content}
+    </p>
+  );
 };
 
-export const MessageCardCreatedAt = ({ createdAt }) => {
-  return <span className="createdAt">{formatDate(createdAt)}</span>;
+export const MessageCardCreatedAt = ({ createdAt, customCss }) => {
+  const createdAtStyles = customCss
+    ? [MessageCardCreatedAtStyle, customCss]
+    : [MessageCardCreatedAtStyle];
+
+  return (
+    <span className="createdAt" css={createdAtStyles}>
+      {formatDate(createdAt)}
+    </span>
+  );
 };
 
-MessageCard.profile = MessageCardProfile;
-MessageCard.content = MessageCardContent;
-MessageCard.createdAt = MessageCardCreatedAt;
+MessageCard.Profile = MessageCardProfile;
+MessageCard.Content = MessageCardContent;
+MessageCard.CreatedAt = MessageCardCreatedAt;
