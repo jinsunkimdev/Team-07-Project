@@ -4,6 +4,7 @@ import useDropdown from "./useDropdown";
 import EmojiBadge from "../Badge/EmojiBadge";
 import iconArrowTop from "../../assets/images/iconArrowTop.svg";
 import iconArrowDown from "../../assets/images/iconArrowDown.svg";
+import { useEffect, useState } from "react";
 
 const MockReactionOptions = [
   { id: 1, emoji: "😀", count: "13" },
@@ -21,6 +22,19 @@ const ReactionBadges = ({ options = MockReactionOptions }) => {
   const { dropdownSelectRef, isOpen, setIsOpen } = useDropdown({
     options,
   });
+
+  const [visibleCount, setVisibleCount] = useState(8);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth;
+      setVisibleCount(width < 768 ? 6 : 8);
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const sortReactions = [...options].sort(
     (a, b) => Number(b.count) - Number(a.count)
@@ -42,7 +56,7 @@ const ReactionBadges = ({ options = MockReactionOptions }) => {
         </div>
         {isOpen && (
           <div css={reactionDropdown}>
-            {sortReactions.slice(0, 8).map((reaction) => (
+            {sortReactions.slice(0, visibleCount).map((reaction) => (
               <EmojiBadge
                 key={reaction.id}
                 id={reaction.id}
