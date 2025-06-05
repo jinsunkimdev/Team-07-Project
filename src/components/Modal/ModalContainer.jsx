@@ -6,10 +6,11 @@ import { useEffect, useRef } from "react";
 const ModalContainer = ({ modals, visible, hideModal }) => {
   const containerEl = document.getElementById("modal-div");
   const modalRef = useRef(null);
-  const modalNode = modalRef.current;
 
   useEffect(() => {
     if (modals.length === 0) return;
+
+    const modalNode = modalRef.current;
 
     // 모달 외부 클릭: 모달 닫기
     const handleOutsideClick = (e) => {
@@ -18,12 +19,15 @@ const ModalContainer = ({ modals, visible, hideModal }) => {
       }
     };
 
+    // 포커스 트랩 변수 설정
     const focusableElementsSelector =
       'a[href], button, textarea, input, select, [tabindex]:not([tabindex="-1"])';
 
     const focusableEls = modalRef.current.querySelectorAll(
       focusableElementsSelector
     );
+    if (focusableEls.length === 0) return;
+
     const firstEl = focusableEls[0];
     const lastEl = focusableEls[focusableEls.length - 1];
 
@@ -58,7 +62,7 @@ const ModalContainer = ({ modals, visible, hideModal }) => {
       document.removeEventListener("mousedown", handleOutsideClick);
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [modals, modalNode, hideModal]);
+  }, [modals, hideModal]);
 
   if (!containerEl || modals.length === 0) return null;
 
