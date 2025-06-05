@@ -54,15 +54,22 @@ const ToastProvider = ({ children }) => {
     }, TOAST_DELETE_DOM_MS);
   };
 
+  const showModal = (modal) => {
+    const id = Math.random().toString(36).substr(2, 9);
+    setModals((prev) => [...prev, { ...modal, id, visible: true }]);
+  };
+
+  const hideModal = (id) => {
+    // 토스트와 달리 사용자 액션 (닫기 버튼, 외부 클릭 등)으로만 닫힘
+    setModals((prev) => prev.filter((modal) => modal.id !== id));
+  };
+
   return (
-    <ToastContext.Provider value={{ toasts, showToast, hideToast }}>
+    <ToastContext.Provider
+      value={{ toasts, showToast, hideToast, showModal, hideModal }}
+    >
       {children}
       <ToastContainer toasts={toasts} hideToast={hideToast} />
-      <ModalContainer
-        modals={modals}
-        hideModal={hideModal}
-        visible={modals.visible}
-      />
     </ToastContext.Provider>
   );
 };
