@@ -1,6 +1,7 @@
 import { css } from "@emotion/react";
 import { ScrollArrowButton } from "../../components/Button/IconButtons";
 import { useState } from "react";
+import { BREAKPOINTS } from "../../constants/constants";
 
 const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
@@ -13,7 +14,7 @@ const Slider = () => {
   };
   const GAP = 20;
   const VISIBLE_COUNT = 4;
-  const TOTAL_COUNT = 8;
+  const TOTAL_COUNT = 9;
   const maxIndex = TOTAL_COUNT - VISIBLE_COUNT;
 
   // 왼쪽 이동
@@ -38,13 +39,13 @@ const Slider = () => {
           direction="left"
           onClick={handlePrev}
           visible={slideIndex > 0}
-          css={prevBtn}
+          css={[prevBtn, hide]}
         />
         <ScrollArrowButton
           direction="right"
           onClick={handleNext}
           visible={slideIndex < maxIndex}
-          css={nextBtn}
+          css={[nextBtn, hide]}
         />
       </>
     );
@@ -96,11 +97,23 @@ const sliderWrapper = css`
   width: 100%;
   overflow: hidden;
   border: 1px solid #666;
+
+  @media (max-width: ${BREAKPOINTS.md}px) {
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+
+    // 스크롤 바 숨기기
+    -ms-overflow-style: none; /* IE, Edge */
+    scrollbar-width: none; /* Firefox */
+    &::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
 `;
 
 //전체 슬라이더 컨테이너 (버튼 기준으로 position relative)
 const sliderOuter = css`
-  width: 1160px;
+  width: 100%;
+  max-width: 1160px;
   margin: 0 auto;
   position: relative;
 `;
@@ -123,4 +136,9 @@ const nextBtn = css`
   transform: translate(50%, -50%);
 `;
 
+const hide = css`
+  @media (max-width: ${BREAKPOINTS.md}px) {
+    display: none;
+  }
+`;
 export default Slider;
