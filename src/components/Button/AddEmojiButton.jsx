@@ -21,7 +21,7 @@ const AddEmojiButton = ({
   >
     <img
       src={disabled ? AddEmojiIconWhite : AddEmojiIconBlack}
-      alt=""
+      alt="이모지 추가 아이콘"
       className="btn-icon"
     />
     <span className="btn-text">{children}</span>
