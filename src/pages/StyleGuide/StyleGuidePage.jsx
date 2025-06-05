@@ -12,6 +12,7 @@ import MessageCardList from "../../components/MessageCard/MessageCardList";
 import MessageCardListStyle from "../../components/MessageCard/MessageCardListStyle";
 import useToast from "../../components/Toast/useToast";
 import useModal from "../../components/Modal/useModal";
+import MessageCardModal from "../../components/Modal/MessageCardModal";
 
 const mockMessage = {
   sender: "강미나",
@@ -300,10 +301,18 @@ const StyleGuidePage = () => {
       </section>
       <section css={sectionStyle}>
         <h2>Modal</h2>
+        <Button
+          variant="outlined"
+          onClick={() => showModal(<MessageCardModal data={mockMessage} />)}
+        >
+          모달 열기
+        </Button>
         <MessageCardList
           messages={mockMessages}
           editMode={false}
-          openMessageCardModal={(data) => showModal({ data })}
+          openMessageCardModal={(data) =>
+            showModal(<MessageCardModal data={data} />)
+          }
         />
       </section>
     </div>

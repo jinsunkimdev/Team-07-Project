@@ -16,9 +16,9 @@ const ModalProvider = ({ children }) => {
     );
   };
 
-  const showModal = (modal) => {
+  const showModal = (modalElement) => {
     const id = nanoid();
-    const newModal = { ...modal, id, visible: false }; // visible 기본값 false: 등장 애니메이션 준비
+    const newModal = { id, visible: false, element: modalElement }; // visible 기본값 false: 등장 애니메이션 준비
 
     // Step 1: 모달 추가
     setModals((prev) => [...prev, newModal]);

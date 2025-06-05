@@ -1,47 +1,10 @@
 import { css } from "@emotion/react";
-import Button from "../Button";
-import {
-  MessageCardProfile,
-  MessageCardContent,
-  MessageCardCreatedAt,
-} from "../MessageCard/MessageCard";
 import { BREAKPOINTS } from "../../constants/constants";
 
-const Modal = ({ data, visible, onClose }) => {
-  const { profileImageURL, sender, relationship, content, font, createdAt } =
-    data;
-
+const Modal = ({ children, visible }) => {
   return (
     <div css={ModalStyle} className={`${visible && "visible"} modal`}>
-      <Modal.header>
-        <MessageCardProfile
-          sender={sender}
-          profileImageURL={profileImageURL}
-          relationship={relationship}
-          font={font}
-        />
-        <MessageCardCreatedAt
-          createdAt={createdAt}
-          customCss={css`
-            font-size: var(--font-size-14);
-          `}
-        />
-      </Modal.header>
-      <Modal.divider />
-      <Modal.body>
-        <MessageCardContent
-          content={content}
-          customCss={css`
-            overflow: visible;
-            -webkit-line-clamp: initial;
-          `}
-        />
-      </Modal.body>
-      <Modal.actions>
-        <Button variant="primary" size="md" onClick={onClose}>
-          확인
-        </Button>
-      </Modal.actions>
+      <div className="modal-content">{children}</div>
     </div>
   );
 };
@@ -66,8 +29,6 @@ Modal.header = ModalHeader;
 Modal.body = ModalBody;
 Modal.actions = ModalActions;
 Modal.divider = ModalDivider;
-
-export default Modal;
 
 const ModalStyle = css`
   position: relative;
@@ -121,3 +82,5 @@ const ModalActionsStyle = css`
   align-items: center;
   justify-content: center;
 `;
+
+export default Modal;
