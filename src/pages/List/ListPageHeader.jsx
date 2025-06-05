@@ -36,7 +36,10 @@ const ListPageHeader = ({ recipient }) => {
 
       // 클립보드에 URL 복사 - 실패
       if (!navigator.clipboard) {
-        showToast({ message: "클립보드 복사를 지원하지 않는 브라우저입니다." });
+        showToast({
+          message: "URL 복사를 지원하지 않는 브라우저예요..🥲",
+          state: "error",
+        });
         return;
       }
 
