@@ -56,11 +56,12 @@ export const MessageCardProfile = ({
   font,
   customCss,
 }) => {
+  const profileStyles = customCss
+    ? [MessageCardProfileStyle, customCss]
+    : [MessageCardProfileStyle];
+
   return (
-    <div
-      className="sender-profile-wrap"
-      css={[MessageCardProfileStyle, customCss]}
-    >
+    <div className="sender-profile-wrap" css={profileStyles}>
       <Avatar imgSrc={profileImageURL} size="md" />
       <div className="sender-profile" style={{ fontFamily: font }}>
         <span className="sender-name">
@@ -76,16 +77,24 @@ export const MessageCardProfile = ({
 };
 
 export const MessageCardContent = ({ content, customCss }) => {
+  const contentStyles = customCss
+    ? [MessageCardProfileStyle, customCss]
+    : [MessageCardProfileStyle];
+
   return (
-    <p className="content" css={[MessageCardContentStyle, customCss]}>
+    <p className="content" css={contentStyles}>
       {content}
     </p>
   );
 };
 
 export const MessageCardCreatedAt = ({ createdAt, customCss }) => {
+  const createdAtStyles = customCss
+    ? [MessageCardProfileStyle, customCss]
+    : [MessageCardProfileStyle];
+
   return (
-    <span className="createdAt" css={[MessageCardCreatedAtStyle, customCss]}>
+    <span className="createdAt" css={createdAtStyles}>
       {formatDate(createdAt)}
     </span>
   );
