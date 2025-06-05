@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import MessageCardStyle, {
   MessageCardCreatedAtStyle,
   MessageCardContentStyle,
@@ -56,9 +57,10 @@ export const MessageCardProfile = ({
   font,
   customCss,
 }) => {
-  const profileStyles = customCss
-    ? [MessageCardProfileStyle, customCss]
-    : [MessageCardProfileStyle];
+  const profileStyles = css`
+    ${MessageCardProfileStyle};
+    ${customCss || ""};
+  `;
 
   return (
     <div className="sender-profile-wrap" css={profileStyles}>
@@ -77,9 +79,10 @@ export const MessageCardProfile = ({
 };
 
 export const MessageCardContent = ({ content, customCss }) => {
-  const contentStyles = customCss
-    ? [MessageCardContentStyle, customCss]
-    : [MessageCardContentStyle];
+  const contentStyles = css`
+    ${MessageCardContentStyle};
+    ${customCss || ""};
+  `;
 
   return (
     <p className="content" css={contentStyles}>
@@ -89,9 +92,10 @@ export const MessageCardContent = ({ content, customCss }) => {
 };
 
 export const MessageCardCreatedAt = ({ createdAt, customCss }) => {
-  const createdAtStyles = customCss
-    ? [MessageCardCreatedAtStyle, customCss]
-    : [MessageCardCreatedAtStyle];
+  const createdAtStyles = css`
+    ${MessageCardCreatedAtStyle};
+    ${customCss || ""}
+  `;
 
   return (
     <span className="createdAt" css={createdAtStyles}>
