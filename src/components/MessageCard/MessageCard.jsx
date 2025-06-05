@@ -29,7 +29,7 @@ const MessageCard = ({
   return (
     <div css={MessageCardStyle} onClick={() => openModal(messageData)}>
       <div className="card-header">
-        <MessageCard.profile
+        <MessageCard.Profile
           sender={sender}
           profileImageURL={profileImageURL}
           relationship={relationship}
@@ -38,10 +38,10 @@ const MessageCard = ({
         {isEditable && <IconDeleteButton onClick={handleDelete} />}
       </div>
       <div className="card-body">
-        <MessageCardContent content={content} />
+        <MessageCard.Content content={content} />
       </div>
       <div className="card-footer">
-        <MessageCard.createdAt createdAt={createdAt} />
+        <MessageCard.CreatedAt createdAt={createdAt} />
       </div>
     </div>
   );
@@ -78,8 +78,8 @@ export const MessageCardProfile = ({
 
 export const MessageCardContent = ({ content, customCss }) => {
   const contentStyles = customCss
-    ? [MessageCardProfileStyle, customCss]
-    : [MessageCardProfileStyle];
+    ? [MessageCardContentStyle, customCss]
+    : [MessageCardContentStyle];
 
   return (
     <p className="content" css={contentStyles}>
@@ -90,8 +90,8 @@ export const MessageCardContent = ({ content, customCss }) => {
 
 export const MessageCardCreatedAt = ({ createdAt, customCss }) => {
   const createdAtStyles = customCss
-    ? [MessageCardProfileStyle, customCss]
-    : [MessageCardProfileStyle];
+    ? [MessageCardCreatedAtStyle, customCss]
+    : [MessageCardCreatedAtStyle];
 
   return (
     <span className="createdAt" css={createdAtStyles}>
@@ -100,6 +100,6 @@ export const MessageCardCreatedAt = ({ createdAt, customCss }) => {
   );
 };
 
-MessageCard.profile = MessageCardProfile;
-MessageCard.content = MessageCardContent;
-MessageCard.createdAt = MessageCardCreatedAt;
+MessageCard.Profile = MessageCardProfile;
+MessageCard.Content = MessageCardContent;
+MessageCard.CreatedAt = MessageCardCreatedAt;
