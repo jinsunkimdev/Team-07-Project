@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
-import { ScrollArrowButton } from "../../components/Button/IconButtons";
 import { useState } from "react";
 import useBreakpoint from "./hooks/useResponsive";
+import Pagination from "./Pagination";
 
 const SETTINGS = {
   desktop: {
@@ -60,26 +60,6 @@ const Slider = () => {
         transform: `translateX(-${(cardWidth + gap) * slideIndex}px)`,
       }
     : {};
-
-  // 페이지네이션 버튼 컴포넌트
-  const Pagination = ({ slideIndex, maxIndex, onPrev, onNext }) => {
-    return (
-      <>
-        <ScrollArrowButton
-          direction="left"
-          onClick={onPrev}
-          visible={slideIndex > 0}
-          css={prevBtn}
-        />
-        <ScrollArrowButton
-          direction="right"
-          onClick={onNext}
-          visible={slideIndex < maxIndex}
-          css={nextBtn}
-        />
-      </>
-    );
-  };
 
   return (
     <div css={sliderOuter}>
@@ -168,22 +148,4 @@ const card = css`
     width: 208px;
     height: 232px;
   }
-`;
-
-//Prev 버튼 위치 (왼쪽 바깥 살짝)
-const prevBtn = css`
-  position: absolute;
-  z-index: 1;
-  left: 0;
-  top: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-//Next 버튼 위치 (오른쪽 바깥 살짝)
-const nextBtn = css`
-  position: absolute;
-  z-index: 1;
-  right: 0;
-  top: 50%;
-  transform: translate(50%, -50%);
 `;
