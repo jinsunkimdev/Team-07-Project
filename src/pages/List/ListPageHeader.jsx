@@ -8,6 +8,7 @@ import MessageAuthorCount from "../../components/MessageAuthorCount";
 import avatarSampleImg1 from "../../assets/images/img-avatar-sample.jpg";
 import avatarSampleImg2 from "../../assets/images/img-avatar-default.png";
 import { BREAKPOINTS } from "../../constants/constants";
+import ReactionBadges from "../../components/Dropdown/ReactionBadges";
 const mockAvatarData = [
   { id: "avatar1", profileImageURL: avatarSampleImg1 },
   { id: "avatar2", profileImageURL: avatarSampleImg2 },
@@ -37,6 +38,7 @@ const ListPageHeader = ({ recipient }) => {
           <li className="li-action-reaction-badges">
             {/* Badges 컴포넌트 생성 이후 추가 예정 */}
             {/* <ReactionBadges /> */}
+            <ReactionBadges />
             <AddEmojiButton size="sm" onClick={showAddReactionPopover}>
               추가
             </AddEmojiButton>
