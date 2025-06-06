@@ -1,12 +1,6 @@
 import { css } from "@emotion/react";
 import { ScrollArrowButton } from "../../components/Button/IconButtons";
 
-/**
- * Pagination 컴포넌트
- * - slideIndex: 현재 슬라이드 인덱스
- * - maxIndex: 최대 슬라이드 인덱스
- * - onPrev, onNext: 이전/다음 클릭 핸들러
- */
 const Pagination = ({ slideIndex, maxIndex, onPrev, onNext }) => (
   <>
     <ScrollArrowButton
