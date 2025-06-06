@@ -14,6 +14,7 @@ const ToastContainer = ({ toasts, hideToast }) => {
         <Toast
           key={toast.id}
           id={toast.id}
+          state={toast.state}
           message={toast.message}
           visible={toast.visible}
           onClose={() => hideToast(toast.id)}
