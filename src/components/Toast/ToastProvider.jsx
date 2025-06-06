@@ -21,7 +21,6 @@ const ToastProvider = ({ children }) => {
   };
 
   const showToast = ({ message, state = "success" }) => {
-    console.log(state);
     // message만 파라미터로 받고, id는 여기서 직접 생성 (삭제할 토스트 구분용 임의 id)
     const id = nanoid();
     const newToast = { id, message, visible: false, state };

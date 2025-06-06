@@ -45,7 +45,7 @@ const ListPageHeader = ({ recipient }) => {
 
       // 클립보드에 URL 복사 - 성공
       navigator.clipboard.writeText(currentUrl);
-      showToast({ message: option.successMsg });
+      showToast({ message: option.value });
     }
 
     if (option.label === "카카오톡 공유") {
