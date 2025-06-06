@@ -3,6 +3,7 @@ import { btnStyles } from "./btnStylesMap";
 
 const Button = ({
   as: Component = "button",
+  type = "button",
   variant = "primary",
   size = "md",
   children,
@@ -12,6 +13,7 @@ const Button = ({
 }) => (
   <Component
     css={ButtonStyle({ size, variant, disabled })}
+    type={type}
     disabled={Component === "button" ? disabled : undefined}
     {...resProps}
     onClick={onClick}

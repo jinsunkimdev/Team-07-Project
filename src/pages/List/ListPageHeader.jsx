@@ -36,7 +36,10 @@ const ListPageHeader = ({ recipient }) => {
 
       // 클립보드에 URL 복사 - 실패
       if (!navigator.clipboard) {
-        showToast({ message: "클립보드 복사를 지원하지 않는 브라우저입니다." });
+        showToast({
+          state: "error",
+          message: option.errorMsg,
+        });
         return;
       }
 
@@ -46,6 +49,7 @@ const ListPageHeader = ({ recipient }) => {
     }
 
     if (option.label === "카카오톡 공유") {
+      /* 카카오톡 공유 작업... */
       console.log("카카오톡 공유하기...");
     }
   };
