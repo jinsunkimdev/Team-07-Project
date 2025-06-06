@@ -18,3 +18,33 @@ export const SHARE_DROPDOWN_ITEMS = [
     errorMsg: "URL 복사에 실패했어요..🥲",
   },
 ];
+
+export const RELATIONSHIP_ITEMS = [
+  {
+    label: "지인",
+    value: "지인",
+  },
+  {
+    label: "동료",
+    value: "동료",
+  },
+  {
+    label: "가족",
+    value: "가족",
+  },
+  {
+    label: "친구",
+    value: "친구",
+  },
+];
+
+export const FONTS_ITEMS = [
+  {
+    label: "Pretendard (기본 설정)",
+    value: "Pretendard",
+  },
+  {
+    label: "Noto Sans",
+    value: "Noto Sans",
+  },
+];
