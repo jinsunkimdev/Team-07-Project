@@ -9,9 +9,9 @@ const EmojiPopover = () => {
   const { dropdownSelectRef, isOpen, setIsOpen, handleSelect } = useDropdown({
     options: [], // 이모지 피커는 option 형태 아님
     selectedOption: null,
-
     onChange: (emoji) => {
       onEmojiSelect?.(emoji);
+      setIsOpen(false);
     },
   }); //굳이 커스텀 훅을 쓸 필요는 없지만 연습겸 써봄
 
@@ -27,12 +27,12 @@ const EmojiPopover = () => {
             data={data}
             onEmojiSelect={(emoji) => {
               console.log(emoji);
-              handleSelect(emoji);
               setIsOpen(false);
             }}
             theme="light"
             previewPosition="none"
             searchPosition="none"
+            locale="ko"
           />
         </div>
       )}
