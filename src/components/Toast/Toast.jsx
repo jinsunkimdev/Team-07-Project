@@ -9,7 +9,7 @@ const Toast = ({ id, state = "success", message, visible, onClose }) => {
       role="status"
       aria-live="polite"
       css={ToastStyle}
-      className={visible && "visible"}
+      className={visible ? "visible" : ""}
     >
       <div className="toast-content">
         {state === "success" && (
