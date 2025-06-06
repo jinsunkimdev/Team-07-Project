@@ -158,6 +158,7 @@ const dropdownOption = css`
   padding: 12px 16px;
   font-size: var(--font-size-16);
   font-weight: var(--font-weight-regular);
+  cursor: pointer;
 
   &:hover {
     background-color: var(--gray-100);

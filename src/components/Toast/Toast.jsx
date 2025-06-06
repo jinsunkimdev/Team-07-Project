@@ -1,13 +1,22 @@
 import { css } from "@emotion/react";
 import IconSuccess from "../../assets/images/ic-success.svg";
 import IconClose from "../../assets/images/ic-close-gray.svg";
+import IconError from "../../assets/images/ic-cross-mark.png";
 
 const Toast = ({ id, state = "success", message, visible, onClose }) => {
   return (
-    <li css={ToastStyle} className={visible ? "visible" : ""}>
+    <li
+      role="status"
+      aria-live="polite"
+      css={ToastStyle}
+      className={visible ? "visible" : ""}
+    >
       <div className="toast-content">
         {state === "success" && (
           <img src={IconSuccess} alt="처리 완료" className="status-icon" />
+        )}
+        {state === "error" && (
+          <img src={IconError} alt="처리 실패" className="status-icon" />
         )}
         {message}
       </div>

@@ -1,6 +1,7 @@
 import { useState } from "react";
+import { nanoid } from "nanoid";
 import ToastContext from "./ToastContext";
-import ToastContainer from "./ToastConatiner";
+import ToastContainer from "./ToastContainer";
 
 const TOAST_VISIBLE_MS = 5000;
 const TOAST_DELETE_DOM_MS = 1000;
@@ -19,15 +20,13 @@ const ToastProvider = ({ children }) => {
     return setToasts((prev) => prev.filter((toast) => toast.id !== id));
   };
 
-  const showToast = ({ message }) => {
+  const showToast = ({ message, state = "success" }) => {
     // message만 파라미터로 받고, id는 여기서 직접 생성 (삭제할 토스트 구분용 임의 id)
-    const id = Math.random().toString(36).substr(2, 9);
+    const id = nanoid();
+    const newToast = { id, message, visible: false, state };
 
-    /*
-     * 토스트 show/hide 애니메이션 🌌
-     */
     // Step 1: visible: false로 토스트 등장 애니메이션 준비
-    setToasts((prev) => [...prev, { id, message, visible: false }]); // visible: 애니메이션 제어용
+    setToasts((prev) => [...prev, newToast]); // visible: 애니메이션 제어용
 
     // Step 2: visible: true로 변경 → 등장 애니메이션 시작
     setTimeout(() => {
