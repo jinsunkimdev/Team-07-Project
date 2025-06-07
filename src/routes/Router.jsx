@@ -12,7 +12,6 @@ function Router() {
       <Route path="/" element={<MainPage />} />
       <Route path="/list" element={<ListPage />} />
       <Route path="/post" element={<PostCreatePage />} />
-      <Route path="/post/:id" element={<PostDetailPage />} />
       <Route path="/post/:id/*" element={<MessagesPage />} />
 
       {/* <Route path="/post/:id/edit" element={<PostEditPage />} />*/}
