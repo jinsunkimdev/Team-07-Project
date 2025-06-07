@@ -4,6 +4,7 @@ export const BREAKPOINTS = {
   sm: 360,
 };
 
+export const CARDINAL_NUMBER = "16";
 export const TEAM = "7";
 
 export const SHARE_DROPDOWN_ITEMS = [
@@ -40,12 +41,12 @@ export const RELATIONSHIP_ITEMS = [
 
 export const FONTS_ITEMS = [
   {
-    label: "Pretendard (기본 설정)",
-    value: "Pretendard",
-  },
-  {
     label: "Noto Sans",
     value: "Noto Sans",
+  },
+  {
+    label: "Pretendard",
+    value: "Pretendard",
   },
   {
     label: "나눔명조",
