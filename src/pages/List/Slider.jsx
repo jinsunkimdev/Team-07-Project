@@ -29,23 +29,22 @@ const SETTINGS = {
 };
 
 const Slider = ({ items }) => {
-  // 현재 화면 크기에 따른 브레이크포인트 가져오기
+  // 뷰포트에 따른 설정 가져오기
   const breakpoint = useBreakpoint();
   const { cardWidth, visibleCount } = SETTINGS[breakpoint] || SETTINGS.desktop;
 
-  // 전체 아이템 개수, 최대 인덱스 계산
+  // 슬라이드 범위 계산산
   const TOTAL_COUNT = items.length;
   const maxIndex = Math.max(0, Math.ceil(TOTAL_COUNT - visibleCount));
   const gap = SLIDER_GAP;
   const isDesktop = breakpoint === "desktop";
   const showPagination = isDesktop && items.length > visibleCount;
 
-  // 슬라이드 인덱스 상태
+  // 상태 및 레퍼런스
   const [slideIndex, setSlideIndex] = useState(0);
-  const wrapperRef = useRef(null); // 스크롤 컨테이너 접근 참조
+  const wrapperRef = useRef(null); // 스크롤 컨테이너 참조
 
-  // 뷰포트 변경 -> slideIndex 리셋, 스크롤 위치 최상단으로 이동
-  // 뷰포트 변경 시 UI 꼬이지 않도록 조절
+  // 뷰포트 변경 시 인덱스, 스크롤 초기화화
   useEffect(() => {
     setSlideIndex(0);
     if (wrapperRef.current) {
@@ -53,14 +52,14 @@ const Slider = ({ items }) => {
     }
   }, [breakpoint]);
 
-  // 스크롤 이벤트 핸들러
+  // 스크롤 이벤트 (slideIndex 동기화)
   const handleScroll = () => {
-    const scrollLeft = wrapperRef.current?.scrollLeft || 0; // 현재 얼마나 스크롤되었는지지
-    const idx = Math.round(scrollLeft / (cardWidth + gap)); // 몇 칸 이동했는지 계산
+    const scrollLeft = wrapperRef.current?.scrollLeft || 0;
+    const idx = Math.round(scrollLeft / (cardWidth + gap));
     setSlideIndex(idx);
   };
 
-  // 이전 버튼 클릭 시 호출: 데스크탑 모드에서만 동작
+  // 이전/다음 버튼 클릭 시 스크롤 이동 (only 데스크탑)
   const handlePrev = () => {
     if (!isDesktop || slideIndex <= 0) return;
     wrapperRef.current.scrollBy({
@@ -68,8 +67,6 @@ const Slider = ({ items }) => {
       behavior: "smooth",
     });
   };
-
-  // 다음 버튼 클릭 시 호출: 데스크탑 모드에서만 동작
   const handleNext = () => {
     if (!isDesktop || slideIndex >= maxIndex) return;
     wrapperRef.current.scrollBy({
@@ -80,7 +77,7 @@ const Slider = ({ items }) => {
 
   return (
     <div css={sliderOuter}>
-      {/* 데스크탑 모드에서만 Pagination 버튼 렌더링 */}
+      {/* 데스크탑 모드에서만 Pagination 표시시*/}
       {showPagination && (
         <Pagination
           slideIndex={slideIndex}
@@ -90,9 +87,7 @@ const Slider = ({ items }) => {
         />
       )}
 
-      {/* 슬라이드 영역:
-          - 데스크탑: overflow: hidden
-          - 태블릿/모바일: 가로 스크롤 */}
+      {/* 스크롤 영역: 항상 카로 스크롤 + 스냅*/}
       <div css={sliderWrapper} ref={wrapperRef} onScroll={handleScroll}>
         <div css={sliderTrack}>
           {items.map((item) => (
@@ -109,54 +104,59 @@ const Slider = ({ items }) => {
 export default Slider;
 
 // CSS 스타일 정의
-// 전체 슬라이더 컨테이너 (버튼 기준 position: relative)
+// 전체 컨테이너: 중앙 정렬 + 최대 너비비
 const sliderOuter = css`
   width: 100%;
-  max-width: ${SLIDER_MAX_WIDTH}px; /* 데스크탑 기준 최대 너비 */
+  max-width: ${SLIDER_MAX_WIDTH}px;
   margin: 0 auto;
   position: relative;
 `;
 
-// 공통 wrapper: border만 있고, overflow는 하위 스타일에서 분기
+// 래퍼: 가로 스크롤 + 스냅 + 스크롤바 숨김김
 const sliderWrapper = css`
   width: 100%;
   border: 1px solid #666;
-
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
+
+  /* 스크롤 스냅 설정 */
   scroll-snap-type: x proximity;
 
   /* 스크롤바 숨기기 */
-  -ms-overflow-style: none; /* IE, Edge */
-  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
   &::-webkit-scrollbar {
-    display: none; /* Chrome, Safari, Opera */
+    display: none;
   }
 `;
 
-// 카드들을 가로로 배치하는 트랙
+// 트랙: flex 레이아웃 + 카드 간격
 const sliderTrack = css`
   display: flex;
   gap: ${SLIDER_GAP}px;
 `;
 
-// 카드 스타일 (기본: 모바일, 미디어쿼리: 데스크탑)
+// 카드: 크기, 스냅 정렬, 기본 스타일
 const card = css`
   border: 1px solid #333;
   flex-shrink: 0;
 
+  /* 스냅 정렬 */
   scroll-snap-align: none;
   scroll-snap-stop: normal;
 
+  /* 모바일 기본 크기 */
   width: ${CARD_WIDTH_MOBILE}px;
   height: 232px;
 
+  /* 반응형 크기 조절 */
   @media (min-width: ${BREAKPOINTS.md}px) {
     width: ${CARD_WIDTH_DESKTOP}px;
     height: 260px;
   }
 
+  /* 데스크탑에서 스냅 강제 적용 */
   @media (min-width: ${BREAKPOINTS.lg}px) {
     scroll-snap-align: start;
     scroll-snap-stop: always;
