@@ -15,6 +15,7 @@ import {
 } from "../../../constants/constants";
 import SelectProfileImage from "./SelectProfileImage";
 import useBreakpoint from "../../List/hooks/useResponsive";
+import createMessage from "../../../api/post/createMessage";
 
 const PostMessagePage = () => {
   // From. Input
@@ -69,9 +70,26 @@ const PostMessagePage = () => {
     setProfileImageSrc(selectedImageSrc);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("메시지 작성 데이터 api로 전송");
+  const handleSubmit = async (e) => {
+    e.preventDefault(); // 폼 제출 시 새로고침 막기
+
+    const formData = {
+      sender: fromInputValue,
+      profileImageURL: profileImageSrc,
+      relationship: relationshipValue.value,
+      content: messageValue,
+      font: fontValue.label,
+    };
+
+    try {
+      const result = await createMessage({
+        recipientId: 11836, // 임시 생성 id
+        data: formData,
+      });
+      console.log("메시지 작성 성공!: ", result);
+    } catch (err) {
+      console.log("메시지 작성 실패!: ", err.message);
+    }
   };
 
   const isMessageEmpty = messageValue.replace(/<(.|\n)*?>/g, "").trim() === ""; //텍스트 에디터 유효성 검사 (내용이 비어있는지 아닌지 검사)
@@ -89,7 +107,9 @@ const PostMessagePage = () => {
       <GlobalHeader />
       <section css={PostMessagePageStyle}>
         <form
-          onSubmit={handleSubmit}
+          onSubmit={(e) => {
+            e.preventDefault(); // 기본 제출 막기
+          }}
           css={PostMessageFormStyle({ messageValueError })}
         >
           <div className="form-control">
@@ -147,6 +167,7 @@ const PostMessagePage = () => {
             size="lg"
             style={{ width: "100%" }}
             disabled={fromInputValue.trim() === "" || isMessageEmpty}
+            onClick={handleSubmit}
           >
             생성하기
           </Button>
