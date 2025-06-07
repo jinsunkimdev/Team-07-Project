@@ -25,11 +25,11 @@ function ListPage() {
       </GlobalHeader>
       <main css={pageWrapper}>
         <section css={section}>
-          <div>
+          <div css={paper}>
             <h2 css={title}>인기 롤링 페이퍼 🔥</h2>
             <div css={slider}>슬라이드</div>
           </div>
-          <div>
+          <div css={paper}>
             <h2 css={title}>최근에 만든 롤링 페이퍼⭐️</h2>
             <div css={slider}>슬라이드</div>
           </div>
@@ -61,12 +61,21 @@ const pageWrapper = css`
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-
-  gap: 48px;
   background-color: var(--bg-light);
-  margin-top: 48px;
+  padding-top: 48px;
+  margin: 0 auto;
+  gap: 48px;
 
   overflow: hidden;
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    height: 951px;
+  }
+  @media (min-width: ${BREAKPOINTS.lg}px) {
+    max-width: 1160px;
+    height: auto;
+    gap: 72px;
+  }
 `;
 
 const section = css`
@@ -76,11 +85,25 @@ const section = css`
   gap: 72px;
 `;
 
+const paper = css`
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    gap: 16px;
+  }
+`;
+
 const title = css`
   font-size: var(--font-size-20);
   font-weight: 600;
   text-align: left;
   padding-left: 20px;
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    font-size: var(--font-size-24);
+    font-weight: var(--font-weight-bold);
+  }
 `;
 
 const slider = css`
@@ -95,4 +118,7 @@ const slider = css`
 const padding = css`
   width: var(--content-width);
   padding: var(--content-padding);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
