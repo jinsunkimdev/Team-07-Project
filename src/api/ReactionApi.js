@@ -1,5 +1,6 @@
 import { TEAM } from "../constants/constants";
-import { BASE_URL } from "../constants/env";
+// import { BASE_URL } from "../constants/env";
+const BASE_URL = `https://rolling-api.vercel.app`;
 
 /** 객체형태로 get과 post를 ReactionsApi에 넣음. 사용할 땐 
  ReactionsApi.get  또는  ReactionsApi.post  로 사용 */

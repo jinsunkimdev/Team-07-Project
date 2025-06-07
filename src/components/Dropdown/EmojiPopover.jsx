@@ -7,7 +7,7 @@ import useDropdown from "./useDropdown";
 import ReactionsApi from "../../api/ReactionApi";
 import { useParams } from "react-router-dom";
 
-const EmojiPopover = () => {
+const EmojiPopover = ({ setRefreshTrigger }) => {
   const { dropdownSelectRef, isOpen, setIsOpen } = useDropdown({}); //굳이 커스텀 훅을 쓸 필요는 없지만 연습겸 써봄
   const { id } = useParams();
 
@@ -15,10 +15,11 @@ const EmojiPopover = () => {
     try {
       const selectedEmoji = emoji.native;
       await ReactionsApi.post({
-        id: 11723,
+        id,
         emoji: selectedEmoji,
         type: "increase",
       });
+      setRefreshTrigger((prev) => prev + 1);
     } catch (error) {
       console.log("이모지 post 실패!", error);
     } finally {
@@ -26,7 +27,6 @@ const EmojiPopover = () => {
       console.log(" emoji:", emoji.native);
 
       setIsOpen(false);
-      setRefreshTrigger((prev) => prev + 1);
     }
   };
 

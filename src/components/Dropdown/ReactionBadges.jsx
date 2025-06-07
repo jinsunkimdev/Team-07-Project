@@ -8,26 +8,14 @@ import { useEffect, useState } from "react";
 import ReactionsApi from "../../api/ReactionApi";
 import { useParams } from "react-router-dom";
 
-const MockReactionOptions = [
-  { id: 1, emoji: "😀", count: "13" },
-  { id: 2, emoji: "🥹", count: "2" },
-  { id: 3, emoji: "😊", count: "43" },
-  { id: 4, emoji: "😂", count: "22" },
-  { id: 5, emoji: "🥲", count: "34" },
-  { id: 6, emoji: "😎", count: "51" },
-  { id: 7, emoji: "⚽️", count: "10" },
-  { id: 8, emoji: "🏍️", count: "6" },
-  { id: 9, emoji: "🍎", count: "120" },
-];
-
-const ReactionBadges = () => {
+const ReactionBadges = ({ refreshTrigger }) => {
   const { id } = useParams();
   const [reactions, setReactions] = useState([]);
-  const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [visibleCount, setVisibleCount] = useState(8);
   const { dropdownSelectRef, isOpen, setIsOpen } = useDropdown({});
 
   useEffect(() => {
+    if (!id) return;
     const fetchReactions = async () => {
       try {
         const data = await ReactionsApi.get({
