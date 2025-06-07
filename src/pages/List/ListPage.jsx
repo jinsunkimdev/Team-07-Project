@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import Button from "../../components/Button/Button";
 import GlobalHeader from "../../components/Header/GlobalHeader";
 import Slider from "./Slider";
+import { css } from "@emotion/react";
+import { BREAKPOINTS } from "../../constants/constants";
 
 export const mockItems = [
   { id: 1, title: "Card 1" },
@@ -39,11 +41,11 @@ function ListPage() {
         <section css={section}>
           <div css={paper}>
             <h2 css={title}>인기 롤링 페이퍼 🔥</h2>
-            <div css={slider}>슬라이드</div>
+            <Slider items={mockItems} />
           </div>
           <div css={paper}>
             <h2 css={title}>최근에 만든 롤링 페이퍼⭐️</h2>
-            <div css={slider}>슬라이드</div>
+            <Slider items={mockItems} />
           </div>
         </section>
         <div css={padding}>
@@ -77,8 +79,6 @@ const pageWrapper = css`
   padding-top: 48px;
   margin: 0 auto;
   gap: 48px;
-
-  overflow: hidden;
 
   @media (min-width: ${BREAKPOINTS.md}px) {
     height: 951px;
@@ -115,15 +115,6 @@ const title = css`
   @media (min-width: ${BREAKPOINTS.md}px) {
     font-size: var(--font-size-24);
     font-weight: var(--font-weight-bold);
-  }
-`;
-
-const slider = css`
-  width: 100%;
-  height: 232px;
-  background-color: #555;
-  @media (min-width: ${BREAKPOINTS.md}px) {
-    height: 260px;
   }
 `;
 
