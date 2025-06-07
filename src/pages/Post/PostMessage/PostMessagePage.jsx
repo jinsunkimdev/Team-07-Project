@@ -16,6 +16,7 @@ import SelectProfileImage from "./SelectProfileImage";
 
 const PostMessagePage = () => {
   const [fromInputValue, setFromInputValue] = useState("");
+  const [fromInputError, setFromInputError] = useState("");
   const [profileImageSrc, setProfileImageSrc] = useState("");
   const [relationshipValue, setRelationshipValue] = useState(
     RELATIONSHIP_ITEMS[0]
@@ -27,10 +28,20 @@ const PostMessagePage = () => {
     setProfileImageSrc(selectedImageSrc);
   };
 
+  const handleFromInputBlur = () => {
+    if (fromInputValue.trim() === "") {
+      setFromInputError("값을 입력해 주세요.");
+    } else {
+      setFromInputError("");
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log("메시지 작성 데이터 api로 전송");
   };
+
+  const isMessageEmpty = messageValue.replace(/<(.|\n)*?>/g, "").trim() === ""; //텍스트 에디터 유효성 검사 (내용이 비어있는지 아닌지 검사)
 
   return (
     <>
@@ -43,6 +54,8 @@ const PostMessagePage = () => {
               id="fromInput"
               value={fromInputValue}
               onChange={(e) => setFromInputValue(e.target.value)}
+              onBlur={handleFromInputBlur}
+              error={fromInputError}
               placeholder="이름을 입력해 주세요."
             />
           </div>
@@ -76,7 +89,11 @@ const PostMessagePage = () => {
               onChange={setFontValue}
             />
           </div>
-          <Button size="lg" style={{ width: "100%" }}>
+          <Button
+            size="lg"
+            style={{ width: "100%" }}
+            disabled={fromInputValue.trim() === "" || isMessageEmpty}
+          >
             생성하기
           </Button>
         </form>
