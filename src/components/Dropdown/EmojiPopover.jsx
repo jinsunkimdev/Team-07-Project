@@ -4,9 +4,30 @@ import Picker from "@emoji-mart/react";
 import data from "@emoji-mart/data";
 import AddEmojiButton from "../Button/AddEmojiButton";
 import useDropdown from "./useDropdown";
+import ReactionsApi from "../../api/ReactionApi";
+import { useParams } from "react-router-dom";
 
 const EmojiPopover = () => {
   const { dropdownSelectRef, isOpen, setIsOpen } = useDropdown({}); //굳이 커스텀 훅을 쓸 필요는 없지만 연습겸 써봄
+  const { id } = useParams();
+
+  const handleEmojiSelect = async (emoji) => {
+    try {
+      const selectedEmoji = emoji.native;
+      await ReactionsApi.post({
+        id: 11723,
+        emoji: selectedEmoji,
+        type: "increase",
+      });
+    } catch (error) {
+      console.log("이모지 post 실패!", error);
+    } finally {
+      console.log(" id:", id);
+      console.log(" emoji:", emoji.native);
+
+      setIsOpen(false);
+    }
+  };
 
   return (
     <div ref={dropdownSelectRef} css={popoverContainerStyle}>
@@ -18,10 +39,7 @@ const EmojiPopover = () => {
         <div css={popoverStyle}>
           <Picker
             data={data}
-            onEmojiSelect={(emoji) => {
-              console.log(emoji);
-              setIsOpen(false);
-            }}
+            onEmojiSelect={handleEmojiSelect}
             theme="light"
             previewPosition="none"
             searchPosition="none"
