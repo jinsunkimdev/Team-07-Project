@@ -11,6 +11,7 @@ import {
   RELATIONSHIP_ITEMS,
   FONTS_ITEMS,
   BREAKPOINTS,
+  NAME_MAX_LENGTH,
 } from "../../../constants/constants";
 import SelectProfileImage from "./SelectProfileImage";
 import useBreakpoint from "../../List/hooks/useResponsive";
@@ -37,16 +38,24 @@ const PostMessagePage = () => {
   // 반응형
   const breakpoint = useBreakpoint();
 
-  const handleProfileImage = (selectedImageSrc) => {
-    setProfileImageSrc(selectedImageSrc);
+  const handleFromInputChange = (value) => {
+    setFromInputValue(value);
+
+    if (value.trim().length >= NAME_MAX_LENGTH) {
+      setFromInputError(`이름은 ${NAME_MAX_LENGTH}자 이상 입력할 수 없어요.`);
+    } else setFromInputError("");
   };
 
   const handleFromInputBlur = () => {
     if (fromInputValue.trim() === "") {
       setFromInputError("값을 입력해 주세요.");
-    } else {
-      setFromInputError("");
-    }
+    } else if (fromInputValue.trim().length >= NAME_MAX_LENGTH) {
+      setFromInputError(`이름은 ${NAME_MAX_LENGTH}자 이상 입력할 수 없어요.`);
+    } else setFromInputError("");
+  };
+
+  const handleProfileImage = (selectedImageSrc) => {
+    setProfileImageSrc(selectedImageSrc);
   };
 
   const handleSubmit = (e) => {
@@ -66,10 +75,12 @@ const PostMessagePage = () => {
             <Input
               id="fromInput"
               value={fromInputValue}
-              onChange={(e) => setFromInputValue(e.target.value)}
+              // onChange={(e) => setFromInputValue(e.target.value)}
+              onChange={(e) => handleFromInputChange(e.target.value)}
               onBlur={handleFromInputBlur}
               error={fromInputError}
               placeholder="이름을 입력해 주세요."
+              maxLength={NAME_MAX_LENGTH}
             />
           </div>
           <div className="form-control">
