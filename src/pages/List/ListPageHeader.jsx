@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import { GlobalHeaderStyle } from "../../components/Header/GlobalHeader";
 import { IconShareButton } from "../../components/Button/IconButtons";
 import { BREAKPOINTS } from "../../constants/constants";
-import AddEmojiButton from "../../components/Button/AddEmojiButton";
+import EmojiPopover from "../../components/Dropdown/EmojiPopover";
 import MessageAuthorCount from "../../components/MessageAuthorCount";
 import DropdownSelect from "../../components/Dropdown/Dropdown";
 import { SHARE_DROPDOWN_ITEMS } from "../../constants/constants";
@@ -24,10 +24,6 @@ const mockAvatarData = [
 const ListPageHeader = ({ recipient }) => {
   const { showToast } = useToast();
 
-  const showAddReactionPopover = () => {
-    console.log("popover open");
-  };
-
   const changeShareOption = (option) => {
     if (!option) return;
 
@@ -36,7 +32,10 @@ const ListPageHeader = ({ recipient }) => {
 
       // 클립보드에 URL 복사 - 실패
       if (!navigator.clipboard) {
-        showToast({ message: "클립보드 복사를 지원하지 않는 브라우저입니다." });
+        showToast({
+          state: "error",
+          message: option.errorMsg,
+        });
         return;
       }
 
@@ -46,6 +45,7 @@ const ListPageHeader = ({ recipient }) => {
     }
 
     if (option.label === "카카오톡 공유") {
+      /* 카카오톡 공유 작업... */
       console.log("카카오톡 공유하기...");
     }
   };
@@ -60,9 +60,7 @@ const ListPageHeader = ({ recipient }) => {
           </li>
           <li className="li-action-reaction-badges">
             <ReactionBadges />
-            <AddEmojiButton size="sm" onClick={showAddReactionPopover}>
-              추가
-            </AddEmojiButton>
+            <EmojiPopover />
           </li>
           <li className="li-action-share">
             <DropdownSelect
@@ -123,5 +121,11 @@ const ListPageHeaderStyle = css`
     > li + li {
       padding-left: 14px;
     }
+  }
+
+  .li-action-reaction-badges {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
   }
 `;
