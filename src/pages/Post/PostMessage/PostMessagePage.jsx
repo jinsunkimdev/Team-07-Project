@@ -31,6 +31,7 @@ const PostMessagePage = () => {
 
   // 메시지 내용 Input
   const [messageValue, setMessageValue] = useState("");
+  const [messageValueError, setMessageValueError] = useState("");
 
   // 폰트 선택
   const [fontValue, setFontValue] = useState(FONTS_ITEMS[0]);
@@ -54,6 +55,15 @@ const PostMessagePage = () => {
     } else setFromInputError("");
   };
 
+  const handleMessageInputBlur = (_range, _source, editor) => {
+    const textOnly = editor.getText().trim(); // Quill의 실제 텍스트 추출
+    if (!textOnly) {
+      setMessageValueError("값을 입력해 주세요.");
+    } else {
+      setMessageValueError("");
+    }
+  };
+
   const handleProfileImage = (selectedImageSrc) => {
     setProfileImageSrc(selectedImageSrc);
   };
@@ -69,13 +79,15 @@ const PostMessagePage = () => {
     <>
       <GlobalHeader />
       <section css={PostMessagePageStyle}>
-        <form onSubmit={handleSubmit} css={PostMessageFormStyle}>
+        <form
+          onSubmit={handleSubmit}
+          css={PostMessageFormStyle({ messageValueError })}
+        >
           <div className="form-control">
             <Label inputId="fromInput" value="From." />
             <Input
               id="fromInput"
               value={fromInputValue}
-              // onChange={(e) => setFromInputValue(e.target.value)}
               onChange={(e) => handleFromInputChange(e.target.value)}
               onBlur={handleFromInputBlur}
               error={fromInputError}
@@ -106,7 +118,11 @@ const PostMessagePage = () => {
               value={messageValue}
               placeholder="하고 싶은 말을 적어보세요..."
               onChange={setMessageValue}
+              onBlur={handleMessageInputBlur}
             />
+            {messageValueError && (
+              <p css={ErrorMessageStyle}>{messageValueError}</p>
+            )}
           </div>
           <div className="form-control">
             <Label value="폰트 선택" />
@@ -141,7 +157,7 @@ const PostMessagePageStyle = css`
   }
 `;
 
-const PostMessageFormStyle = css`
+const PostMessageFormStyle = ({ messageValueError }) => css`
   display: flex;
   flex-direction: column;
   gap: 50px;
@@ -159,16 +175,33 @@ const PostMessageFormStyle = css`
     margin-bottom: 12px;
   }
 
+  /* react-quill custom style */
+  .quill {
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    border: ${!messageValueError
+      ? "1px solid var(--gray-300)"
+      : "1px solid var(--error)"};
+  }
+
   .ql-toolbar {
-    border-radius: var(--radius-md) var(--radius-md) 0 0;
     background-color: var(--gray-200);
+    border: none;
+    border-bottom: 1px solid var(--gray-300);
   }
 
   .ql-container {
-    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    border: none;
   }
 
   .ql-editor {
     min-height: 200px;
+    font-size: var(--font-size-16);
   }
+`;
+
+const ErrorMessageStyle = css`
+  font-size: var(--font-size-14);
+  margin-top: 8px;
+  color: var(--error);
 `;
