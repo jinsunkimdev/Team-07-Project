@@ -1,5 +1,6 @@
 import { css } from "@emotion/react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import useBreakpoint from "./hooks/useResponsive";
 import Pagination from "./Pagination";
 import {
@@ -38,6 +39,7 @@ const Slider = ({ items }) => {
   const gap = SLIDER_GAP;
   const isDesktop = breakpoint === "desktop";
 
+  const showPagination = isDesktop && items.length > visibleCount;
   // 슬라이드 인덱스 상태
   const [slideIndex, setSlideIndex] = useState(0);
 
@@ -61,13 +63,14 @@ const Slider = ({ items }) => {
   const transformStyle = isDesktop
     ? {
         transform: `translateX(-${(cardWidth + gap) * slideIndex}px)`,
+        transition: "transform 0.3s ease",
       }
     : {};
 
   return (
     <div css={sliderOuter}>
       {/* 데스크탑 모드에서만 Pagination 버튼 렌더링 */}
-      {isDesktop && (
+      {showPagination && (
         <Pagination
           slideIndex={slideIndex}
           maxIndex={maxIndex}
@@ -79,12 +82,12 @@ const Slider = ({ items }) => {
       {/* 슬라이드 영역:
           - 데스크탑: overflow: hidden
           - 태블릿/모바일: 가로 스크롤 */}
-      <div css={[wrapper, isDesktop ? sliderWrapper : scrollWrapper]}>
+      <div css={sliderWrapper}>
         <div css={sliderTrack} style={transformStyle}>
-          {items.map((item, id) => (
-            <div key={id} css={card}>
+          {items.map((item) => (
+            <Link key={item.id} to={`/post/${item.id}`} css={card}>
               {item.title}
-            </div>
+            </Link>
           ))}
         </div>
       </div>
@@ -98,24 +101,16 @@ export default Slider;
 // 전체 슬라이더 컨테이너 (버튼 기준 position: relative)
 const sliderOuter = css`
   width: 100%;
-  max-width: ${SLIDER_MAX_WIDTH}px; // 데스크탑 기준 최대 너비
+  max-width: ${SLIDER_MAX_WIDTH}px; /* 데스크탑 기준 최대 너비 */
   margin: 0 auto;
   position: relative;
 `;
 
 // 공통 wrapper: border만 있고, overflow는 하위 스타일에서 분기
-const wrapper = css`
+const sliderWrapper = css`
   width: 100%;
   border: 1px solid #666;
-`;
 
-// 데스크탑: 슬라이드 트랙이 넘어가지 않도록 overflow 숨김
-const sliderWrapper = css`
-  overflow: hidden;
-`;
-
-// 태블릿/모바일: 가로 스크롤 사용, 세로 스크롤 제거
-const scrollWrapper = css`
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
@@ -132,7 +127,6 @@ const scrollWrapper = css`
 const sliderTrack = css`
   display: flex;
   gap: ${SLIDER_GAP}px;
-  transition: transform 0.3s ease;
 `;
 
 // 카드 스타일 (기본: 모바일, 미디어쿼리: 데스크탑)
