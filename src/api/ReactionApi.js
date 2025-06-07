@@ -1,16 +1,16 @@
 import { BASE_URL } from "../constants/env";
 
-export const ReactionsApi = {
-  get: async ({ team, id }) => {
+/** 객체형태로 get과 post를 ReactionsApi에 넣음. 사용할 땐 
+ ReactionsApi.get  또는  ReactionsApi.post  로 사용 */
+const ReactionsApi = {
+  get: async ({ team, id, limit, offset }) => {
     try {
       const res = await fetch(
         `${BASE_URL}/${team}/recipients/${id}/reactions?limit=${limit}&offset=${offset}`
       );
 
       if (!res.ok) {
-        throw new Error(
-          `API불러오기 실패ㅋㅋ: ${res.status} ${res.statusText}`
-        );
+        throw new Error(`Reaction get 실패: ${res.status} ${res.statusText}`);
       }
 
       const data = await res.json();
@@ -35,9 +35,7 @@ export const ReactionsApi = {
       );
 
       if (!res.ok) {
-        throw new Error(
-          `API불러오기 실패ㅋㅋ: ${res.status} ${res.statusText}`
-        );
+        throw new Error(`Reaction post 실패: ${res.status} ${res.statusText}`);
       }
 
       const data = await res.json();
@@ -48,3 +46,5 @@ export const ReactionsApi = {
     }
   },
 };
+
+export default ReactionsApi;
