@@ -93,7 +93,10 @@ const ReactionsWrapper = css`
 const topCountReaction = css`
   display: flex;
   gap: 8px;
-  font-size: var(--font-size-14) img {
+  font-size: var(--font-size-14);
+  cursor: pointer;
+
+  img {
     width: 24px;
     padding: 2px;
   }

@@ -57,7 +57,7 @@ const ListPageHeader = ({ recipient }) => {
           <li className="li-message-author-count">
             <MessageAuthorCount items={mockAvatarData} />
           </li>
-          <li className="li-action-reaction-badges">
+          <li>
             <ReactionBox />
           </li>
           <li className="li-action-share">
@@ -119,11 +119,5 @@ const ListPageHeaderStyle = css`
     > li + li {
       padding-left: 14px;
     }
-  }
-
-  .li-action-reaction-badges {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
   }
 `;
