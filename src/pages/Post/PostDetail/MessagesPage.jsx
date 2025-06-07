@@ -17,11 +17,12 @@ const MessagesPage = () => {
   const editMode = !!useMatch("/post/:id/edit");
   const [selectedIds, setSelectedIds] = useState([]);
   const observerRef = useRef();
-  const { messages, setMessages, fetchMore, isLast } = useInfiniteMessages({
+  const { messages, setMessages, fetchMore, isLast, error: fetchError } = useInfiniteMessages({
     id: recipientId,
     limit: editMode ? 6 : 5,
   });
   const [error, setError] = useState("");
+  const fullError = fetchError || error;
 
   // 함수 선언
   const toggleSelect = (id) => {
@@ -104,7 +105,7 @@ const MessagesPage = () => {
           onToggle={toggleSelect}
         />
       </section>
-      {error && <p css={ErrorTextStyle}>{error}</p>}
+      {fullError && <p css={ErrorTextStyle}>{fullError}</p>}
       <div ref={observerRef} css={ObserverSpacerStyle} />
     </>
   );
