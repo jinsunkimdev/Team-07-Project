@@ -13,7 +13,7 @@ createRoot(document.getElementById("root")).render(
       <ToastProvider>
         <Reset />
         <Variables />
-        <BrowserRouter>
+        <BrowserRouter basename="/Team-07-Rolling-Github-Pages/">
           <App />
         </BrowserRouter>
       </ToastProvider>
