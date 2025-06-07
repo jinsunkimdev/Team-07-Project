@@ -5,6 +5,8 @@ import EmojiBadge from "../Badge/EmojiBadge";
 import iconArrowTop from "../../assets/images/iconArrowTop.svg";
 import iconArrowDown from "../../assets/images/iconArrowDown.svg";
 import { useEffect, useState } from "react";
+import ReactionsApi from "../../api/ReactionApi";
+import { useParams } from "react-router-dom";
 
 const MockReactionOptions = [
   { id: 1, emoji: "😀", count: "13" },
@@ -18,17 +20,34 @@ const MockReactionOptions = [
   { id: 9, emoji: "🍎", count: "120" },
 ];
 
-const ReactionBadges = ({ options = MockReactionOptions }) => {
-  const { dropdownSelectRef, isOpen, setIsOpen } = useDropdown({
-    options,
-  });
-
+const ReactionBadges = () => {
+  const { id } = useParams();
+  const [reactions, setReactions] = useState([]);
+  const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [visibleCount, setVisibleCount] = useState(8);
+  const { dropdownSelectRef, isOpen, setIsOpen } = useDropdown({});
+
+  useEffect(() => {
+    const fetchReactions = async () => {
+      try {
+        const data = await ReactionsApi.get({
+          id,
+          limit: 100,
+          offset: 0,
+        });
+        setReactions(data.results);
+      } catch (error) {
+        console.log("emoji get 실패:", error);
+      }
+    };
+
+    fetchReactions();
+  }, [id, refreshTrigger]);
 
   useEffect(() => {
     const handleResize = () => {
       const width = window.innerWidth;
-      setVisibleCount(width < 769 ? 6 : 8);
+      setVisibleCount(width <= BREAKPOINTS.md ? 6 : 8);
     };
 
     handleResize();
@@ -36,7 +55,7 @@ const ReactionBadges = ({ options = MockReactionOptions }) => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  const sortReactions = [...options].sort(
+  const sortReactions = [...reactions].sort(
     (a, b) => Number(b.count) - Number(a.count)
   );
 
@@ -44,14 +63,17 @@ const ReactionBadges = ({ options = MockReactionOptions }) => {
     <div ref={dropdownSelectRef} css={ReactionsWrapper}>
       <div onClick={() => setIsOpen(!isOpen)}>
         <div css={topCountReaction}>
-          {sortReactions.slice(0, 3).map((reaction) => (
-            <EmojiBadge
-              key={reaction.id}
-              id={reaction.id}
-              emoji={reaction.emoji}
-              count={Number(reaction.count) > 99 ? "99+" : reaction.count}
-            />
-          ))}
+          {sortReactions &&
+            sortReactions
+              .slice(0, 3)
+              .map((reaction) => (
+                <EmojiBadge
+                  key={reaction.id}
+                  id={reaction.id}
+                  emoji={reaction.emoji}
+                  count={Number(reaction.count) > 99 ? "99+" : reaction.count}
+                />
+              ))}
           <img src={isOpen ? iconArrowTop : iconArrowDown} alt="toggle" />
         </div>
         {isOpen && (
