@@ -1,6 +1,7 @@
 import { TEAM } from "../../constants/constants";
 import { BASE_URL } from "../../constants/env";
 import { apiClient } from "../../utils/apiClient";
+import { buildQuery } from "../../utils/buildQuery";
 
 /**
  * 특정 recipient ID에 해당하는 메시지들을 가져옵니다.
@@ -22,28 +23,11 @@ export const getMessages = async ({
   team = TEAM,
   limit = 6,
   offset = 0,
-  // sort에 따로 값을 넣지 않으면 최신순으로 정렬
-  sort = "",
+  sort,
 }) => {
-  const url = `${BASE_URL}/${team}/recipients/${id}/messages/?limit=${limit}&offset=${offset}&sort=${sort}`;
+  const query = buildQuery({ limit, offset, sort });
+  const url = `${BASE_URL}/${team}/recipients/${id}/messages/?${query}`;
   return await apiClient(url);
 };
 
-/**
- * 메시지 ID로 메시지를 삭제합니다.
- * @param {Object} params
- * @param {string} params.id - 삭제할 메시지의 고유 ID
- * @param {string} [params.team=TEAM] - 팀 이름 (기본값: TEAM 상수)
- * @returns {Promise<void>} - 성공 시 아무것도 반환하지 않음
- * @throws {Error} 삭제 실패 시 에러 메시지를 포함한 예외를 발생시킴
- */
-export const deleteMessage = async ({ id, team = TEAM }) => {
-  const res = await fetch(`${BASE_URL}/${team}/messages/${id}/`, {
-    method: "DELETE",
-  });
 
-  if (!res.ok) {
-    const err = await res.text();
-    throw new Error(`삭제 실패: ${res.statusText}\n${err}`);
-  }
-};

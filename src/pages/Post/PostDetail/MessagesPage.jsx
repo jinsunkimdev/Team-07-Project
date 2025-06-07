@@ -2,13 +2,13 @@ import { useNavigate, useMatch, useParams } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import useInfiniteMessages from "./hooks/useInfiniteMessages";
 import MessageCardList from "../../../components/MessageCard/MessageCardList";
-import { deleteMessage } from "../../../api/post/fetchMessages";
 import GlobalHeader from "../../../components/Header/GlobalHeader";
 import ListPageHeader from "../../List/ListPageHeader";
 import Button from "../../../components/Button";
 import { ButtonGroupStyle } from "./MessagesPageStyle";
 import { ErrorTextStyle } from "./MessagesPageStyle";
 import { ObserverSpacerStyle } from "./MessagesPageStyle";
+import { deleteMessages } from "../../../api/delete/deleteMessages";
 
 const MessagesPage = () => {
   // 변수 선언
@@ -36,7 +36,7 @@ const MessagesPage = () => {
 
   const handleSave = async () => {
     try {
-      await Promise.all(selectedIds.map((id) => deleteMessage({ id })));
+      await Promise.all(selectedIds.map((id) => deleteMessages({ id })));
       // 삭제 후 메시지 상태 갱신
       setMessages((prev) =>
         prev.filter((msg) => !selectedIds.includes(msg.id))
@@ -44,6 +44,7 @@ const MessagesPage = () => {
       setSelectedIds([]);
       navigate(`/post/${recipientId}`); // 일반 모드로 돌아가기
     } catch (err) {
+      console.error("삭제 실패", err);  
       setError("메시지 삭제 중 문제가 발생했습니다.");
     }
   };
