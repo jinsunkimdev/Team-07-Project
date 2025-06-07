@@ -33,7 +33,7 @@ const Slider = ({ items }) => {
   const breakpoint = useBreakpoint();
   const { cardWidth, visibleCount } = SETTINGS[breakpoint] || SETTINGS.desktop;
 
-  // 슬라이드 범위 계산산
+  // 슬라이드 범위 계산
   const TOTAL_COUNT = items.length;
   const maxIndex = Math.max(0, Math.ceil(TOTAL_COUNT - visibleCount));
   const gap = SLIDER_GAP;
@@ -44,7 +44,7 @@ const Slider = ({ items }) => {
   const [slideIndex, setSlideIndex] = useState(0);
   const wrapperRef = useRef(null); // 스크롤 컨테이너 참조
 
-  // 뷰포트 변경 시 인덱스, 스크롤 초기화화
+  // 뷰포트 변경 시 인덱스, 스크롤 초기화
   useEffect(() => {
     setSlideIndex(0);
     if (wrapperRef.current) {
@@ -77,7 +77,7 @@ const Slider = ({ items }) => {
 
   return (
     <div css={sliderOuter}>
-      {/* 데스크탑 모드에서만 Pagination 표시시*/}
+      {/* 데스크탑 모드에서만 Pagination 표시*/}
       {showPagination && (
         <Pagination
           slideIndex={slideIndex}
@@ -104,7 +104,7 @@ const Slider = ({ items }) => {
 export default Slider;
 
 // CSS 스타일 정의
-// 전체 컨테이너: 중앙 정렬 + 최대 너비비
+// 전체 컨테이너: 중앙 정렬 + 최대 너비
 const sliderOuter = css`
   width: 100%;
   max-width: ${SLIDER_MAX_WIDTH}px;
@@ -112,7 +112,7 @@ const sliderOuter = css`
   position: relative;
 `;
 
-// 래퍼: 가로 스크롤 + 스냅 + 스크롤바 숨김김
+// 래퍼: 가로 스크롤 + 스냅 + 스크롤바 숨김
 const sliderWrapper = css`
   width: 100%;
   border: 1px solid #666;
