@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { css } from "@emotion/react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
@@ -32,6 +32,7 @@ const PostMessagePage = () => {
   // 메시지 내용 Input
   const [messageValue, setMessageValue] = useState("");
   const [messageValueError, setMessageValueError] = useState("");
+  const textEditorRef = useRef(null);
 
   // 폰트 선택
   const [fontValue, setFontValue] = useState(FONTS_ITEMS[0]);
@@ -75,6 +76,14 @@ const PostMessagePage = () => {
 
   const isMessageEmpty = messageValue.replace(/<(.|\n)*?>/g, "").trim() === ""; //텍스트 에디터 유효성 검사 (내용이 비어있는지 아닌지 검사)
 
+  useEffect(() => {
+    // 텍스트 에디터에 선택한 폰트 적용
+    const editorEl = textEditorRef.current?.editor?.root;
+    if (editorEl) {
+      editorEl.style.fontFamily = fontValue.value;
+    }
+  }, [fontValue]);
+
   return (
     <>
       <GlobalHeader />
@@ -114,6 +123,7 @@ const PostMessagePage = () => {
           <div className="form-control">
             <Label value="내용을 입력해 주세요" />
             <ReactQuill
+              ref={textEditorRef}
               theme="snow"
               value={messageValue}
               placeholder="하고 싶은 말을 적어보세요..."
@@ -130,6 +140,7 @@ const PostMessagePage = () => {
               options={FONTS_ITEMS}
               selectedOption={fontValue}
               onChange={setFontValue}
+              isFontDropdown={true}
             />
           </div>
           <Button
