@@ -9,6 +9,8 @@ import { ButtonGroupStyle } from "./MessagesPageStyle";
 import { ErrorTextStyle } from "./MessagesPageStyle";
 import { ObserverSpacerStyle } from "./MessagesPageStyle";
 import { deleteMessages } from "../../../api/delete/deleteMessages";
+import useModal from "../../../components/Modal/useModal";
+import MessageCardModal from "../../../components/Modal/MessageCardModal";
 
 const MessagesPage = () => {
   // 변수 선언
@@ -17,12 +19,19 @@ const MessagesPage = () => {
   const editMode = !!useMatch("/post/:id/edit");
   const [selectedIds, setSelectedIds] = useState([]);
   const observerRef = useRef();
-  const { messages, setMessages, fetchMore, isLast, error: fetchError } = useInfiniteMessages({
+  const {
+    messages,
+    setMessages,
+    fetchMore,
+    isLast,
+    error: fetchError,
+  } = useInfiniteMessages({
     id: recipientId,
     limit: editMode ? 6 : 5,
   });
   const [error, setError] = useState("");
   const fullError = fetchError || error;
+  const { showModal } = useModal();
 
   // 함수 선언
   const toggleSelect = (id) => {
@@ -103,6 +112,9 @@ const MessagesPage = () => {
           editMode={editMode}
           selectedIds={selectedIds}
           onToggle={toggleSelect}
+          openMessageCardModal={(data) =>
+            showModal(<MessageCardModal data={data} />)
+          }
         />
       </section>
       {fullError && <p css={ErrorTextStyle}>{fullError}</p>}
