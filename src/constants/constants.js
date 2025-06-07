@@ -47,6 +47,14 @@ export const FONTS_ITEMS = [
     label: "Noto Sans",
     value: "Noto Sans",
   },
+  {
+    label: "나눔명조",
+    value: "NanumMyeongjo",
+  },
+  {
+    label: "나눔손글씨 손편지체",
+    value: "NanumLetter",
+  },
 ];
 
 export const SLIDER_GAP = 20;
