@@ -13,16 +13,29 @@ import {
   BREAKPOINTS,
 } from "../../../constants/constants";
 import SelectProfileImage from "./SelectProfileImage";
+import useBreakpoint from "../../List/hooks/useResponsive";
 
 const PostMessagePage = () => {
+  // From. Input
   const [fromInputValue, setFromInputValue] = useState("");
   const [fromInputError, setFromInputError] = useState("");
+
+  // 프로필 이미지 선택
   const [profileImageSrc, setProfileImageSrc] = useState("");
+
+  // 관계 선택
   const [relationshipValue, setRelationshipValue] = useState(
     RELATIONSHIP_ITEMS[0]
   );
+
+  // 메시지 내용 Input
   const [messageValue, setMessageValue] = useState("");
+
+  // 폰트 선택
   const [fontValue, setFontValue] = useState(FONTS_ITEMS[0]);
+
+  // 반응형
+  const breakpoint = useBreakpoint();
 
   const handleProfileImage = (selectedImageSrc) => {
     setProfileImageSrc(selectedImageSrc);
@@ -62,7 +75,10 @@ const PostMessagePage = () => {
           <div className="form-control">
             <Label value="프로필 이미지" />
             <p className="form-control-hint">프로필 이미지를 선택해주세요!</p>
-            <SelectProfileImage onChange={handleProfileImage} />
+            <SelectProfileImage
+              onChange={handleProfileImage}
+              onResponsive={breakpoint}
+            />
           </div>
           <div className="form-control">
             <Label value="상대와의 관계" />

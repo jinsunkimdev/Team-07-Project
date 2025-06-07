@@ -4,8 +4,9 @@ import Avatar from "../../../components/Avatar";
 import getProfileImages from "../../../api/get/getProfileImages";
 import useFetch from "../../../api/useFetch";
 import avatarDefaultImg from "../../../assets/images/img-avatar-default.png";
+import { BREAKPOINTS } from "../../../constants/constants";
 
-const SelectProfileImage = ({ onChange }) => {
+const SelectProfileImage = ({ onChange, onResponsive }) => {
   const [images, setImages] = useState([]);
   const [profileImageUrl, setProfileImageUrl] = useState(avatarDefaultImg);
   const { isLoading, fetchError, fetchAsync } = useFetch(getProfileImages);
@@ -41,7 +42,7 @@ const SelectProfileImage = ({ onChange }) => {
             <Avatar
               key={imageUrl}
               imgSrc={imageUrl}
-              size="md"
+              size={onResponsive !== "mobile" ? "md" : "sm"}
               onClick={changeProfileImageUrl}
             />
           ))}
@@ -56,7 +57,11 @@ export default SelectProfileImage;
 const SelectProfileImageStyle = css`
   display: flex;
   align-items: center;
-  gap: 32px;
+  gap: 24px;
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    gap: 32px;
+  }
 
   .select-profile-img-area p {
     font-size: var(--font-size-16);
@@ -67,6 +72,10 @@ const SelectProfileImageStyle = css`
   .select-profile-img {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
+    gap: 4px;
+
+    @media (min-width: ${BREAKPOINTS.md}px) {
+      gap: 6px;
+    }
   }
 `;
