@@ -19,6 +19,36 @@ export const SHARE_DROPDOWN_ITEMS = [
   },
 ];
 
+export const RELATIONSHIP_ITEMS = [
+  {
+    label: "지인",
+    value: "지인",
+  },
+  {
+    label: "동료",
+    value: "동료",
+  },
+  {
+    label: "가족",
+    value: "가족",
+  },
+  {
+    label: "친구",
+    value: "친구",
+  },
+];
+
+export const FONTS_ITEMS = [
+  {
+    label: "Pretendard (기본 설정)",
+    value: "Pretendard",
+  },
+  {
+    label: "Noto Sans",
+    value: "Noto Sans",
+  },
+];
+
 export const SLIDER_GAP = 20;
 export const CARD_WIDTH_DESKTOP = 275;
 export const CARD_WIDTH_TABLET = 275;
@@ -27,3 +57,4 @@ export const CARDS_PER_VIEW_DESKTOP = 4;
 export const SLIDER_MAX_WIDTH =
   CARD_WIDTH_DESKTOP * CARDS_PER_VIEW_DESKTOP +
   SLIDER_GAP * (CARDS_PER_VIEW_DESKTOP - 1);
+
