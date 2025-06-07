@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import useBreakpoint from "./hooks/useResponsive";
 import Pagination from "./Pagination";
@@ -38,34 +38,45 @@ const Slider = ({ items }) => {
   const maxIndex = Math.max(0, Math.ceil(TOTAL_COUNT - visibleCount));
   const gap = SLIDER_GAP;
   const isDesktop = breakpoint === "desktop";
-
   const showPagination = isDesktop && items.length > visibleCount;
+
   // 슬라이드 인덱스 상태
   const [slideIndex, setSlideIndex] = useState(0);
+  const wrapperRef = useRef(null); // 스크롤 컨테이너 접근 참조
+
+  // 뷰포트 변경 -> slideIndex 리셋, 스크롤 위치 최상단으로 이동
+  // 뷰포트 변경 시 UI 꼬이지 않도록 조절
+  useEffect(() => {
+    setSlideIndex(0);
+    if (wrapperRef.current) {
+      wrapperRef.current.scrollLeft = 0;
+    }
+  }, [breakpoint]);
+
+  // 스크롤 이벤트 핸들러
+  const handleScroll = () => {
+    const scrollLeft = wrapperRef.current?.scrollLeft || 0; // 현재 얼마나 스크롤되었는지지
+    const idx = Math.round(scrollLeft / (cardWidth + gap)); // 몇 칸 이동했는지 계산
+    setSlideIndex(idx);
+  };
 
   // 이전 버튼 클릭 시 호출: 데스크탑 모드에서만 동작
   const handlePrev = () => {
-    if (!isDesktop) return;
-    if (slideIndex > 0) {
-      setSlideIndex((prev) => prev - 1);
-    }
+    if (!isDesktop || slideIndex <= 0) return;
+    wrapperRef.current.scrollBy({
+      left: -(cardWidth + gap),
+      behavior: "smooth",
+    });
   };
 
   // 다음 버튼 클릭 시 호출: 데스크탑 모드에서만 동작
   const handleNext = () => {
-    if (!isDesktop) return;
-    if (slideIndex < maxIndex) {
-      setSlideIndex((prev) => prev + 1);
-    }
+    if (!isDesktop || slideIndex >= maxIndex) return;
+    wrapperRef.current.scrollBy({
+      left: cardWidth + gap,
+      behavior: "smooth",
+    });
   };
-
-  // 데스크탑 모드에서만 transform 스타일 적용
-  const transformStyle = isDesktop
-    ? {
-        transform: `translateX(-${(cardWidth + gap) * slideIndex}px)`,
-        transition: "transform 0.3s ease",
-      }
-    : {};
 
   return (
     <div css={sliderOuter}>
@@ -82,8 +93,8 @@ const Slider = ({ items }) => {
       {/* 슬라이드 영역:
           - 데스크탑: overflow: hidden
           - 태블릿/모바일: 가로 스크롤 */}
-      <div css={sliderWrapper}>
-        <div css={sliderTrack} style={transformStyle}>
+      <div css={sliderWrapper} ref={wrapperRef} onScroll={handleScroll}>
+        <div css={sliderTrack}>
           {items.map((item) => (
             <Link key={item.id} to={`/post/${item.id}`} css={card}>
               {item.title}
@@ -114,6 +125,7 @@ const sliderWrapper = css`
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x proximity;
 
   /* 스크롤바 숨기기 */
   -ms-overflow-style: none; /* IE, Edge */
@@ -134,11 +146,19 @@ const card = css`
   border: 1px solid #333;
   flex-shrink: 0;
 
+  scroll-snap-align: none;
+  scroll-snap-stop: normal;
+
   width: ${CARD_WIDTH_MOBILE}px;
   height: 232px;
 
   @media (min-width: ${BREAKPOINTS.md}px) {
     width: ${CARD_WIDTH_DESKTOP}px;
     height: 260px;
+  }
+
+  @media (min-width: ${BREAKPOINTS.lg}px) {
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
   }
 `;

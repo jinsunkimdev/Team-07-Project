@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
+
 import Button from "../../components/Button/Button";
 import GlobalHeader from "../../components/Header/GlobalHeader";
 import Slider from "./Slider";
