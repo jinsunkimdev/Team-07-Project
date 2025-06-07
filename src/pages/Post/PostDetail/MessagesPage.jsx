@@ -44,7 +44,7 @@ const MessagesPage = () => {
       setSelectedIds([]);
       navigate(`/post/${recipientId}`); // 일반 모드로 돌아가기
     } catch (err) {
-      console.error("삭제 실패", err);  
+      console.error("삭제 실패", err);
       setError("메시지 삭제 중 문제가 발생했습니다.");
     }
   };
@@ -86,6 +86,9 @@ const MessagesPage = () => {
               disabled={selectedIds.length === 0}
             >
               🚫 선택 해제 (항목: {selectedIds.length}개)
+            </Button>
+            <Button onClick={() => navigate(`/post/${recipientId}`)}>
+              ❌ 편집 종료
             </Button>
           </div>
         ) : (
