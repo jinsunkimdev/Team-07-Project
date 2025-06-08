@@ -1,5 +1,4 @@
-import { TEAM } from "../../constants/constants";
-import { BASE_URL } from "../../constants/env";
+import { CARDINAL_NUMBER, TEAM } from "../../constants/constants";
 import { apiClient } from "../../utils/apiClient";
 
 /**
@@ -11,7 +10,10 @@ import { apiClient } from "../../utils/apiClient";
  * @throws {Error} 삭제 실패 시 에러 메시지를 포함한 예외를 발생시킴
  */
 export const deleteMessages = async ({ id, team = TEAM }) => {
-  return await apiClient(`${BASE_URL}/${team}/messages/${id}/`, {
-    method: "DELETE",
-  });
+  return await apiClient(
+    `https://rolling-api.vercel.app/${CARDINAL_NUMBER}-${TEAM}/messages/${id}/`,
+    {
+      method: "DELETE",
+    }
+  );
 };
