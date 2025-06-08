@@ -46,6 +46,7 @@ const MessageCardModal = ({ data }) => {
       <Modal.body>
         <MessageCardContent
           content={content}
+          font={font}
           customCss={css`
             display: block;
             overflow: visible;
