@@ -19,7 +19,7 @@ const MessagesPage = () => {
     fetchMore,
     isLast,
     error,
-  } = useMessages(); 
+  } = useMessages();
 
   const observerRef = useRef();
 
@@ -28,7 +28,6 @@ const MessagesPage = () => {
   return (
     <>
       <MessageActionButtons />
-
       <MessageCardList
         messages={messages}
         editMode={editMode}
@@ -38,7 +37,6 @@ const MessagesPage = () => {
           showModal(<MessageCardModal data={data} />)
         }
       />
-
       {error && <p css={ErrorTextStyle}>{error}</p>}
       <div ref={observerRef} css={ObserverSpacerStyle} />
     </>
