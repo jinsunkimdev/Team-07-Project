@@ -8,6 +8,7 @@ export default defineConfig({
   base: "/",
   plugins: [
     // @emotion/react를 자동 임포트 해줍니다.
+    // 일일이 적어주지 않아도 됩니다.
     react({
       jsxImportSource: "@emotion/react",
     }),
