@@ -11,6 +11,9 @@ const useDropdown = ({
   );
   const dropdownSelectRef = useRef();
 
+  const open = () => setIsOpen(true);
+  const close = () => setIsOpen(false);
+  const toggle = () => setIsOpen(!isOpen);
   const selectedValue = selectedOption ?? internalValue;
 
   useEffect(() => {
@@ -43,7 +46,9 @@ const useDropdown = ({
   return {
     dropdownSelectRef,
     isOpen,
-    setIsOpen,
+    open,
+    close,
+    toggle,
     selectedValue,
     handleSelect,
   };
