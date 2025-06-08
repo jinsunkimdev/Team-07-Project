@@ -6,6 +6,7 @@ export default defineConfig({
   // vercel용 base url입니다.
   base: "/",
   plugins: [
+    // @emotion/react를 자동 임포트 해줍니다.
     react({
       jsxImportSource: "@emotion/react",
     }),
