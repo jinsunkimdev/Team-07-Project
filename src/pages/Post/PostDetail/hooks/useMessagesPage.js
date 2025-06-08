@@ -63,7 +63,7 @@ const useMessagesPage = () => {
 
   const handleToggleSelectAll = () => {
     const allIds = messages.map((m) => m.id);
-    if (selectedIds.length === allIds.length) {
+    if (selectedIds.length > 0) {
       setSelectedIds([]); // 모두 해제
     } else {
       setSelectedIds(allIds); // 모두 선택
