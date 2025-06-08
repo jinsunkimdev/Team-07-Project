@@ -1,5 +1,4 @@
-import { TEAM } from "../../constants/constants";
-import { BASE_URL } from "../../constants/env";
+import { CARDINAL_NUMBER, TEAM } from "../../constants/constants";
 import { apiClient } from "../../utils/apiClient";
 import { buildQuery } from "../../utils/buildQuery";
 
@@ -18,16 +17,8 @@ import { buildQuery } from "../../utils/buildQuery";
  *
  * @throws {Error} - 요청 실패 시 에러 메시지를 포함한 예외 발생
  */
-export const getMessages = async ({
-  id,
-  team = TEAM,
-  limit = 6,
-  offset = 0,
-  sort,
-}) => {
+export const getMessages = async ({ id, limit = 6, offset = 0, sort }) => {
   const query = buildQuery({ limit, offset, sort });
-  const url = `${BASE_URL}/${team}/recipients/${id}/messages/?${query}`;
+  const url = `https://rolling-api.vercel.app/${CARDINAL_NUMBER}-${TEAM}/recipients/${id}/messages/?${query}`;
   return await apiClient(url);
 };
-
-
