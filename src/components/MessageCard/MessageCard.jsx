@@ -10,6 +10,7 @@ import MessageCardStyle, {
 import Avatar from "../Avatar";
 import { IconDeleteButton } from "./../Button/IconButtons";
 import formatDate from "../../utils/formatDate";
+import getFontValueByLabel from "../../utils/getFontValueByLabel";
 
 const MessageCard = ({
   messageData = {},
@@ -48,12 +49,15 @@ const MessageCard = ({
           sender={sender}
           profileImageURL={profileImageURL}
           relationship={relationship}
-          font={font}
+          font={getFontValueByLabel(font)}
         />
         {isEditable && <IconDeleteButton onClick={handleDelete} />}
       </div>
       <div className="card-body">
-        <MessageCard.Content content={content} />
+        <MessageCard.Content
+          content={content}
+          font={getFontValueByLabel(font)}
+        />
       </div>
       <div className="card-footer">
         <MessageCard.CreatedAt createdAt={createdAt} />
@@ -79,7 +83,7 @@ export const MessageCardProfile = ({
   return (
     <div className="sender-profile-wrap" css={profileStyles}>
       <Avatar imgSrc={profileImageURL} size="md" />
-      <div className="sender-profile" style={{ fontFamily: font.value }}>
+      <div className="sender-profile" style={{ fontFamily: font }}>
         <span className="sender-name">
           From. <b>{sender}</b>
         </span>
@@ -92,17 +96,17 @@ export const MessageCardProfile = ({
   );
 };
 
-export const MessageCardContent = ({ content, customCss }) => {
+export const MessageCardContent = ({ content, font, customCss }) => {
   const contentStyles = css`
     ${MessageCardContentStyle};
     ${customCss || ""};
   `;
 
-  // content가 null/undefined인 경우
+  // content === null || undefined
   const sanitizedHTML = DOMPurify.sanitize(content || "");
 
   return (
-    <div className="content" css={contentStyles}>
+    <div className="content" css={contentStyles} style={{ fontFamily: font }}>
       {parse(sanitizedHTML)}
     </div>
   );
