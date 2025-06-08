@@ -11,6 +11,7 @@ const SelectProfileImage = ({ onChange, onResponsive }) => {
   const [profileImageUrl, setProfileImageUrl] = useState(avatarDefaultImg);
   const [isImageDefault, setIsImageDefault] = useState(true);
   const { isLoading, fetchError, fetchAsync } = useFetch(getProfileImages);
+  const isMobile = onResponsive === "mobile";
 
   const changeProfileImageUrl = ({ target }) => {
     const { src } = target;
@@ -55,7 +56,7 @@ const SelectProfileImage = ({ onChange, onResponsive }) => {
             <Avatar
               key={imageUrl}
               imgSrc={imageUrl}
-              size={onResponsive !== "mobile" ? "md" : "sm"}
+              size={isMobile ? "sm" : "md"}
               onClick={changeProfileImageUrl}
             />
           ))}
@@ -81,6 +82,7 @@ const SelectProfileImageStyle = css`
     overflow: hidden;
     height: 80px;
     border-radius: 50%;
+    flex-shrink: 0;
 
     &:before {
       content: "";
