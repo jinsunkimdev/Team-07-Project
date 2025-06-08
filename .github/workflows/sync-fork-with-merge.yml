@@ -30,11 +30,16 @@ jobs:
           git checkout main
           git merge upstream/main --allow-unrelated-histories -m "🔁 Sync from upstream"
 
-      - name: Remove upstream workflows
+      - name: Remove unwanted upstream workflows (preserve only sync-fork-with-merge.yml)
         run: |
+          mkdir -p .temp
+          mv .github/workflows/sync-fork-with-merge.yml .temp/ || true
           rm -rf .github/workflows
-          git add -u .github/workflows || true
-          git commit -m "chore: remove upstream workflows" || echo "No changes to commit"
+          mkdir -p .github/workflows
+          mv .temp/sync-fork-with-merge.yml .github/workflows/ || true
+          rm -rf .temp
+          git add -A .github/workflows
+          git commit -m "chore: remove unwanted upstream workflows" || echo "No changes to commit"
 
       - name: Push to origin
         run: git push origin main
