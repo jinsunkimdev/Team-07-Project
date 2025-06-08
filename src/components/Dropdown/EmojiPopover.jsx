@@ -8,7 +8,7 @@ import ReactionsApi from "../../api/ReactionApi";
 import { useParams } from "react-router-dom";
 
 const EmojiPopover = ({ setRefreshTrigger }) => {
-  const { dropdownSelectRef, isOpen, setIsOpen } = useDropdown({}); //굳이 커스텀 훅을 쓸 필요는 없지만 연습겸 써봄
+  const { dropdownSelectRef, isOpen, close, toggle } = useDropdown({}); //굳이 커스텀 훅을 쓸 필요는 없지만 연습겸 써봄
   const { id } = useParams();
 
   const handleEmojiSelect = async (emoji) => {
@@ -26,15 +26,13 @@ const EmojiPopover = ({ setRefreshTrigger }) => {
       console.log(" id:", id);
       console.log(" emoji:", emoji.native);
 
-      setIsOpen(false);
+      close;
     }
   };
 
   return (
     <div ref={dropdownSelectRef} css={popoverContainerStyle}>
-      <AddEmojiButton onClick={() => setIsOpen((prev) => !prev)}>
-        추가
-      </AddEmojiButton>
+      <AddEmojiButton onClick={toggle}>추가</AddEmojiButton>
 
       {isOpen && (
         <div css={popoverStyle}>

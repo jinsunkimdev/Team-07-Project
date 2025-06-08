@@ -7,7 +7,7 @@ const ReactionBox = () => {
   const [refreshTrigger, setRefreshTrigger] = useState(0);
 
   return (
-    <div css={rectionBoxStyle}>
+    <div css={reactionBoxStyle}>
       <ReactionBadges refreshTrigger={refreshTrigger} />
       <EmojiPopover setRefreshTrigger={setRefreshTrigger} />
     </div>
@@ -16,7 +16,7 @@ const ReactionBox = () => {
 
 export default ReactionBox;
 
-const rectionBoxStyle = css`
+const reactionBoxStyle = css`
   display: inline-flex;
   align-items: center;
   gap: 8px;

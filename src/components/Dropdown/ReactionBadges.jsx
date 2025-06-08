@@ -12,7 +12,7 @@ const ReactionBadges = ({ refreshTrigger }) => {
   const { id } = useParams();
   const [reactions, setReactions] = useState([]);
   const [visibleCount, setVisibleCount] = useState(8);
-  const { dropdownSelectRef, isOpen, setIsOpen } = useDropdown({});
+  const { dropdownSelectRef, isOpen, toggle } = useDropdown({});
 
   useEffect(() => {
     if (!id) return;
@@ -49,7 +49,7 @@ const ReactionBadges = ({ refreshTrigger }) => {
 
   return (
     <div ref={dropdownSelectRef} css={ReactionsWrapper}>
-      <div onClick={() => setIsOpen(!isOpen)}>
+      <div onClick={toggle}>
         <div css={topCountReaction}>
           {sortReactions &&
             sortReactions
