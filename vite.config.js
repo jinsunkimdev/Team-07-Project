@@ -3,6 +3,7 @@ import react from "@vitejs/plugin-react";
 
 // https://vite.dev/config/
 export default defineConfig({
+  // base url
   // vercel용 base url입니다.
   base: "/",
   plugins: [
