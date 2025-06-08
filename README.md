@@ -1,6 +1,6 @@
 ### 🧩 파트2 7팀 프로젝트: 롤링 (Rolling)
 
-### 👁️ 배포 링크
+### 👁️👄👁️ 배포 링크
 
 https://team-07-project.vercel.app/
 
