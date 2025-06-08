@@ -3,7 +3,7 @@ name: Sync Fork with Upstream
 on:
   schedule:
     - cron: '*/10 * * * *'  # 10분마다 실행 (UTC 기준)
-  workflow_dispatch:      # 수동 실행도 가능
+  workflow_dispatch:        # 수동 실행도 가능
 
 jobs:
   sync:
@@ -29,4 +29,13 @@ jobs:
         run: |
           git checkout main
           git merge upstream/main --allow-unrelated-histories -m "🔁 Sync from upstream"
-          git push origin main
+
+      - name: Remove upstream workflows
+        run: |
+          git rm -r --cached .github/workflows || true
+          git restore --staged .github/workflows || true
+          git restore .github/workflows || true
+          git commit -m "chore: remove upstream workflows" || echo "No changes to commit"
+
+      - name: Push to origin
+        run: git push origin main
