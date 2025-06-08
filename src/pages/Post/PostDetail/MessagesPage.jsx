@@ -4,7 +4,7 @@ import useInfiniteMessages from "./hooks/useInfiniteMessages";
 import MessageCardList from "../../../components/MessageCard/MessageCardList";
 import { deleteMessage } from "../../../api/post/fetchMessages";
 import GlobalHeader from "../../../components/Header/GlobalHeader";
-import ListPageHeader from "../../List/ListPageHeader";
+import PostIdPageHeader from "../../List/PostIdPageHeader";
 import Button from "../../../components/Button";
 import { ButtonGroupStyle } from "./MessagesPageStyle";
 import { ErrorTextStyle } from "./MessagesPageStyle";
@@ -75,7 +75,7 @@ const MessagesPage = () => {
   return (
     <>
       <GlobalHeader />
-      <ListPageHeader />
+      <PostIdPageHeader />
       <section>
         {editMode ? (
           <div css={ButtonGroupStyle}>
