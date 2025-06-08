@@ -1,5 +1,5 @@
 import { css } from "@emotion/react";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import useBreakpoint from "./hooks/useResponsive";
 import Pagination from "./Pagination";
@@ -43,14 +43,6 @@ const Slider = ({ items }) => {
   // 상태 및 레퍼런스
   const [slideIndex, setSlideIndex] = useState(0);
   const wrapperRef = useRef(null); // 스크롤 컨테이너 참조
-
-  // 뷰포트 변경 시 인덱스, 스크롤 초기화
-  useEffect(() => {
-    setSlideIndex(0);
-    if (wrapperRef.current) {
-      wrapperRef.current.scrollLeft = 0;
-    }
-  }, [breakpoint]);
 
   // 스크롤 이벤트 (slideIndex 동기화)
   const handleScroll = () => {
