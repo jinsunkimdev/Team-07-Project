@@ -1,4 +1,6 @@
 import { css } from "@emotion/react";
+import parse from "html-react-parser";
+import DOMPurify from "dompurify";
 import MessageCardStyle, {
   MessageCardCreatedAtStyle,
   MessageCardContentStyle,
@@ -77,7 +79,7 @@ export const MessageCardProfile = ({
   return (
     <div className="sender-profile-wrap" css={profileStyles}>
       <Avatar imgSrc={profileImageURL} size="md" />
-      <div className="sender-profile" style={{ fontFamily: font }}>
+      <div className="sender-profile" style={{ fontFamily: font.value }}>
         <span className="sender-name">
           From. <b>{sender}</b>
         </span>
@@ -96,10 +98,13 @@ export const MessageCardContent = ({ content, customCss }) => {
     ${customCss || ""};
   `;
 
+  // content가 null/undefined인 경우
+  const sanitizedHTML = DOMPurify.sanitize(content || "");
+
   return (
-    <p className="content" css={contentStyles}>
-      {content}
-    </p>
+    <div className="content" css={contentStyles}>
+      {parse(sanitizedHTML)}
+    </div>
   );
 };
 
