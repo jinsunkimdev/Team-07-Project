@@ -32,9 +32,8 @@ jobs:
 
       - name: Remove upstream workflows
         run: |
-          git rm -r --cached .github/workflows || true
-          git restore --staged .github/workflows || true
-          git restore .github/workflows || true
+          rm -rf .github/workflows
+          git add -u .github/workflows || true
           git commit -m "chore: remove upstream workflows" || echo "No changes to commit"
 
       - name: Push to origin
