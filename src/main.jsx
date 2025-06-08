@@ -15,7 +15,7 @@ createRoot(document.getElementById("root")).render(
         <Reset />
         <Variables />
         <Fonts />
-        <BrowserRouter>
+        <BrowserRouter basename="/rolling/">
           <App />
         </BrowserRouter>
       </ToastProvider>
