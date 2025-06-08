@@ -54,6 +54,9 @@ export const Variables = () => (
         --gray-800: #2b2b2b;
         --gray-900: #181818;
 
+        /* selection / state colors */
+        --card-selected-bg: #fbd5d5; /* background color used for selected cards */
+
         /* primary color */
         --primary: var(--purple-600);
         --primary-hover: var(--purple-700);

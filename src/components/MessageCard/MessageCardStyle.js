@@ -34,8 +34,8 @@ const MessageCardStyle = css`
 `;
 
 export const SelectedCardStyle = css`
-  background-color: #FBD5D5;
-  border: 1px solid #E60023;
+  background-color: var(--card-selected-bg);
+  border: 1px solid var(--error);
 `;
 
 export default MessageCardStyle;
