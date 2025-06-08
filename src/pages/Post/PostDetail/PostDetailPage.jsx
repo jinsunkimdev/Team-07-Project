@@ -2,7 +2,7 @@
  * 진입점 페이지
  */
 import GlobalHeader from "../../../components/Header/GlobalHeader";
-import ListPageHeader from "../../List/ListPageHeader";
+import PostIdPageHeader from "../../List/PostIdPageHeader";
 import MessagesPage from "./components/MessagesPage";
 import useMessagesPage from "./hooks/useMessagesPage";
 
@@ -12,7 +12,7 @@ const PostDetailPage = () => {
   return (
     <>
       <GlobalHeader />
-      <ListPageHeader />
+      <PostIdPageHeader />
       <MessagesPage {...state} />
     </>
   );
