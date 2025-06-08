@@ -4,52 +4,49 @@
 import { useRef, useEffect } from "react";
 import MessageCardList from "../../../../components/MessageCard/MessageCardList";
 import MessageCardModal from "../../../../components/Modal/MessageCardModal";
-import {
-  ErrorTextStyle,
-  ObserverSpacerStyle,
-} from "./MessagesPageStyle";
+import { ErrorTextStyle, ObserverSpacerStyle } from "./MessagesPageStyle";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
 import MessageActionButtons from "./MessageActionButtons";
 
 const MessagesPage = ({
   editMode,
   selectedIds,
-  setSelectedIds,
   toggleSelection,
   messages,
   showModal,
   fetchMore,
   isLast,
   error,
-  handleSave,
   handleEditButton,
+  handleDeleteSelected,
+  handleToggleSelectAll,
 }) => {
   const observerRef = useRef();
 
-useInfiniteScroll({ ref: observerRef, callback: fetchMore, isLast });
+  useInfiniteScroll({ ref: observerRef, callback: fetchMore, isLast });
 
   return (
     <>
-        <MessageActionButtons
-          editMode={editMode}
-          selectedIds={selectedIds}
-          handleSave={handleSave}
-          handleEditButton={handleEditButton}
-          handleClearSelection={() => setSelectedIds([])}
-        />
+      <MessageActionButtons
+        editMode={editMode}
+        selectedIds={selectedIds}
+        handleDeleteSelected={handleDeleteSelected}
+        handleEditButton={handleEditButton}
+        handleToggleSelectAll={handleToggleSelectAll}
+      />
 
-        <MessageCardList
-          messages={messages}
-          editMode={editMode}
-          selectedIds={selectedIds}
-          onToggle={toggleSelection}
-          openMessageCardModal={(data) =>
-            showModal(<MessageCardModal data={data} />)
-          }
-        />
+      <MessageCardList
+        messages={messages}
+        editMode={editMode}
+        selectedIds={selectedIds}
+        onToggle={toggleSelection}
+        openMessageCardModal={(data) =>
+          showModal(<MessageCardModal data={data} />)
+        }
+      />
 
-        {error && <p css={ErrorTextStyle}>{error}</p>}
-        <div ref={observerRef} css={ObserverSpacerStyle} />
+      {error && <p css={ErrorTextStyle}>{error}</p>}
+      <div ref={observerRef} css={ObserverSpacerStyle} />
     </>
   );
 };
