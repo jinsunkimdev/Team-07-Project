@@ -2,7 +2,7 @@ name: Sync Fork with Upstream
 
 on:
   schedule:
-    - cron: '*/2 * * * *'  # 매 시간마다 실행 (UTC 기준)
+    - cron: '*/5 * * * *'  # 2분마다 실행 (UTC 기준)
   workflow_dispatch:      # 수동 실행도 가능
 
 jobs:
@@ -19,6 +19,14 @@ jobs:
         run: |
           git remote add upstream https://github.com/Team-07-Project/Team-07-Project.git
           git fetch upstream
+
+      - name: Set Git Identity
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+      - name: Merge upstream changes
+        run: |
           git checkout main
           git merge upstream/main --allow-unrelated-histories -m "🔁 Sync from upstream"
           git push origin main
