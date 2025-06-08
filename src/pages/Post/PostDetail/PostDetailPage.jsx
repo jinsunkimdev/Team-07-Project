@@ -3,17 +3,17 @@
  */
 import GlobalHeader from "../../../components/Header/GlobalHeader";
 import ListPageHeader from "../../List/ListPageHeader";
-import MessagesPage from "./components/MessagesPage";
-import useMessagesPage from "./hooks/useMessagesPage";
+import { MessagesProvider } from "../context/MessagesProvider";
+import MessagesPage from "./MessagesPage";
 
 const PostDetailPage = () => {
-  const state = useMessagesPage();
-
   return (
     <>
       <GlobalHeader />
-      <ListPageHeader />
-      <MessagesPage {...state} />
+      <MessagesProvider>
+        <ListPageHeader />
+        <MessagesPage />
+      </MessagesProvider>
     </>
   );
 };
