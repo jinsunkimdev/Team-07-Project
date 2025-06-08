@@ -107,9 +107,7 @@ const PostMessagePage = () => {
       <GlobalHeader />
       <section css={PostMessagePageStyle}>
         <form
-          onSubmit={(e) => {
-            e.preventDefault(); // 기본 제출 막기
-          }}
+          onSubmit={handleSubmit}
           css={PostMessageFormStyle({ messageValueError })}
         >
           <div className="form-control">
@@ -164,10 +162,10 @@ const PostMessagePage = () => {
             />
           </div>
           <Button
+            type="submit"
             size="lg"
             style={{ width: "100%" }}
             disabled={fromInputValue.trim() === "" || isMessageEmpty}
-            onClick={handleSubmit}
           >
             생성하기
           </Button>
