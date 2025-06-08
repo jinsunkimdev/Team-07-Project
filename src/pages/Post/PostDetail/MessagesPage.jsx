@@ -4,11 +4,13 @@ import useInfiniteMessages from "./hooks/useInfiniteMessages";
 import MessageCardList from "../../../components/MessageCard/MessageCardList";
 import { deleteMessage } from "../../../api/post/fetchMessages";
 import GlobalHeader from "../../../components/Header/GlobalHeader";
-import ListPageHeader from "../../List/ListPageHeader";
+import PostIdPageHeader from "../../List/PostIdPageHeader";
 import Button from "../../../components/Button";
 import { ButtonGroupStyle } from "./MessagesPageStyle";
 import { ErrorTextStyle } from "./MessagesPageStyle";
 import { ObserverSpacerStyle } from "./MessagesPageStyle";
+import useWindowWidth from "../../../utils/useWindowWidth";
+import { BREAKPOINTS } from "../../../constants/constants";
 
 const MessagesPage = () => {
   // 변수 선언
@@ -71,11 +73,13 @@ const MessagesPage = () => {
     return () => observer.disconnect();
   }, [fetchMore, isLast]);
 
+  const width = useWindowWidth();
+
   // 화면
   return (
     <>
-      <GlobalHeader />
-      <ListPageHeader />
+      {width > BREAKPOINTS.md - 1 && <GlobalHeader />}
+      <PostIdPageHeader />
       <section>
         {editMode ? (
           <div css={ButtonGroupStyle}>

@@ -1,13 +1,39 @@
 export const apiClient = async (url, options = {}) => {
+  const headers = options.headers ? { ...options.headers } : {};
+
+  const method = options.method?.toUpperCase?.() || "GET";
+  const isJsonMethod = ["POST", "PUT", "PATCH"].includes(method);
+
+  if (isJsonMethod && !headers["Content-Type"]) {
+    headers["Content-Type"] = "application/json";
+  }
+
   const res = await fetch(url, {
-    headers: { "Content-Type": "application/json" },
     ...options,
+    method,
+    headers,
   });
 
   if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`[API Error] ${res.status} ${res.statusText}\n${errText}`);
+    let message;
+    try {
+      message = await res.json();
+    } catch (_) {
+      message = await res.text();
+    }
+
+    throw {
+      name: "ApiClientError",
+      status: res.status,
+      statusText: res.statusText,
+      message: message?.message || message || "Unknown error",
+      url,
+      method,
+    };
   }
+
+  // Handle 204 No Content
+  if (res.status === 204) return null;
 
   return await res.json();
 };

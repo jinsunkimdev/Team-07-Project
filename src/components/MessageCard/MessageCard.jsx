@@ -33,7 +33,13 @@ const MessageCard = ({
   return (
     <div
       css={[MessageCardStyle, isSelected && SelectedCardStyle]}
-      onClick={() => openModal(messageData)}
+      onClick={() => {
+        if (isEditable) {
+          onToggleSelect();
+        } else {
+          openModal(messageData);
+        }
+      }}
     >
       <div className="card-header">
         <MessageCard.Profile
