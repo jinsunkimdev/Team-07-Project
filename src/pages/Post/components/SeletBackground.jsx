@@ -2,15 +2,10 @@ import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { getImages } from "../../../api";
 import { IconCheckButton } from "../../../components/Button/IconButtons";
+import { BACKGROUND_COLORS } from "../../../constants/constants";
 
 // 백그라운드 컬러
-const Background_Color = {
-  beige: "#FFE2AD",
-  purple: "#ECD9FF",
-  blue: "#B1E4FF",
-  green: "#D0F5C3",
-};
-const AVAILABLE_COLORS = Object.keys(BackgroundColor);
+const AVAILABLE_COLORS = Object.keys(BACKGROUND_COLORS);
 const FIRST_COLOR = AVAILABLE_COLORS[0];
 
 // 컴포넌트 본문
@@ -91,7 +86,7 @@ const SelectBackground = ({ onChange }) => {
             {AVAILABLE_COLORS.map((color) => (
               <ColorOption
                 key={color}
-                color={BackgroundColor[color]}
+                color={BACKGROUND_COLORS[color]}
                 selected={selectedColor === color}
                 onClick={() => handleColorClick(color)}
               >

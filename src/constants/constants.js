@@ -70,3 +70,10 @@ export const SLIDER_MAX_WIDTH =
 export const NAME_MAX_LENGTH = 40;
 
 export const PROFILE_IMAGE_LENGTH = 9;
+
+export const BACKGROUND_COLORS = {
+  beige: "var(--beige-200)",
+  purple: "var(--purple-200)",
+  blue: "var(--blue-200)",
+  green: "var(--green-200)",
+};

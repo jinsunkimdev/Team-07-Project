@@ -7,6 +7,13 @@ import SelectBackground from "./components/SeletBackground";
 import GlobalHeader from "../../components/Header/GlobalHeader";
 import Button from "../../components/Button";
 import styled from "@emotion/styled";
+import Label from "../../../components/Form/Label";
+import Input from "../../../components/Form/Input";
+import SelectBackground from "../components/SelectBackground";
+import GlobalHeader from "../../../components/Header/GlobalHeader";
+import Button from "../../../components/Button";
+import createRecipient from "../../../api/post/createRecipient";
+import { BACKGROUND_COLORS } from "../../../constants/constants";
 
 const Container = styled.div`
   max-width: 600px;
@@ -26,6 +33,9 @@ const HeaderWrapper = styled.div`
 `;
 
 const MAX_TO_LENGTH = 20;
+
+// 백그라운드 컬러
+const AVAILABLE_COLORS = Object.keys(BACKGROUND_COLORS);
 
 const PostCreatePage = () => {
   const [to, setTo] = useState("");
