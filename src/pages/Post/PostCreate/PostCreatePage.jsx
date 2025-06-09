@@ -1,12 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Label from "../../components/Form/Label";
-import Input from "../../components/Form/Input";
-import ToInput from "./components/ToInPut";
-import SelectBackground from "./components/SeletBackground";
-import GlobalHeader from "../../components/Header/GlobalHeader";
-import Button from "../../components/Button";
 import styled from "@emotion/styled";
+import Label from "../../../components/Form/Label";
+import Input from "../../../components/Form/Input";
+import SelectBackground from "../components/SelectBackground";
+import GlobalHeader from "../../../components/Header/GlobalHeader";
+import Button from "../../../components/Button";
+import createRecipient from "../../../api/post/createRecipient";
 
 const Container = styled.div`
   max-width: 600px;
@@ -27,11 +27,20 @@ const HeaderWrapper = styled.div`
 
 const MAX_TO_LENGTH = 20;
 
+// 백그라운드 컬러
+const BackgroundColor = {
+  beige: "#FFE2AD",
+  purple: "#ECD9FF",
+  blue: "#B1E4FF",
+  green: "#D0F5C3",
+};
+const AVAILABLE_COLORS = Object.keys(BackgroundColor);
+
 const PostCreatePage = () => {
-  const [to, setTo] = useState("");
+  const [toInputValue, setToInputValue] = useState("");
   const [toError, setToError] = useState("");
   const [background, setBackground] = useState({
-    backgroundColor: undefined,
+    backgroundColor: AVAILABLE_COLORS[0],
     backgroundImageURL: undefined,
   });
 
@@ -44,33 +53,45 @@ const PostCreatePage = () => {
     } else {
       setToError("");
     }
-    setTo(value);
+    setToInputValue(value);
   };
 
   const handleBlur = () => {
-    if (to.trim() === "") {
+    if (toInputValue.trim() === "") {
       setToError("값을 입력해 주세요");
-    } else if (to.length > MAX_TO_LENGTH) {
+    } else if (toInputValue.length > MAX_TO_LENGTH) {
       setToError(`이름은 ${MAX_TO_LENGTH}자 이상 입력할 수 없어요.`);
     } else {
       setToError("");
     }
   };
 
-  const handleCreate = () => {
-    if (to.trim() === "") {
+  const handleCreatePostPage = async () => {
+    if (toInputValue.trim() === "") {
       setToError("값을 입력해 주세요");
       return;
     }
 
-    const fakeId = "test123";
-    navigate(`/post/${fakeId}`);
+    const formData = {
+      team: "16-7",
+      name: toInputValue,
+      backgroundColor: background.backgroundColor,
+      backgroundImageURL: background.backgroundImageURL,
+    };
+
+    try {
+      const result = await createRecipient(formData);
+      console.log("롤링페이퍼 생성 성공!: ", result);
+      navigate(`/post/${result.id}`);
+    } catch (err) {
+      console.log(err.message);
+    }
   };
 
   const isBackgroundSelected =
     background.backgroundColor || background.backgroundImageURL;
 
-  const isCreateEnabled = to.trim() !== "" && isBackgroundSelected;
+  const isCreateEnabled = toInputValue.trim() !== "" && isBackgroundSelected;
 
   return (
     <div>
@@ -81,7 +102,7 @@ const PostCreatePage = () => {
       <Container>
         <Label value="To." />
         <Input
-          value={to}
+          value={toInputValue}
           onChange={handleChange}
           onBlur={handleBlur}
           placeholder="받는사람 이름을 입력해 주세요"
@@ -89,13 +110,6 @@ const PostCreatePage = () => {
           maxLength={MAX_TO_LENGTH}
           autoFocus
         />
-        {/* <ToInput
-          value={to}
-          onChange={handleChange}
-          onBlur={handleBlur}
-          placeholder="받는사람 이름을 입력해 주세요"
-          error={toError}
-        /> */}
 
         <Background>
           <SelectBackground onChange={setBackground} />
@@ -106,7 +120,7 @@ const PostCreatePage = () => {
             variant="primary"
             size="lg"
             disabled={!isCreateEnabled}
-            onClick={handleCreate}
+            onClick={handleCreatePostPage}
             style={{ width: "100%" }}
           >
             생성하기
