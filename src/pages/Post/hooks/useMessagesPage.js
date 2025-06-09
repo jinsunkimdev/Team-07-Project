@@ -4,8 +4,8 @@
 import { useCallback, useState } from "react";
 import { useNavigate, useMatch, useParams } from "react-router-dom";
 import useInfiniteMessages from "./useInfiniteMessages";
-import useModal from "../../../../components/Modal/useModal";
-import { deleteMessages } from "../../../../api/delete/deleteMessages";
+import useModal from "../../../components/Modal/useModal";
+import { deleteMessages } from "../../../api/delete/deleteMessages";
 
 const useMessagesPage = () => {
   const { id: recipientId } = useParams();
@@ -22,19 +22,6 @@ const useMessagesPage = () => {
   } = useInfiniteMessages({ id: recipientId, limit: editMode ? 6 : 5 });
   const [error, setError] = useState("");
 
-  const handleSave = async () => {
-    try {
-      await Promise.all(selectedIds.map((id) => deleteMessages({ id })));
-      setMessages((prev) =>
-        prev.filter((msg) => !selectedIds.includes(msg.id))
-      );
-      setSelectedIds([]);
-      navigate(`/post/${recipientId}`);
-    } catch (err) {
-      console.error("삭제 실패", err);
-      setError("메시지 삭제 중 문제가 발생했습니다.");
-    }
-  };
 
   const handleEditButton = () => {
     const baseUrl = `/post/${recipientId}`;
@@ -81,7 +68,6 @@ const useMessagesPage = () => {
     fetchMore,
     isLast,
     error: fetchError || error,
-    handleSave,
     handleEditButton,
     handleDeleteSelected,
     handleToggleSelectAll,

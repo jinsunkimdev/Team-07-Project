@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getMessages } from "../../../../api/get/getMessages";
+import { getMessages } from "../../../api/get/getMessages";
 
 /**
  * 무한스크롤 메시지 훅
