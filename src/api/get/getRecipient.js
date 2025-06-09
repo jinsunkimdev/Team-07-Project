@@ -14,6 +14,5 @@ import { apiClient } from "../../utils/apiClient";
  */
 export const getRecipient = async ({ id }) => {
   const url = `https://rolling-api.vercel.app/${CARDINAL_NUMBER}-${TEAM}/recipients/${id}/`;
-  console.log(url);
   return await apiClient(url)
 };
