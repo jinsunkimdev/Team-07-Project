@@ -221,10 +221,10 @@ const ColorList = styled.div`
   }
 `;
 
-const ColorOption = styled.button`
+const ColorOption = styled.div`
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-radius: var(--radius-lg);
+  border-radius: 12px;
   border: transparent;
   background-color: ${({ color }) => color};
   cursor: pointer;
@@ -262,7 +262,7 @@ const ImageList = styled.div`
 `;
 
 // ImageOption: 이미지 + 클릭 영역통합
-const ImageOption = styled.button`
+const ImageOption = styled.div`
   width: 100%;
   aspect-ratio: 1 / 1;
   padding: 0;
@@ -271,14 +271,14 @@ const ImageOption = styled.button`
   cursor: pointer;
   position: relative;
 
-  img {
+  > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
     border-radius: 12px;
     display: block;
-    transition: filter 0.3s ease;
-    filter: ${({ selected }) => (selected ? "brightness(120%)" : "none")};
+    transition: opacity 0.3s ease;
+    opacity: ${({ selected }) => (selected ? "0.3" : "1")};
   }
 
   &::before {
