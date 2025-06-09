@@ -10,7 +10,125 @@ const Background_Color = {
   blue: "#B1E4FF",
   green: "#D0F5C3",
 };
-const AVAILABLE_COLORS = Object.keys(Background_Color);
+const AVAILABLE_COLORS = Object.keys(BackgroundColor);
+const FIRST_COLOR = AVAILABLE_COLORS[0];
+
+// 컴포넌트 본문
+const SelectBackground = ({ onChange }) => {
+  const [images, setImages] = useState([]);
+  const [firstImage, setFirstImage] = useState("");
+  const [selectedColor, setSelectedColor] = useState(FIRST_COLOR);
+  const [selectedImage, setSelectedImage] = useState("");
+  const [mode, setMode] = useState("color");
+
+  const handleColorClick = (color) => {
+    setSelectedColor(color);
+    onChange?.({ backgroundColor: color, backgroundImageURL: selectedImage });
+  };
+
+  const handleImageClick = (url) => {
+    setSelectedImage(url);
+    onChange?.({ backgroundColor: selectedColor, backgroundImageURL: url });
+  };
+
+  const handleChangeMode = (newMode) => {
+    setMode(newMode);
+
+    if (newMode === "color") {
+      setSelectedColor(FIRST_COLOR);
+    } else if (newMode === "image" && images.length > 0) {
+      setSelectedImage(firstImage);
+    }
+
+    onChange?.({
+      backgroundColor: FIRST_COLOR,
+      backgroundImageURL: firstImage,
+    });
+  };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const imagesData = await getImages();
+      if (Array.isArray(imagesData)) setImages(imagesData);
+
+      // 배경/컬러 미설정시 기본값으로 첫번째 값 전송 (api 유효값 설정용)
+      setSelectedColor(FIRST_COLOR);
+      const firstImage = imagesData[0];
+      setFirstImage(firstImage);
+      setSelectedImage(firstImage);
+
+      onChange?.({
+        backgroundColor: FIRST_COLOR,
+        backgroundImageURL: firstImage,
+      });
+    };
+    fetchData();
+  }, [onChange]);
+
+  return (
+    <div>
+      <BackgroundLabel>배경화면을 선택해 주세요.</BackgroundLabel>
+      <SubText>컬러를 선택하거나, 이미지를 선택할 수 있습니다.</SubText>
+
+      <ToggleButtons>
+        <button
+          onClick={() => handleChangeMode("color")}
+          className={mode === "color" ? "active" : ""}
+        >
+          컬러
+        </button>
+        <button
+          onClick={() => handleChangeMode("image")}
+          className={mode === "image" ? "active" : ""}
+        >
+          이미지
+        </button>
+      </ToggleButtons>
+
+      <TabsContentWrapper>
+        {mode === "color" && (
+          <ColorList>
+            {AVAILABLE_COLORS.map((color) => (
+              <ColorOption
+                key={color}
+                color={BackgroundColor[color]}
+                selected={selectedColor === color}
+                onClick={() => handleColorClick(color)}
+              >
+                {selectedColor === color && (
+                  <CheckIconWrapper>
+                    <IconCheckButton />
+                  </CheckIconWrapper>
+                )}
+              </ColorOption>
+            ))}
+          </ColorList>
+        )}
+
+        {mode === "image" && (
+          <ImageList>
+            {images.map((url, idx) => (
+              <ImageOption
+                key={idx}
+                onClick={() => handleImageClick(url)}
+                selected={selectedImage === url}
+              >
+                <img src={url} alt="" />
+                {selectedImage === url && (
+                  <CheckIconWrapper>
+                    <IconCheckButton />
+                  </CheckIconWrapper>
+                )}
+              </ImageOption>
+            ))}
+          </ImageList>
+        )}
+      </TabsContentWrapper>
+    </div>
+  );
+};
+
+export default SelectBackground;
 
 // 스타일 컴포넌트
 const TabsContentWrapper = styled.div`
@@ -53,13 +171,29 @@ const ColorList = styled.div`
 const ColorOption = styled.button`
   width: 100%;
   aspect-ratio: 1 / 1;
-  border-radius: 12px;
-  border: ${({ selected }) => (selected ? "2px solid blue" : "1px solid #ccc")};
+  border-radius: var(--radius-lg);
+  border: transparent;
   background-color: ${({ color }) => color};
   cursor: pointer;
-  transition: filter 0.3s ease;
-  filter: ${({ selected }) => (selected ? "brightness(100%)" : "none")};
   position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0);
+    border-radius: var(--radius-lg);
+    transition: background 0.3s ease;
+    z-index: 0;
+  }
+
+  &:hover::before {
+    background: rgba(0, 0, 0, 0.1); // hover 시 어두운 오버레이
+  }
+
+  > * {
+    z-index: 1;
+  }
 `;
 
 const ImageList = styled.div`
@@ -93,10 +227,29 @@ const ImageOption = styled.button`
     transition: filter 0.3s ease;
     filter: ${({ selected }) => (selected ? "brightness(120%)" : "none")};
   }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: var(--radius-lg);
+    background: rgba(0, 0, 0, 0);
+    transition: background 0.3s ease;
+    z-index: 0;
+  }
+
+  &:hover::before {
+    background: rgba(0, 0, 0, 0.1);
+  }
+
+  > * {
+    z-index: 1;
+  }
 `;
 
 const CheckIconWrapper = styled.div`
   position: absolute;
+  z-index: 1;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -117,106 +270,3 @@ const SubText = styled.p`
   font-weight: var(--font-weight-regular);
   margin: 0px 0px 24px;
 `;
-
-// 컴포넌트 본문
-const SelectBackground = ({ onChange }) => {
-  const [images, setImages] = useState([]);
-  const [selectedColor, setSelectedColor] = useState("");
-  const [selectedImage, setSelectedImage] = useState("");
-  const [mode, setMode] = useState("color");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const imagesData = await getImages();
-      if (Array.isArray(imagesData)) setImages(imagesData);
-    };
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (!selectedColor && !selectedImage && mode === "color") {
-      const firstColor = AVAILABLE_COLORS[0];
-      setSelectedColor(firstColor);
-      onChange?.({
-        backgroundColor: firstColor,
-        backgroundImageURL: undefined,
-      });
-    }
-  }, [selectedColor, selectedImage, mode, onChange]);
-
-  const handleColorClick = (color) => {
-    setSelectedColor(color);
-    setSelectedImage("");
-    onChange?.({ backgroundColor: color, backgroundImageURL: undefined });
-  };
-
-  const handleImageClick = (url) => {
-    setSelectedImage(url);
-    setSelectedColor("");
-    onChange?.({ backgroundColor: undefined, backgroundImageURL: url });
-  };
-
-  return (
-    <div>
-      <BackgroundLabel>배경화면을 선택해 주세요.</BackgroundLabel>
-      <SubText>컬러를 선택하거나, 이미지를 선택할 수 있습니다.</SubText>
-
-      <ToggleButtons>
-        <button
-          onClick={() => setMode("color")}
-          className={mode === "color" ? "active" : ""}
-        >
-          컬러
-        </button>
-        <button
-          onClick={() => setMode("image")}
-          className={mode === "image" ? "active" : ""}
-        >
-          이미지
-        </button>
-      </ToggleButtons>
-
-      <TabsContentWrapper>
-        {mode === "color" && (
-          <ColorList>
-            {AVAILABLE_COLORS.map((color) => (
-              <ColorOption
-                key={color}
-                color={Background_Color[color]}
-                selected={selectedColor === color}
-                onClick={() => handleColorClick(color)}
-              >
-                {selectedColor === color && (
-                  <CheckIconWrapper>
-                    <IconCheckButton />
-                  </CheckIconWrapper>
-                )}
-              </ColorOption>
-            ))}
-          </ColorList>
-        )}
-
-        {mode === "image" && (
-          <ImageList>
-            {images.map((url, idx) => (
-              <ImageOption
-                key={idx}
-                onClick={() => handleImageClick(url)}
-                selected={selectedImage === url}
-              >
-                <img src={url} alt="" />
-                {selectedImage === url && (
-                  <CheckIconWrapper>
-                    <IconCheckButton />
-                  </CheckIconWrapper>
-                )}
-              </ImageOption>
-            ))}
-          </ImageList>
-        )}
-      </TabsContentWrapper>
-    </div>
-  );
-};
-
-export default SelectBackground;
