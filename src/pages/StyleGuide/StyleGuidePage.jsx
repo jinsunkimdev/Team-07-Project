@@ -4,7 +4,7 @@ import AddEmojiButton from "../../components/Button/AddEmojiButton";
 import Avatar from "../../components/Avatar";
 import avatarSampleImg from "../../assets/images/img-avatar-sample.jpg";
 import GlobalHeader from "../../components/Header/GlobalHeader";
-import ListPageHeader from "../List/ListPageHeader";
+import PostIdPageHeader from "../List/PostIdPageHeader";
 import MessageCard from "../../components/MessageCard/MessageCard";
 import AddMessageCardButton from "../../components/MessageCard/AddMessageCardButton";
 import MessageCardList from "../../components/MessageCard/MessageCardList";
@@ -253,7 +253,7 @@ const StyleGuidePage = () => {
         </div>
         <div className="sub-section">
           <h3 className="section-sub-title">ListPageHeader</h3>
-          <ListPageHeader recipient="Ashley Kim" />
+          <PostIdPageHeader recipient="Ashley Kim" />
         </div>
       </section>
       {/* Cards */}
