@@ -50,7 +50,7 @@ const ColorList = styled.div`
   }
 `;
 
-const ColorOption = styled.button`
+const ColorOption = styled.div`
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 12px;
@@ -75,7 +75,7 @@ const ImageList = styled.div`
 `;
 
 // ImageOption: 이미지 + 클릭 영역통합
-const ImageOption = styled.button`
+const ImageOption = styled.div`
   width: 100%;
   aspect-ratio: 1 / 1;
   padding: 0;
@@ -84,7 +84,7 @@ const ImageOption = styled.button`
   cursor: pointer;
   position: relative;
 
-  img {
+  > img {
     width: 100%;
     height: 100%;
     object-fit: cover;
