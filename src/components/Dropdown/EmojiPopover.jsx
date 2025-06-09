@@ -26,7 +26,7 @@ const EmojiPopover = ({ setRefreshTrigger }) => {
       console.log(" id:", id);
       console.log(" emoji:", emoji.native);
 
-      close;
+      close();
     }
   };
 
