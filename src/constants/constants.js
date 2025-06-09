@@ -68,3 +68,5 @@ export const SLIDER_MAX_WIDTH =
   SLIDER_GAP * (CARDS_PER_VIEW_DESKTOP - 1);
 
 export const NAME_MAX_LENGTH = 40;
+
+export const PROFILE_IMAGE_LENGTH = 9;
