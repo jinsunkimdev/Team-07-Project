@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Label from "../../components/Form/Label";
 import Input from "../../components/Form/Input";
@@ -14,23 +14,6 @@ import GlobalHeader from "../../../components/Header/GlobalHeader";
 import Button from "../../../components/Button";
 import createRecipient from "../../../api/post/createRecipient";
 import { BACKGROUND_COLORS } from "../../../constants/constants";
-
-const Container = styled.div`
-  max-width: 600px;
-  margin: 57px auto 340px;
-  padding: 0 24px;
-`;
-
-// 배경 선택 영역
-const Background = styled.div`
-  margin: 50px 0px;
-`;
-
-const HeaderWrapper = styled.div`
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
 
 const MAX_TO_LENGTH = 20;
 
@@ -128,3 +111,20 @@ const PostCreatePage = () => {
 };
 
 export default PostCreatePage;
+
+const Container = styled.div`
+  max-width: 600px;
+  margin: 57px auto 340px;
+  padding: 0 24px;
+`;
+
+// 배경 선택 영역
+const Background = styled.div`
+  margin: 50px 0px;
+`;
+
+const HeaderWrapper = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
