@@ -20,7 +20,7 @@ const MessageActionButtons = () => {
           </Button>
           <Button
             onClick={handleDeleteSelected}
-            disabled={selectedIds.length === 0}
+            disabled={!selectedIds.length}
           >
             🗑 선택 삭제 ({selectedIds.length}개)
           </Button>
