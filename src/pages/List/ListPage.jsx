@@ -143,4 +143,8 @@ const ctaWrapper = css`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (min-width: ${BREAKPOINTS.lg}px) {
+    padding-bottom: 48px;
+  }
 `;
