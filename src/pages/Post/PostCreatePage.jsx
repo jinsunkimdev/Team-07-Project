@@ -25,6 +25,8 @@ const HeaderWrapper = styled.div`
   }
 `;
 
+const MAX_TO_LENGTH = 20;
+
 const PostCreatePage = () => {
   const [to, setTo] = useState("");
   const [toError, setToError] = useState("");
@@ -36,13 +38,22 @@ const PostCreatePage = () => {
   const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setTo(e.target.value);
-    if (toError) setToError("");
+    const value = e.target.value;
+    if (value.length > MAX_TO_LENGTH) {
+      setToError(`이름은 ${MAX_TO_LENGTH}자 이상 입력할 수 없어요.`);
+    } else {
+      setToError("");
+    }
+    setTo(value);
   };
 
   const handleBlur = () => {
     if (to.trim() === "") {
       setToError("값을 입력해 주세요");
+    } else if (to.length > MAX_TO_LENGTH) {
+      setToError(`이름은 ${MAX_TO_LENGTH}자 이상 입력할 수 없어요.`);
+    } else {
+      setToError("");
     }
   };
 
@@ -75,6 +86,8 @@ const PostCreatePage = () => {
           onBlur={handleBlur}
           placeholder="받는사람 이름을 입력해 주세요"
           error={toError}
+          maxLength={MAX_TO_LENGTH}
+          autoFocus
         />
         {/* <ToInput
           value={to}
