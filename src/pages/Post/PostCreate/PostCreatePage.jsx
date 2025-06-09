@@ -113,8 +113,8 @@ export default PostCreatePage;
 
 const Container = styled.div`
   max-width: 600px;
-  margin: 57px auto 340px;
-  padding: 0 24px;
+  margin: 60px auto 0;
+  padding: 0 24px 60px;
 `;
 
 // 배경 선택 영역
