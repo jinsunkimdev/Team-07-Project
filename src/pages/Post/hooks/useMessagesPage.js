@@ -1,11 +1,12 @@
 /**
  * 상태 및 로직만 담당
  */
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useMatch, useParams } from "react-router-dom";
 import useInfiniteMessages from "./useInfiniteMessages";
 import useModal from "../../../components/Modal/useModal";
 import { deleteMessages } from "../../../api/delete/deleteMessages";
+import { getRecipient } from "../../../api/get/getRecipient";
 
 const useMessagesPage = () => {
   const { id: recipientId } = useParams();
@@ -21,7 +22,25 @@ const useMessagesPage = () => {
     error: fetchError,
   } = useInfiniteMessages({ id: recipientId, limit: editMode ? 6 : 5 });
   const [error, setError] = useState("");
+  const [recipient, setRecipient] = useState(null);
 
+  // 👇 recipient 정보 불러오기
+  useEffect(() => {
+    const fetchRecipient = async () => {
+      try {
+        const data = await getRecipient({ id: recipientId });
+        console.log(`data=${recipient}`);
+        setRecipient(data);
+      } catch (err) {
+        console.error("recipient 로딩 실패", err);
+        setError("수신인 정보를 불러오는 데 실패했습니다.");
+      }
+    };
+
+    if (recipientId) {
+      fetchRecipient();
+    }
+  }, [recipientId]);
 
   const handleEditButton = () => {
     const baseUrl = `/post/${recipientId}`;
@@ -58,12 +77,14 @@ const useMessagesPage = () => {
   };
 
   return {
+    recipient,
     recipientId,
     editMode,
     selectedIds,
     setSelectedIds,
     toggleSelection,
     messages,
+    setMessages,
     showModal,
     fetchMore,
     isLast,

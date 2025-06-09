@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { css } from "@emotion/react";
 import { GlobalHeaderStyle } from "../../components/Header/GlobalHeader";
 import { IconShareButton } from "../../components/Button/IconButtons";
@@ -20,15 +21,28 @@ const mockAvatarData = [
   { id: "avatar5", profileImageURL: avatarSampleImg2 },
 ];
 
-const PostIdPageHeader = ({ recipient }) => {
+// 카카오톡 공유
+const { Kakao } = window;
+
+const PostIdPageHeader = () => {
+  // recipient 데이터 전부
+  const { recipient, messages } = useMessages()
+  console.log("messages=",messages);
   const { showToast } = useToast();
+
+  // 카카오톡 공유용 배포 사이트
+  const realUrl = `https://team-07-project.vercel.app/${location.pathname}`;
+
+  useEffect(() => {
+    Kakao.init(import.meta.env.VITE_KAKAO_API_KEY);
+    return () => Kakao.cleanup();
+  }, []);
 
   const changeShareOption = (option) => {
     if (!option) return;
+    const currentUrl = location.href;
 
     if (option.label === "URL 복사") {
-      const currentUrl = location.href;
-
       // 클립보드에 URL 복사 - 실패
       if (!navigator.clipboard) {
         showToast({
@@ -44,18 +58,38 @@ const PostIdPageHeader = ({ recipient }) => {
     }
 
     if (option.label === "카카오톡 공유") {
-      /* 카카오톡 공유 작업... */
-      console.log("카카오톡 공유하기...");
+      Kakao.Share.sendDefault({
+        objectType: "feed",
+        content: {
+          title:
+            "📜 롤링페이퍼에 메시지를 남겨 소소한 추억을 만들어 보세요! 📜",
+          description: "Rolling",
+          imageUrl: "https://team-07-project.vercel.app/og-image-md.png", // 절대경로
+          link: {
+            mobileWebUrl: realUrl || currentUrl,
+            webUrl: realUrl || currentUrl,
+          },
+        },
+        buttons: [
+          {
+            title: "롤링페이퍼 보러가기",
+            link: {
+              mobileWebUrl: realUrl || currentUrl,
+              webUrl: realUrl || currentUrl,
+            },
+          },
+        ],
+      });
     }
   };
 
   return (
     <div css={ListPageHeaderStyle}>
       <div className="header-container">
-        <h2 className="recipient-name">To. {recipient}</h2>
+        <h2 className="recipient-name">To.{recipient?.name || ""}</h2>
         <ul className="recipient-panel">
           <li className="li-message-author-count">
-            <MessageAuthorCount items={mockAvatarData} />
+            <MessageAuthorCount messages={messages} />
           </li>
           <li>
             <ReactionBox />
