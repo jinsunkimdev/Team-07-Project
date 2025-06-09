@@ -8,19 +8,15 @@ const getBreakpoint = () => {
   return "mobile";
 };
 
-const useBreakpoint = () => {
+const useResponsive = () => {
   const [breakpoint, setBreakpoint] = useState(getBreakpoint());
 
   useEffect(() => {
     const handleResize = () => {
-      const next = getBreakpoint();
-      if (next !== breakpoint) {
-        setBreakpoint(next);
-      }
+      setBreakpoint(getBreakpoint());
     };
 
     window.addEventListener("resize", handleResize);
-
     return () => {
       window.removeEventListener("resize", handleResize);
     };
@@ -28,4 +24,4 @@ const useBreakpoint = () => {
   return breakpoint;
 };
 
-export default useBreakpoint;
+export default useResponsive;
