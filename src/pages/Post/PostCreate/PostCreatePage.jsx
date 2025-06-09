@@ -27,11 +27,20 @@ const HeaderWrapper = styled.div`
 
 const MAX_TO_LENGTH = 20;
 
+// 백그라운드 컬러
+const BackgroundColor = {
+  beige: "#FFE2AD",
+  purple: "#ECD9FF",
+  blue: "#B1E4FF",
+  green: "#D0F5C3",
+};
+const AVAILABLE_COLORS = Object.keys(BackgroundColor);
+
 const PostCreatePage = () => {
   const [toInputValue, setToInputValue] = useState("");
   const [toError, setToError] = useState("");
   const [background, setBackground] = useState({
-    backgroundColor: undefined,
+    backgroundColor: AVAILABLE_COLORS[0],
     backgroundImageURL: undefined,
   });
 
@@ -64,29 +73,25 @@ const PostCreatePage = () => {
     }
 
     const formData = {
+      team: "16-7",
       name: toInputValue,
-      backgroundColor: isBackgroundSelected,
-      backgroundImageURL: isBackgroundSelected,
+      backgroundColor: background.backgroundColor,
+      backgroundImageURL: background.backgroundImageURL,
     };
 
     try {
       const result = await createRecipient(formData);
       console.log("롤링페이퍼 생성 성공!: ", result);
+      navigate(`/post/${result.id}`);
     } catch (err) {
       console.log(err.message);
     }
-
-    // navigate(`/post/${fakeId}`);
   };
 
   const isBackgroundSelected =
     background.backgroundColor || background.backgroundImageURL;
 
   const isCreateEnabled = toInputValue.trim() !== "" && isBackgroundSelected;
-
-  useEffect(() => {
-    console.log(isBackgroundSelected);
-  }, [isBackgroundSelected]);
 
   return (
     <div>
