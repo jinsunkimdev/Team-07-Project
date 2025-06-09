@@ -24,13 +24,19 @@ const MessagesPage = () => {
 
   const observerRef = useRef();
 
-  const backgroundStyle = css`
-    min-height: 100vh;
-    background: ${recipient?.backgroundImageURL
-      ? `url(${recipient.backgroundImageURL}) center/cover no-repeat`
-      : recipient?.backgroundColor || "#fff"};
-    transition: background 0.3s ease;
-  `;
+const backgroundStyle = css`
+  min-height: 100vh;
+  background-color: ${recipient?.backgroundColor || "#fff"};
+
+  ${recipient?.backgroundImageURL &&
+  css`
+    background-image: url(${recipient.backgroundImageURL});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  `}
+`;
+
 
 
   useInfiniteScroll({ ref: observerRef, callback: fetchMore, isLast });
