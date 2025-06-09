@@ -12,6 +12,13 @@ import {
   SLIDER_MAX_WIDTH,
 } from "../../constants/constants";
 import Card from "./Card";
+import React from "react";
+
+const MemoizedCardItem = React.memo(({ item }) => (
+  <Link css={card} to={`/post/${item.id}`}>
+    <Card item={item} />
+  </Link>
+));
 
 // 브레이크포인트별 카드 설정
 const SETTINGS = {
@@ -87,9 +94,7 @@ const Slider = ({ items }) => {
       <div css={sliderWrapper} ref={wrapperRef} onScroll={handleScroll}>
         <div css={sliderTrack}>
           {items.map((item) => (
-            <Link css={card} key={item.id} to={`/post/${item.id}`}>
-              <Card item={item} />
-            </Link>
+            <MemoizedCardItem key={item.id} item={item} />
           ))}
         </div>
       </div>

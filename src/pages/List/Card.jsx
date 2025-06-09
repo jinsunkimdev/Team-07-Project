@@ -1,6 +1,7 @@
 import MessageAuthorCount from "../../components/MessageAuthorCount";
 import EmojiBadge from "../../components/Badge/EmojiBadge";
 import { css } from "@emotion/react";
+import React from "react";
 
 const TopReactions = ({ reactions, customStyle }) => {
   if (!reactions || reactions.length === 0) return null;
@@ -39,7 +40,7 @@ const Card = ({ item }) => {
   );
 };
 
-export default Card;
+export default React.memo(Card);
 
 const cardStyle = ({ backgroundColor, backgroundImageURL }) => css`
   width: 100%;

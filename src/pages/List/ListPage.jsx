@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { getCardListItem } from "../../api/get/getCardListItem";
 import Button from "../../components/Button/Button";
 import GlobalHeader from "../../components/Header/GlobalHeader";
@@ -13,6 +13,9 @@ import { BREAKPOINTS } from "../../constants/constants";
 function ListPage() {
   const [newCards, setNewCards] = useState([]);
   const [bestCards, setBestCards] = useState([]);
+
+  const newestCards = useMemo(() => newCards, [newCards]);
+  const popularCards = useMemo(() => bestCards, [bestCards]);
 
   useEffect(() => {
     const fetchCards = async () => {
@@ -49,8 +52,11 @@ function ListPage() {
       <main css={pageWrapper} role="main">
         {/* 슬라이더 섹션 */}
         <section css={section}>
-          <SliderSection title="인기 롤링 페이퍼 🔥" items={bestCards} />
-          <SliderSection title="최근에 만든 롤링 페이퍼⭐️" items={newCards} />
+          <SliderSection title="인기 롤링 페이퍼 🔥" items={popularCards} />
+          <SliderSection
+            title="최근에 만든 롤링 페이퍼⭐️"
+            items={newestCards}
+          />
         </section>
         {/* 하단 CTA 버튼 */}
         <div css={ctaWrapper}>
