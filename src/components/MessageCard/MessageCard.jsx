@@ -1,4 +1,6 @@
 import { css } from "@emotion/react";
+import parse from "html-react-parser";
+import DOMPurify from "dompurify";
 import MessageCardStyle, {
   MessageCardCreatedAtStyle,
   MessageCardContentStyle,
@@ -8,6 +10,7 @@ import MessageCardStyle, {
 import Avatar from "../Avatar";
 import { IconDeleteButton } from "./../Button/IconButtons";
 import formatDate from "../../utils/formatDate";
+import getFontValueByLabel from "../../utils/getFontValueByLabel";
 
 const MessageCard = ({
   messageData = {},
@@ -24,6 +27,7 @@ const MessageCard = ({
     font = "Pretendard",
     createdAt,
   } = messageData || {};
+  const fontValue = getFontValueByLabel(font);
 
   const handleDelete = (e) => {
     e.stopPropagation();
@@ -46,12 +50,12 @@ const MessageCard = ({
           sender={sender}
           profileImageURL={profileImageURL}
           relationship={relationship}
-          font={font}
+          font={fontValue}
         />
         {isEditable && <IconDeleteButton onClick={handleDelete} />}
       </div>
       <div className="card-body">
-        <MessageCard.Content content={content} />
+        <MessageCard.Content content={content} font={fontValue} />
       </div>
       <div className="card-footer">
         <MessageCard.CreatedAt createdAt={createdAt} />
@@ -90,16 +94,19 @@ export const MessageCardProfile = ({
   );
 };
 
-export const MessageCardContent = ({ content, customCss }) => {
+export const MessageCardContent = ({ content, font, customCss }) => {
   const contentStyles = css`
     ${MessageCardContentStyle};
     ${customCss || ""};
   `;
 
+  // content === null || undefined
+  const sanitizedHTML = DOMPurify.sanitize(content || "");
+
   return (
-    <p className="content" css={contentStyles}>
-      {content}
-    </p>
+    <div className="content" css={contentStyles} style={{ fontFamily: font }}>
+      {parse(sanitizedHTML)}
+    </div>
   );
 };
 
