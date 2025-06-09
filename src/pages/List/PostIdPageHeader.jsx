@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { css } from "@emotion/react";
 import { GlobalHeaderStyle } from "../../components/Header/GlobalHeader";
 import { IconShareButton } from "../../components/Button/IconButtons";
@@ -20,15 +21,28 @@ const mockAvatarData = [
   { id: "avatar5", profileImageURL: avatarSampleImg2 },
 ];
 
+// 카카오톡 공유
+const { Kakao } = window;
+
 const PostIdPageHeader = ({ recipient }) => {
   const { showToast } = useToast();
 
+  // 카카오톡 공유용 배포 사이트 변수
+  const realUrl = `https://team-07-project.vercel.app/${location.pathname}`;
+
+  useEffect(() => {
+    // 자신의 js 키를 넣어준다.
+    Kakao.init("7b0c60485254a8ed97545096bcd1ca11");
+    // 잘 적용되면 true 를 뱉는다.
+    console.log(Kakao.isInitialized());
+    return () => Kakao.cleanup();
+  }, []);
+
   const changeShareOption = (option) => {
     if (!option) return;
+    const currentUrl = location.href;
 
     if (option.label === "URL 복사") {
-      const currentUrl = location.href;
-
       // 클립보드에 URL 복사 - 실패
       if (!navigator.clipboard) {
         showToast({
@@ -44,8 +58,28 @@ const PostIdPageHeader = ({ recipient }) => {
     }
 
     if (option.label === "카카오톡 공유") {
-      /* 카카오톡 공유 작업... */
-      console.log("카카오톡 공유하기...");
+      Kakao.Share.sendDefault({
+        objectType: "feed",
+        content: {
+          title:
+            "📜 롤링페이퍼에 메시지를 남겨 소소한 추억을 만들어 보세요! 📜",
+          description: "Rolling",
+          imageUrl: "https://team-07-project.vercel.app/og-image.png", // 절대경로
+          link: {
+            mobileWebUrl: realUrl || currentUrl,
+            webUrl: realUrl || currentUrl,
+          },
+        },
+        buttons: [
+          {
+            title: "롤링페이퍼 보러가기",
+            link: {
+              mobileWebUrl: realUrl || currentUrl,
+              webUrl: realUrl || currentUrl,
+            },
+          },
+        ],
+      });
     }
   };
 
