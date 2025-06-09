@@ -1,10 +1,22 @@
 import styled from "@emotion/styled";
-import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
-import { getColors, getImages } from "../../../api";
+import { getImages } from "../../../api";
 import { IconCheckButton } from "../../../components/Button/IconButtons";
 
-// 스타일 컴포넌트들
+// 백그라운드 컬러
+const Background_Color = {
+  beige: "#FFE2AD",
+  purple: "#ECD9FF",
+  blue: "#B1E4FF",
+  green: "#D0F5C3",
+};
+const AVAILABLE_COLORS = Object.keys(Background_Color);
+
+// 스타일 컴포넌트
+const TabsContentWrapper = styled.div`
+  min-height: 220px;
+`;
+
 const ToggleButtons = styled.div`
   display: flex;
   margin-top: 12px;
@@ -28,18 +40,26 @@ const ToggleButtons = styled.div`
 
 const ColorList = styled.div`
   padding: 40px 0px;
-  display: flex;
-  gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
   margin-top: 12px;
+
+  @media (max-width: 767px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 `;
 
 const ColorOption = styled.button`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
   border: ${({ selected }) => (selected ? "2px solid blue" : "1px solid #ccc")};
   background-color: ${({ color }) => color};
   cursor: pointer;
+  transition: filter 0.3s ease;
+  filter: ${({ selected }) => (selected ? "brightness(100%)" : "none")};
+  position: relative;
 `;
 
 const ImageList = styled.div`
@@ -54,22 +74,25 @@ const ImageList = styled.div`
   }
 `;
 
-const ImageButton = styled.button`
-  position: relative;
+// ImageOption: 이미지 + 클릭 영역통합
+const ImageOption = styled.button`
+  width: 100%;
+  aspect-ratio: 1 / 1;
   padding: 0;
   border: none;
   background: none;
   cursor: pointer;
-`;
+  position: relative;
 
-const Thumbnail = styled.img`
-  width: 100%;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 12px;
-  display: block;
-  transition: filter 0.3s ease;
-  filter: ${({ selected }) => (selected ? "brightness(60%)" : "none")};
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+    display: block;
+    transition: filter 0.3s ease;
+    filter: ${({ selected }) => (selected ? "brightness(120%)" : "none")};
+  }
 `;
 
 const CheckIconWrapper = styled.div`
@@ -78,9 +101,9 @@ const CheckIconWrapper = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
+  color: white;
 `;
 
-// 텍스트 스타일
 const BackgroundLabel = styled.span`
   color: var(--gray-900);
   font-size: var(--font-size-24);
@@ -97,7 +120,6 @@ const SubText = styled.p`
 
 // 컴포넌트 본문
 const SelectBackground = ({ onChange }) => {
-  const [colors, setColors] = useState([]);
   const [images, setImages] = useState([]);
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedImage, setSelectedImage] = useState("");
@@ -105,25 +127,22 @@ const SelectBackground = ({ onChange }) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const colorsData = await getColors();
       const imagesData = await getImages();
-
-      if (Array.isArray(colorsData)) setColors(colorsData);
       if (Array.isArray(imagesData)) setImages(imagesData);
     };
     fetchData();
   }, []);
 
   useEffect(() => {
-    if (colors.length && !selectedColor && !selectedImage && mode === "color") {
-      const firstColor = colors[0];
+    if (!selectedColor && !selectedImage && mode === "color") {
+      const firstColor = AVAILABLE_COLORS[0];
       setSelectedColor(firstColor);
       onChange?.({
         backgroundColor: firstColor,
         backgroundImageURL: undefined,
       });
     }
-  }, [colors, selectedColor, selectedImage, mode, onChange]);
+  }, [selectedColor, selectedImage, mode, onChange]);
 
   const handleColorClick = (color) => {
     setSelectedColor(color);
@@ -157,33 +176,45 @@ const SelectBackground = ({ onChange }) => {
         </button>
       </ToggleButtons>
 
-      {mode === "color" && (
-        <ColorList>
-          {colors.map((color) => (
-            <ColorOption
-              key={color}
-              color={color}
-              selected={selectedColor === color}
-              onClick={() => handleColorClick(color)}
-            />
-          ))}
-        </ColorList>
-      )}
+      <TabsContentWrapper>
+        {mode === "color" && (
+          <ColorList>
+            {AVAILABLE_COLORS.map((color) => (
+              <ColorOption
+                key={color}
+                color={Background_Color[color]}
+                selected={selectedColor === color}
+                onClick={() => handleColorClick(color)}
+              >
+                {selectedColor === color && (
+                  <CheckIconWrapper>
+                    <IconCheckButton />
+                  </CheckIconWrapper>
+                )}
+              </ColorOption>
+            ))}
+          </ColorList>
+        )}
 
-      {mode === "image" && (
-        <ImageList>
-          {images.map((url, idx) => (
-            <ImageButton key={idx} onClick={() => handleImageClick(url)}>
-              <Thumbnail src={url} selected={selectedImage === url} />
-              {selectedImage === url && (
-                <CheckIconWrapper>
-                  <IconCheckButton />
-                </CheckIconWrapper>
-              )}
-            </ImageButton>
-          ))}
-        </ImageList>
-      )}
+        {mode === "image" && (
+          <ImageList>
+            {images.map((url, idx) => (
+              <ImageOption
+                key={idx}
+                onClick={() => handleImageClick(url)}
+                selected={selectedImage === url}
+              >
+                <img src={url} alt="" />
+                {selectedImage === url && (
+                  <CheckIconWrapper>
+                    <IconCheckButton />
+                  </CheckIconWrapper>
+                )}
+              </ImageOption>
+            ))}
+          </ImageList>
+        )}
+      </TabsContentWrapper>
     </div>
   );
 };
