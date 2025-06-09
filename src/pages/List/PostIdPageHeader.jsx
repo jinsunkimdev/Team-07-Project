@@ -11,16 +11,20 @@ import ReactionBox from "../../components/Header/ReactionBox";
 // MessageAuthors 컴포넌트용 mockData
 import avatarSampleImg1 from "../../assets/images/img-avatar-sample.jpg";
 import avatarSampleImg2 from "../../assets/images/img-avatar-default.png";
+import { useMessages } from "../Post/context/MessagesContext";
 
-const mockAvatarData = [
-  { id: "avatar1", profileImageURL: avatarSampleImg1 },
-  { id: "avatar2", profileImageURL: avatarSampleImg2 },
-  { id: "avatar3", profileImageURL: avatarSampleImg1 },
-  { id: "avatar4", profileImageURL: avatarSampleImg2 },
-  { id: "avatar5", profileImageURL: avatarSampleImg2 },
-];
+// const mockAvatarData = [
+//   { id: "avatar1", profileImageURL: avatarSampleImg1 },
+//   { id: "avatar2", profileImageURL: avatarSampleImg2 },
+//   { id: "avatar3", profileImageURL: avatarSampleImg1 },
+//   { id: "avatar4", profileImageURL: avatarSampleImg2 },
+//   { id: "avatar5", profileImageURL: avatarSampleImg2 },
+// ];
 
-const PostIdPageHeader = ({ recipient }) => {
+const PostIdPageHeader = () => {
+  // recipient 데이터 전부
+  const { recipient, messages } = useMessages()
+  console.log("messages=",messages);
   const { showToast } = useToast();
 
   const changeShareOption = (option) => {
@@ -52,10 +56,10 @@ const PostIdPageHeader = ({ recipient }) => {
   return (
     <div css={ListPageHeaderStyle}>
       <div className="header-container">
-        <h2 className="recipient-name">To. {recipient}</h2>
+        <h2 className="recipient-name">To.{recipient?.name || ""}</h2>
         <ul className="recipient-panel">
           <li className="li-message-author-count">
-            <MessageAuthorCount items={mockAvatarData} />
+            <MessageAuthorCount messages={messages} />
           </li>
           <li>
             <ReactionBox />

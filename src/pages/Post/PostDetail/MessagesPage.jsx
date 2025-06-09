@@ -11,6 +11,7 @@ import { useMessages } from "../context/MessagesContext";
 
 const MessagesPage = () => {
   const {
+    recipient,
     editMode,
     selectedIds,
     toggleSelection,
@@ -23,10 +24,19 @@ const MessagesPage = () => {
 
   const observerRef = useRef();
 
+  const backgroundStyle = css`
+    min-height: 100vh;
+    background: ${recipient?.backgroundImageURL
+      ? `url(${recipient.backgroundImageURL}) center/cover no-repeat`
+      : recipient?.backgroundColor || "#fff"};
+    transition: background 0.3s ease;
+  `;
+
+
   useInfiniteScroll({ ref: observerRef, callback: fetchMore, isLast });
 
   return (
-    <>
+    <section css={backgroundStyle}>
       <MessageActionButtons />
       <MessageCardList
         messages={messages}
@@ -37,20 +47,20 @@ const MessagesPage = () => {
           showModal(<MessageCardModal data={data} />)
         }
       />
-      {error && <p css={ErrorTextStyle}>{error}</p>}
-      <div ref={observerRef} css={ObserverSpacerStyle} />
-    </>
+      {error && <p css={errorTextStyle}>{error}</p>}
+      <div ref={observerRef} css={observerSpacerStyle} />
+    </section>
   );
 };
 
-const ErrorTextStyle = css`
+const errorTextStyle = css`
   color: red;
   margin-top: 12px;
   font-size: 14px;
   text-align: center;
 `;
 
-const ObserverSpacerStyle = css`
+const observerSpacerStyle = css`
   height: 1px;
   margin-top: 40px;
 `;
