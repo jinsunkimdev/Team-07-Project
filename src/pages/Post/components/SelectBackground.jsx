@@ -54,7 +54,7 @@ const ColorOption = styled.div`
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 12px;
-  border: ${({ selected }) => (selected ? "2px solid blue" : "1px solid #ccc")};
+  border: transparent;
   background-color: ${({ color }) => color};
   cursor: pointer;
   transition: filter 0.3s ease;
