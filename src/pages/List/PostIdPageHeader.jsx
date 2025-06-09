@@ -27,14 +27,11 @@ const { Kakao } = window;
 const PostIdPageHeader = ({ recipient }) => {
   const { showToast } = useToast();
 
-  // 카카오톡 공유용 배포 사이트 변수
+  // 카카오톡 공유용 배포 사이트
   const realUrl = `https://team-07-project.vercel.app/${location.pathname}`;
 
   useEffect(() => {
-    // 자신의 js 키를 넣어준다.
-    Kakao.init("7b0c60485254a8ed97545096bcd1ca11");
-    // 잘 적용되면 true 를 뱉는다.
-    console.log(Kakao.isInitialized());
+    Kakao.init(import.meta.env.VITE_KAKAO_API_KEY);
     return () => Kakao.cleanup();
   }, []);
 
@@ -64,7 +61,7 @@ const PostIdPageHeader = ({ recipient }) => {
           title:
             "📜 롤링페이퍼에 메시지를 남겨 소소한 추억을 만들어 보세요! 📜",
           description: "Rolling",
-          imageUrl: "https://team-07-project.vercel.app/og-image.png", // 절대경로
+          imageUrl: "https://team-07-project.vercel.app/og-image-md.png", // 절대경로
           link: {
             mobileWebUrl: realUrl || currentUrl,
             webUrl: realUrl || currentUrl,
