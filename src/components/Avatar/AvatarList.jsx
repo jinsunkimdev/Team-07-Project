@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import Avatar from "./Avatar";
 
-const AvatarList = ({ items }) => {
+const AvatarList = ({items = []}) => {
   if (!items || items.length === 0) return null;
 
   const visibleItems = items.slice(0, 3);
@@ -9,9 +9,9 @@ const AvatarList = ({ items }) => {
 
   return (
     <div css={AvatarListStyle}>
-      {visibleItems.slice(0, 3).map((item) => (
+      {visibleItems.map((item) => (
         <Avatar
-          key={item.id}
+          key={item.sender}
           imgSrc={item.profileImageURL}
           size="xs"
           className="avatar-li"
