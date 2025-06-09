@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { getImages } from "../../../api/get/getImages";
 import { IconCheckButton } from "../../../components/Button/IconButtons";
@@ -20,6 +21,9 @@ const SelectBackground = ({ onChange }) => {
 
   const { fetchError, fetchAsync } = useFetch(getImages);
   const [isImageReady, setIsImageReady] = useState(false);
+
+  const isImageFetchError = mode === "image" && fetchError;
+  const isImageFetched = mode === "image" && !fetchError;
 
   const handleColorClick = (color) => {
     setSelectedColor(color);
@@ -134,10 +138,12 @@ const SelectBackground = ({ onChange }) => {
           </ColorList>
         )}
 
-        {mode === "image" && fetchError && (
-          <p>배경 이미지 불러오기에 실패했습니다. 😥</p>
+        {isImageFetchError && (
+          <div css={imageFetchErrorStyle}>
+            배경 이미지 불러오기에 실패했습니다. 😥
+          </div>
         )}
-        {mode === "image" && (
+        {isImageFetched && (
           <ImageList>
             {!isImageReady
               ? Array.from({ length: AVAILABLE_COLORS.length }).map(
@@ -169,6 +175,13 @@ const SelectBackground = ({ onChange }) => {
 };
 
 export default SelectBackground;
+
+const imageFetchErrorStyle = css`
+  min-height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 // 스타일 컴포넌트
 const TabsContentWrapper = styled.div`
