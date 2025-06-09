@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "@emotion/styled";
 import Label from "../../../components/Form/Label";
@@ -7,34 +7,12 @@ import SelectBackground from "../components/SelectBackground";
 import GlobalHeader from "../../../components/Header/GlobalHeader";
 import Button from "../../../components/Button";
 import createRecipient from "../../../api/post/createRecipient";
-
-const Container = styled.div`
-  max-width: 600px;
-  margin: 57px auto 340px;
-  padding: 0 24px;
-`;
-
-// 배경 선택 영역
-const Background = styled.div`
-  margin: 50px 0px;
-`;
-
-const HeaderWrapper = styled.div`
-  @media (max-width: 768px) {
-    display: none;
-  }
-`;
+import { BACKGROUND_COLORS } from "../../../constants/constants";
 
 const MAX_TO_LENGTH = 20;
 
 // 백그라운드 컬러
-const BackgroundColor = {
-  beige: "#FFE2AD",
-  purple: "#ECD9FF",
-  blue: "#B1E4FF",
-  green: "#D0F5C3",
-};
-const AVAILABLE_COLORS = Object.keys(BackgroundColor);
+const AVAILABLE_COLORS = Object.keys(BACKGROUND_COLORS);
 
 const PostCreatePage = () => {
   const [toInputValue, setToInputValue] = useState("");
@@ -132,3 +110,20 @@ const PostCreatePage = () => {
 };
 
 export default PostCreatePage;
+
+const Container = styled.div`
+  max-width: 600px;
+  margin: 57px auto 340px;
+  padding: 0 24px;
+`;
+
+// 배경 선택 영역
+const Background = styled.div`
+  margin: 50px 0px;
+`;
+
+const HeaderWrapper = styled.div`
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
