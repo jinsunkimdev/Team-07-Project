@@ -90,8 +90,8 @@ const ImageOption = styled.div`
     object-fit: cover;
     border-radius: 12px;
     display: block;
-    transition: filter 0.3s ease;
-    filter: ${({ selected }) => (selected ? "brightness(120%)" : "none")};
+    transition: opacity 0.3s ease;
+    opacity: ${({ selected }) => (selected ? "0.3" : "1")};
   }
 `;
 
