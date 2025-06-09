@@ -3,7 +3,7 @@ name: Sync Fork with Upstream
 on:
   schedule:
     - cron: '*/10 * * * *'  # 10분마다 실행 (UTC 기준)
-  workflow_dispatch:
+  workflow_dispatch:        # 수동 실행도 가능
 
 jobs:
   sync:
@@ -27,9 +27,23 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: Merge upstream/main into fork/main with conflict strategy
+        continue-on-error: true
         run: |
           git checkout main
           git merge upstream/main --allow-unrelated-histories -X theirs -m "🔁 Sync from upstream"
+
+      - name: Resolve conflicts by preserving only sync-fork-with-merge.yml
+        if: failure()
+        run: |
+          echo "⚠️ Conflict detected — restoring workflows manually..."
+          mkdir -p .temp
+          mv .github/workflows/sync-fork-with-merge.yml .temp/ || true
+          rm -rf .github/workflows
+          mkdir -p .github/workflows
+          mv .temp/sync-fork-with-merge.yml .github/workflows/ || true
+          rm -rf .temp
+          git add -A .github/workflows
+          git commit -m "resolve: prefer upstream but preserve sync workflow" || echo "No changes to commit"
 
       - name: Keep only sync-fork-with-merge.yml
         run: |
