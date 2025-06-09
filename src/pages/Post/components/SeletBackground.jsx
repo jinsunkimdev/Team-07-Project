@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { getImages } from "../../../api";
 import { IconCheckButton } from "../../../components/Button/IconButtons";
 import { BACKGROUND_COLORS } from "../../../constants/constants";
+import useFetch from "./../../../api/useFetch";
+import Skeleton from "../../../components/Skeleton/Skeleton";
 
 // 백그라운드 컬러
 const AVAILABLE_COLORS = Object.keys(BACKGROUND_COLORS);
@@ -15,6 +17,9 @@ const SelectBackground = ({ onChange }) => {
   const [selectedColor, setSelectedColor] = useState(FIRST_COLOR);
   const [selectedImage, setSelectedImage] = useState("");
   const [mode, setMode] = useState("color");
+
+  const { fetchError, fetchAsync } = useFetch(getImages);
+  const [isImageReady, setIsImageReady] = useState(false);
 
   const handleColorClick = (color) => {
     setSelectedColor(color);
@@ -41,24 +46,53 @@ const SelectBackground = ({ onChange }) => {
     });
   };
 
+  // 배경 이미지 로딩 상태 관리 (스켈레톤 적용 준비)
   useEffect(() => {
-    const fetchData = async () => {
-      const imagesData = await getImages();
-      if (Array.isArray(imagesData)) setImages(imagesData);
+    const loadImages = async () => {
+      try {
+        const imagesData = await fetchAsync();
+        if (!imagesData) return;
 
-      // 배경/컬러 미설정시 기본값으로 첫번째 값 전송 (api 유효값 설정용)
-      setSelectedColor(FIRST_COLOR);
-      const firstImage = imagesData[0];
-      setFirstImage(firstImage);
-      setSelectedImage(firstImage);
+        // 이미지 프리로드
+        const urlsToLoad = imagesData;
+        const preloadPromises = urlsToLoad.map(
+          (src) =>
+            new Promise((resolve) => {
+              const img = new Image();
+              img.src = src;
+              img.onload = () => resolve(src);
+              img.onerror = () => resolve(null);
+            })
+        );
 
-      onChange?.({
-        backgroundColor: FIRST_COLOR,
-        backgroundImageURL: firstImage,
-      });
+        const results = await Promise.allSettled(preloadPromises);
+
+        const successfullyLoaded = results
+          .filter((result) => result.status === "fulfilled")
+          .map((result) => result.value);
+        setImages(successfullyLoaded);
+
+        setIsImageReady(true);
+      } catch (err) {
+        console.error(err);
+      }
     };
-    fetchData();
-  }, [onChange]);
+
+    loadImages();
+  }, [fetchAsync]);
+
+  // 배경/컬러 미설정시 기본값으로 첫번째 값 전송 (api 유효값 설정용)
+  useEffect(() => {
+    setSelectedColor(FIRST_COLOR);
+    const firstImage = images[0];
+    setFirstImage(firstImage);
+    setSelectedImage(firstImage);
+
+    onChange?.({
+      backgroundColor: FIRST_COLOR,
+      backgroundImageURL: firstImage,
+    });
+  }, [onChange, images]);
 
   return (
     <div>
@@ -102,20 +136,28 @@ const SelectBackground = ({ onChange }) => {
 
         {mode === "image" && (
           <ImageList>
-            {images.map((url, idx) => (
-              <ImageOption
-                key={idx}
-                onClick={() => handleImageClick(url)}
-                selected={selectedImage === url}
-              >
-                <img src={url} alt="" />
-                {selectedImage === url && (
-                  <CheckIconWrapper>
-                    <IconCheckButton />
-                  </CheckIconWrapper>
-                )}
-              </ImageOption>
-            ))}
+            {!isImageReady
+              ? Array.from({ length: AVAILABLE_COLORS.length }).map(
+                  (_, idx) => (
+                    <ImageOption key={idx}>
+                      <Skeleton borderRadius="var(--radius-lg)" />
+                    </ImageOption>
+                  )
+                )
+              : images.map((url, idx) => (
+                  <ImageOption
+                    key={idx}
+                    onClick={() => handleImageClick(url)}
+                    selected={selectedImage === url}
+                  >
+                    <img src={url} alt="" />
+                    {selectedImage === url && (
+                      <CheckIconWrapper>
+                        <IconCheckButton />
+                      </CheckIconWrapper>
+                    )}
+                  </ImageOption>
+                ))}
           </ImageList>
         )}
       </TabsContentWrapper>
