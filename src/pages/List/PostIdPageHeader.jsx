@@ -5,7 +5,7 @@ import { BREAKPOINTS } from "../../constants/constants";
 import MessageAuthorCount from "../../components/MessageAuthorCount";
 import DropdownSelect from "../../components/Dropdown/Dropdown";
 import { SHARE_DROPDOWN_ITEMS } from "../../constants/constants";
-import useToast from "./../../components/Toast/useToast";
+import useToast from "../../components/Toast/useToast";
 import ReactionBox from "../../components/Header/ReactionBox";
 
 // MessageAuthors 컴포넌트용 mockData
@@ -20,7 +20,7 @@ const mockAvatarData = [
   { id: "avatar5", profileImageURL: avatarSampleImg2 },
 ];
 
-const ListPageHeader = ({ recipient }) => {
+const PostIdPageHeader = ({ recipient }) => {
   const { showToast } = useToast();
 
   const changeShareOption = (option) => {
@@ -73,7 +73,7 @@ const ListPageHeader = ({ recipient }) => {
   );
 };
 
-export default ListPageHeader;
+export default PostIdPageHeader;
 
 const ListPageHeaderStyle = css`
   ${GlobalHeaderStyle};
@@ -82,9 +82,29 @@ const ListPageHeaderStyle = css`
     display: none;
   }
 
-  @media (min-width: ${BREAKPOINTS.md}px) {
+  @media (min-width: ${BREAKPOINTS.lg}px) {
     .li-message-author-count {
       display: block;
+    }
+  }
+
+  @media (max-width: ${BREAKPOINTS.md - 1}px) {
+    padding: 0;
+
+    .header-container {
+      flex-direction: column;
+    }
+
+    .recipient-name {
+      width: 100%;
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--gray-200);
+      padding: 12px 20px;
+    }
+
+    .recipient-panel {
+      padding: 8px 20px;
     }
   }
 
@@ -95,29 +115,30 @@ const ListPageHeaderStyle = css`
   .recipient-panel {
     display: flex;
     align-items: center;
+    margin-left: auto;
     gap: 14px;
 
     > li {
       position: relative;
 
-      &:before {
+      &::after {
         content: "";
         position: absolute;
-        left: 0;
+        right: 0;
         top: 50%;
-        transform: translate(-50%, -50%);
+        transform: translate(50%, -50%);
         width: 1px;
         height: 28px;
         background-color: var(--gray-200);
       }
 
-      &:first-of-type:before {
+      &.li-action-share::after {
         display: none;
       }
     }
 
-    > li + li {
-      padding-left: 14px;
+    > li:not(.li-action-share) {
+      padding-right: 14px;
     }
   }
 `;

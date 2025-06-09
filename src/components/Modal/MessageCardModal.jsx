@@ -7,11 +7,13 @@ import {
 } from "../MessageCard/MessageCard";
 import Modal from "./Modal";
 import useModal from "./useModal";
+import getFontValueByLabel from "../../utils/getFontValueByLabel";
 
 const MessageCardModal = ({ data }) => {
   const { profileImageURL, sender, relationship, content, font, createdAt } =
     data;
   const { hideModal, modals } = useModal();
+  const fontValue = getFontValueByLabel(font);
 
   // 현재 컴포넌트에 해당하는 모달 ID 찾기
   const currentModal = modals.find(
@@ -33,7 +35,7 @@ const MessageCardModal = ({ data }) => {
           sender={sender}
           profileImageURL={profileImageURL}
           relationship={relationship}
-          font={font}
+          font={fontValue}
         />
         <MessageCardCreatedAt
           createdAt={createdAt}
@@ -46,6 +48,7 @@ const MessageCardModal = ({ data }) => {
       <Modal.body>
         <MessageCardContent
           content={content}
+          font={fontValue}
           customCss={css`
             display: block;
             overflow: visible;

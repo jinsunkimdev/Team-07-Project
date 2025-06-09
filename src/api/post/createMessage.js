@@ -1,4 +1,3 @@
-import { BASE_URL } from "../../constants/env";
 import { TEAM, CARDINAL_NUMBER } from "../../constants/constants";
 
 const RECIPIENTS = "recipients";
