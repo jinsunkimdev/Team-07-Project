@@ -11,11 +11,13 @@ const BackgroundColor = {
   green: "#D0F5C3",
 };
 const AVAILABLE_COLORS = Object.keys(BackgroundColor);
+const FIRST_COLOR = AVAILABLE_COLORS[0];
 
 // 컴포넌트 본문
 const SelectBackground = ({ onChange }) => {
   const [images, setImages] = useState([]);
-  const [selectedColor, setSelectedColor] = useState("");
+  const [firstImage, setFirstImage] = useState("");
+  const [selectedColor, setSelectedColor] = useState(FIRST_COLOR);
   const [selectedImage, setSelectedImage] = useState("");
   const [mode, setMode] = useState("color");
 
@@ -23,50 +25,44 @@ const SelectBackground = ({ onChange }) => {
     const fetchData = async () => {
       const imagesData = await getImages();
       if (Array.isArray(imagesData)) setImages(imagesData);
+
+      // 배경/컬러 미설정시 기본값으로 첫번째 값 전송 (api 유효값 설정용)
+      setSelectedColor(FIRST_COLOR);
+      const firstImage = imagesData[0];
+      setFirstImage(firstImage);
+      setSelectedImage(firstImage);
+
+      onChange?.({
+        backgroundColor: FIRST_COLOR,
+        backgroundImageURL: firstImage,
+      });
     };
     fetchData();
-  }, []);
-
-  useEffect(() => {
-    if (!selectedColor && mode === "color") {
-      const firstColor = AVAILABLE_COLORS[0];
-      setSelectedColor(firstColor);
-      onChange?.({
-        backgroundColor: firstColor,
-        backgroundImageURL: undefined,
-      });
-    } else if (!selectedImage && mode === "image" && images.length > 0) {
-      const firstImage = images[0];
-      if (selectedImage !== firstImage) {
-        setSelectedImage(firstImage);
-        onChange?.({
-          backgroundColor: undefined,
-          backgroundImageURL: firstImage,
-        });
-      }
-    }
-  }, [selectedColor, selectedImage, mode, images, onChange]);
+  }, [onChange]);
 
   const handleColorClick = (color) => {
     setSelectedColor(color);
-    setSelectedImage("");
-    onChange?.({ backgroundColor: color, backgroundImageURL: undefined });
+    onChange?.({ backgroundColor: color, backgroundImageURL: selectedImage });
   };
 
   const handleImageClick = (url) => {
     setSelectedImage(url);
-    setSelectedColor("");
-    onChange?.({ backgroundColor: undefined, backgroundImageURL: url });
+    onChange?.({ backgroundColor: selectedColor, backgroundImageURL: url });
   };
 
-  const handleChangeMode = (mode) => {
-    setMode(mode);
-    if (mode === "color") {
-      setSelectedImage("");
+  const handleChangeMode = (newMode) => {
+    setMode(newMode);
+
+    if (newMode === "color") {
+      setSelectedColor(FIRST_COLOR);
+    } else if (newMode === "image" && images.length > 0) {
+      setSelectedImage(firstImage);
     }
-    if (mode === "image") {
-      setSelectedColor("");
-    }
+
+    onChange?.({
+      backgroundColor: FIRST_COLOR,
+      backgroundImageURL: firstImage,
+    });
   };
 
   return (
