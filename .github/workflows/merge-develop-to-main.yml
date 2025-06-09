@@ -31,3 +31,4 @@ jobs:
           git pull origin main
           git merge develop --no-edit
           git push origin main
+
