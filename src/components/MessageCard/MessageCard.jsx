@@ -27,6 +27,7 @@ const MessageCard = ({
     font = "Pretendard",
     createdAt,
   } = messageData || {};
+  const fontValue = getFontValueByLabel(font);
 
   const handleDelete = (e) => {
     e.stopPropagation();
@@ -49,15 +50,12 @@ const MessageCard = ({
           sender={sender}
           profileImageURL={profileImageURL}
           relationship={relationship}
-          font={getFontValueByLabel(font)}
+          font={fontValue}
         />
         {isEditable && <IconDeleteButton onClick={handleDelete} />}
       </div>
       <div className="card-body">
-        <MessageCard.Content
-          content={content}
-          font={getFontValueByLabel(font)}
-        />
+        <MessageCard.Content content={content} font={fontValue} />
       </div>
       <div className="card-footer">
         <MessageCard.CreatedAt createdAt={createdAt} />
