@@ -11,7 +11,6 @@ export const getImages = async () => {
     const data = await response.json();
     return data.imageUrls || [];
   } catch (error) {
-    console.error("오류가 발생했습니다.", error);
-    return [];
+    throw new Error(error);
   }
 };

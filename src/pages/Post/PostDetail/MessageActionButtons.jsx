@@ -36,7 +36,7 @@ const MessageActionButtons = () => {
 const ButtonGroupStyle = css`
   display: flex;
   gap: 10px;
-  margin: 16px 0 16px 0;
+  margin: 0 0 16px 0;
 `;
 
 export default MessageActionButtons;

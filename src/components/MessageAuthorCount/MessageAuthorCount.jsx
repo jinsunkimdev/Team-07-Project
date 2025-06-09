@@ -1,7 +1,10 @@
 import { css } from "@emotion/react";
 import AvatarList from "../Avatar/AvatarList";
+import { extractUniqueSenders } from "../../utils/extractUniqueSenders";
 
-const MessageAuthorCount = ({ items, customStyle }) => {
+const MessageAuthorCount = ({ messages, customStyle }) => {
+   const items = extractUniqueSenders(messages);
+
   if (!items || items.length === 0) return null;
 
   return (

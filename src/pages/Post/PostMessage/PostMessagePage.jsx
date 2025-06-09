@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { css } from "@emotion/react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
@@ -41,6 +42,10 @@ const PostMessagePage = () => {
   // 반응형
   const breakpoint = useBreakpoint();
 
+  // params
+  const { id: recipientId } = useParams();
+  const navigate = useNavigate();
+
   const handleFromInputChange = (value) => {
     setFromInputValue(value);
 
@@ -82,11 +87,11 @@ const PostMessagePage = () => {
     };
 
     try {
-      const result = await createMessage({
-        recipientId: 11836, // 임시 생성 id
+      await createMessage({
+        recipientId,
         data: formData,
       });
-      console.log("메시지 작성 성공!: ", result);
+      navigate(`/post/${recipientId}`);
     } catch (err) {
       console.log("메시지 작성 실패!: ", err.message);
     }
@@ -106,10 +111,7 @@ const PostMessagePage = () => {
     <>
       <GlobalHeader />
       <section css={PostMessagePageStyle}>
-        <form
-          onSubmit={handleSubmit}
-          css={PostMessageFormStyle({ messageValueError })}
-        >
+        <form css={PostMessageFormStyle({ messageValueError })}>
           <div className="form-control">
             <Label inputId="fromInput" value="From." />
             <Input
@@ -166,6 +168,7 @@ const PostMessagePage = () => {
             size="lg"
             style={{ width: "100%" }}
             disabled={fromInputValue.trim() === "" || isMessageEmpty}
+            onClick={handleSubmit}
           >
             생성하기
           </Button>
