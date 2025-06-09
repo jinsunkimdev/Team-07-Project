@@ -72,7 +72,7 @@ const DropdownSelect = ({
         {customButton ? (
           customButton
         ) : (
-          <button css={selectedTrigger} disabled={false}>
+          <button css={selectedTrigger} disabled={false} type="button">
             {selectedValue?.label}
             <img src={isOpen ? iconArrowTop : iconArrowDown} alt="toggle" />
           </button>
