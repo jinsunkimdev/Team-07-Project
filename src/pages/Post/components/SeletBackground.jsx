@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
-import { getImages } from "../../../api";
+import { getImages } from "../../../api/get/getImages";
 import { IconCheckButton } from "../../../components/Button/IconButtons";
 import { BACKGROUND_COLORS } from "../../../constants/constants";
 import useFetch from "./../../../api/useFetch";
@@ -134,6 +134,9 @@ const SelectBackground = ({ onChange }) => {
           </ColorList>
         )}
 
+        {mode === "image" && fetchError && (
+          <p>배경 이미지 불러오기에 실패했습니다. 😥</p>
+        )}
         {mode === "image" && (
           <ImageList>
             {!isImageReady
