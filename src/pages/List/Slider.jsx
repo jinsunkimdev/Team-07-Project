@@ -11,6 +11,7 @@ import {
   SLIDER_GAP,
   SLIDER_MAX_WIDTH,
 } from "../../constants/constants";
+import Card from "./Card";
 
 // 브레이크포인트별 카드 설정
 const SETTINGS = {
@@ -30,6 +31,7 @@ const SETTINGS = {
 
 const Slider = ({ items }) => {
   // 뷰포트에 따른 설정 가져오기
+  console.log("▶ Slider items:", items);
   const breakpoint = useBreakpoint();
   const { cardWidth, visibleCount } = SETTINGS[breakpoint] || SETTINGS.desktop;
 
@@ -83,8 +85,8 @@ const Slider = ({ items }) => {
       <div css={sliderWrapper} ref={wrapperRef} onScroll={handleScroll}>
         <div css={sliderTrack}>
           {items.map((item) => (
-            <Link key={item.id} to={`/post/${item.id}`} css={card}>
-              {item.title}
+            <Link css={card} key={item.id} to={`/post/${item.id}`}>
+              <Card item={item} />
             </Link>
           ))}
         </div>
@@ -107,7 +109,6 @@ const sliderOuter = css`
 // 래퍼: 가로 스크롤 + 스냅 + 스크롤바 숨김
 const sliderWrapper = css`
   width: 100%;
-  border: 1px solid #666;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
@@ -131,7 +132,6 @@ const sliderTrack = css`
 
 // 카드: 크기, 스냅 정렬, 기본 스타일
 const card = css`
-  border: 1px solid #333;
   flex-shrink: 0;
 
   /* 스냅 정렬 */
