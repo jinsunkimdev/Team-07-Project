@@ -147,12 +147,13 @@ const card = css`
 
   /* 모바일 기본 크기 */
   width: ${CARD_WIDTH_MOBILE}px;
-  height: 232px;
+  height: 256px;
+  padding: 12px 0;
 
   /* 반응형 크기 조절 */
   @media (min-width: ${BREAKPOINTS.md}px) {
     width: ${CARD_WIDTH_DESKTOP}px;
-    height: 260px;
+    height: 284px;
   }
 
   /* 데스크탑에서 스냅 강제 적용 */
