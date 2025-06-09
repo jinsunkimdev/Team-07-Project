@@ -29,7 +29,6 @@ const useMessagesPage = () => {
     const fetchRecipient = async () => {
       try {
         const data = await getRecipient({ id: recipientId });
-        console.log(`data=${recipient}`);
         setRecipient(data);
       } catch (err) {
         console.error("recipient 로딩 실패", err);

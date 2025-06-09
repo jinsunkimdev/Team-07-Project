@@ -12,6 +12,7 @@ import ReactionBox from "../../components/Header/ReactionBox";
 // MessageAuthors 컴포넌트용 mockData
 import avatarSampleImg1 from "../../assets/images/img-avatar-sample.jpg";
 import avatarSampleImg2 from "../../assets/images/img-avatar-default.png";
+import { useMessages } from "../Post/context/MessagesContext";
 
 const mockAvatarData = [
   { id: "avatar1", profileImageURL: avatarSampleImg1 },
@@ -27,7 +28,6 @@ const { Kakao } = window;
 const PostIdPageHeader = () => {
   // recipient 데이터 전부
   const { recipient, messages } = useMessages()
-  console.log("messages=",messages);
   const { showToast } = useToast();
 
   // 카카오톡 공유용 배포 사이트
