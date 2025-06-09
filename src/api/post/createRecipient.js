@@ -1,6 +1,5 @@
 const createRecipient = async (data) => {
   const url = `https://rolling-api.vercel.app/16-7/recipients/`;
-  console.log(data);
 
   const res = await fetch(url, {
     method: "POST",
