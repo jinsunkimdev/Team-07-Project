@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import MainPage from "../pages/Main/components/MainPage.jsx";
 import ListPage from "../pages/List/ListPage";
 import StyleGuidePage from "../pages/StyleGuide/StyleGuidePage";
-import PostCreatePage from "../pages/Post/PostCreatePage.jsx";
+import PostCreatePage from "../pages/Post/PostCreate/PostCreatePage.jsx";
 import PostMessagePage from "../pages/Post/PostMessage/PostMessagePage.jsx";
 import PostDetailPage from "../pages/Post/PostDetail/PostDetailPage.jsx";
 

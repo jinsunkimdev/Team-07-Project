@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import useBreakpoint from "./hooks/useResponsive";
+import useResponsive from "./hooks/useResponsive";
 import Pagination from "./Pagination";
 import {
   BREAKPOINTS,
@@ -30,7 +30,7 @@ const SETTINGS = {
 
 const Slider = ({ items }) => {
   // 뷰포트에 따른 설정 가져오기
-  const breakpoint = useBreakpoint();
+  const breakpoint = useResponsive();
   const { cardWidth, visibleCount } = SETTINGS[breakpoint] || SETTINGS.desktop;
 
   // 슬라이드 범위 계산
