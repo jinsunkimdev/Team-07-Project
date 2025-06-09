@@ -1,13 +1,16 @@
-import Button from "../../../../components/Button";
-import { ButtonGroupStyle } from "./MessagesPageStyle";
+import { css } from "@emotion/react";
+import Button from "../../../components/Button";
+import { useMessages } from "../context/MessagesContext";
 
-const MessageActionButtons = ({
-  editMode,
-  selectedIds,
-  handleDeleteSelected,
-  handleEditButton,
-  handleToggleSelectAll,
-}) => {
+const MessageActionButtons = () => {
+  const {
+    editMode,
+    selectedIds,
+    handleDeleteSelected,
+    handleEditButton,
+    handleToggleSelectAll,
+  } = useMessages();
+
   return (
     <div css={ButtonGroupStyle}>
       {editMode ? (
@@ -17,7 +20,7 @@ const MessageActionButtons = ({
           </Button>
           <Button
             onClick={handleDeleteSelected}
-            disabled={selectedIds.length === 0}
+            disabled={!selectedIds.length}
           >
             🗑 선택 삭제 ({selectedIds.length}개)
           </Button>
@@ -29,5 +32,11 @@ const MessageActionButtons = ({
     </div>
   );
 };
+
+const ButtonGroupStyle = css`
+  display: flex;
+  gap: 10px;
+  margin: 16px 0 16px 0;
+`;
 
 export default MessageActionButtons;
