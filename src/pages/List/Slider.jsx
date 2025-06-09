@@ -31,7 +31,6 @@ const SETTINGS = {
 
 const Slider = ({ items }) => {
   // 뷰포트에 따른 설정 가져오기
-  console.log("▶ Slider items:", items);
   const breakpoint = useBreakpoint();
   const { cardWidth, visibleCount } = SETTINGS[breakpoint] || SETTINGS.desktop;
 
@@ -50,7 +49,10 @@ const Slider = ({ items }) => {
   const handleScroll = () => {
     const scrollLeft = wrapperRef.current?.scrollLeft || 0;
     const idx = Math.round(scrollLeft / (cardWidth + gap));
-    setSlideIndex(idx);
+
+    if (idx !== slideIndex) {
+      setSlideIndex(idx);
+    }
   };
 
   // 이전/다음 버튼 클릭 시 스크롤 이동 (only 데스크탑)
