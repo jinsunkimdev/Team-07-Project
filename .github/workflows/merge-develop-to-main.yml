@@ -9,13 +9,16 @@ on:
 jobs:
   merge:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write  # ✅ push 권한 명시 필요
+
     steps:
-      - name: Checkout repo
+      - name: Checkout develop branch
         uses: actions/checkout@v4
         with:
-          ref: main
+          ref: develop
+          fetch-depth: 0  # 전체 기록 가져오기
           token: ${{ secrets.GITHUB_TOKEN }}
-          fetch-depth: 0
 
       - name: Configure Git
         run: |
@@ -24,6 +27,7 @@ jobs:
 
       - name: Merge develop into main
         run: |
-          git fetch origin develop
-          git merge origin/develop --no-edit
+          git checkout main
+          git pull origin main
+          git merge develop --no-edit
           git push origin main
