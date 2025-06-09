@@ -23,6 +23,5 @@ const emojiBadgeStyle = css`
 `;
 
 const EMOJI_SIZE = css`
-  font-size: 20px;
   line-height: 20px;
 `;
