@@ -6,7 +6,7 @@ export const Fonts = () => (
       /* Pretendard */
       @font-face {
         font-family: "Pretendard";
-        src: url("/src/assets/fonts/PretendardVariable.woff2") format("woff2");
+        src: url("/fonts/PretendardVariable.woff2") format("woff2");
         font-weight: 400 500 700;
         font-display: swap;
       }
@@ -14,19 +14,19 @@ export const Fonts = () => (
       /* Noto Sans KR */
       @font-face {
         font-family: "Noto Sans";
-        src: url("/src/assets/fonts/NotoSansKR-Regular.woff") format("woff");
+        src: url("/fonts/NotoSansKR-Regular.woff") format("woff");
         font-weight: 400;
         font-display: swap;
       }
       @font-face {
         font-family: "Noto Sans";
-        src: url("/src/assets/fonts/NotoSansKR-Medium.woff") format("woff");
+        src: url("/fonts/NotoSansKR-Medium.woff") format("woff");
         font-weight: 500;
         font-display: swap;
       }
       @font-face {
         font-family: "Noto Sans";
-        src: url("/src/assets/fonts/NotoSansKR-Bold.woff") format("woff");
+        src: url("/fonts/NotoSansKR-Bold.woff") format("woff");
         font-weight: 700;
         font-display: swap;
       }
@@ -34,13 +34,13 @@ export const Fonts = () => (
       /* 나눔명조 */
       @font-face {
         font-family: "NanumMyeongjo";
-        src: url("/src/assets/fonts/NanumMyeongjo.ttf") format("truetype");
+        src: url("/fonts/NanumMyeongjo.woff") format("woff");
         font-weight: 400;
         font-display: swap;
       }
       @font-face {
         font-family: "NanumMyeongjo";
-        src: url("/src/assets/fonts/NanumMyeongjoBold.ttf") format("truetype");
+        src: url("/fonts/NanumMyeongjoBold.woff") format("woff");
         font-weight: 700;
         font-display: swap;
       }
@@ -48,7 +48,7 @@ export const Fonts = () => (
       /* 나눔손글씨 손편지체 */
       @font-face {
         font-family: "NanumLetter";
-        src: url("/src/assets/fonts/NanumLetter.ttf") format("truetype");
+        src: url("/fonts/NanumLetter.woff") format("woff");
         font-weight: 400;
         font-display: swap;
       }
