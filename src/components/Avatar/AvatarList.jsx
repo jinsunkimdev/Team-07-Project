@@ -1,7 +1,7 @@
 import { css } from "@emotion/react";
 import Avatar from "./Avatar";
 
-const AvatarList = ({items = []}) => {
+const AvatarList = ({ items = [] }) => {
   if (!items || items.length === 0) return null;
 
   const visibleItems = items.slice(0, 3);
@@ -43,10 +43,11 @@ const AvatarListStyle = css`
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 28px;
-    aspect-ratio: 1/1;
+    padding: 0 4px;
+    height: 28px;
+    aspect-ratio: 1 / 1;
     background-color: var(--white);
-    border-radius: 50%;
+    border-radius: 20px;
     border: 1.4px solid var(--border-color);
     color: var(--secondary);
     font-size: var(--font-size-12);
