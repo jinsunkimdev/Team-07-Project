@@ -3,6 +3,7 @@ import MessageAuthorCount from "../../components/MessageAuthorCount";
 import EmojiBadge from "../../components/Badge/EmojiBadge";
 import { css } from "@emotion/react";
 import { BREAKPOINTS } from "../../constants/constants";
+import { BACKGROUND_COLORS } from "../../constants/constants";
 
 const TopReactions = ({ reactions, customStyle }) => {
   if (!reactions || reactions.length === 0) return null;
@@ -47,7 +48,7 @@ const cardStyle = ({ backgroundColor, backgroundImageURL }) => css`
   height: 100%;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 16px;
-  background-color: ${backgroundColor || "transparent"};
+  background-color: ${BACKGROUND_COLORS[backgroundColor] || "transparent"};
   background-image: ${backgroundImageURL
     ? `url(${backgroundImageURL})`
     : "none"};
