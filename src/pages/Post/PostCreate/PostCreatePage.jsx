@@ -36,7 +36,7 @@ const PostCreatePage = () => {
 
   const handleBlur = () => {
     if (toInputValue.trim() === "") {
-      setToError("값을 입력해 주세요");
+      setToError("이름을 한 글자 이상 입력해 주세요.");
     } else if (toInputValue.length > MAX_TO_LENGTH) {
       setToError(`이름은 ${MAX_TO_LENGTH}자 이상 입력할 수 없어요.`);
     } else {
@@ -46,7 +46,7 @@ const PostCreatePage = () => {
 
   const handleCreatePostPage = async () => {
     if (toInputValue.trim() === "") {
-      setToError("값을 입력해 주세요");
+      setToError("이름을 한 글자 이상 입력해 주세요.");
       return;
     }
 

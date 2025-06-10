@@ -1,11 +1,21 @@
 import { css } from "@emotion/react";
 import AvatarList from "../Avatar/AvatarList";
-import { extractUniqueSenders } from "../../utils/extractUniqueSenders";
+import useSenderMap from "../../pages/Post/hooks/useSenderMap";
+import { useMemo } from "react";
 
 const MessageAuthorCount = ({ messages = [], customStyle }) => {
-  const items = extractUniqueSenders(messages);
+   const senderMap = useSenderMap(messages);
 
-  if (!items || items.length === 0) return null;
+  const items = useMemo(
+    () =>
+      Object.entries(senderMap).map(([sender, { profileImageURL }]) => ({
+        sender,
+        profileImageURL,
+      })),
+    [senderMap]
+  );
+
+  if (!items.length) return null;
 
   return (
     <div css={[MessageAuthorCountStyle, customStyle]}>
