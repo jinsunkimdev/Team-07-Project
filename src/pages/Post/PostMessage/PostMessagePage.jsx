@@ -56,7 +56,7 @@ const PostMessagePage = () => {
 
   const handleFromInputBlur = () => {
     if (fromInputValue.trim() === "") {
-      setFromInputError("이름을 입력해 주세요!");
+      setFromInputError("이름을 한 글자 이상 입력해 주세요.");
     } else if (fromInputValue.trim().length >= NAME_MAX_LENGTH) {
       setFromInputError(`이름은 ${NAME_MAX_LENGTH}자 이상 입력할 수 없어요.`);
     } else setFromInputError("");
@@ -65,13 +65,14 @@ const PostMessagePage = () => {
   const handleMessageInputBlur = (_range, _source, editor) => {
     const textOnly = editor.getText().trim(); // Quill의 실제 텍스트 추출
     if (!textOnly) {
-      setMessageValueError("내용을 입력해 주세요!");
+      setMessageValueError("내용을 한 글자 이상 입력해 주세요.");
     } else {
       setMessageValueError("");
     }
   };
 
   const handleProfileImage = (selectedImageSrc) => {
+    console.log(selectedImageSrc);
     setProfileImageSrc(selectedImageSrc);
   };
 
