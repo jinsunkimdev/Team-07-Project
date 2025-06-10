@@ -27,7 +27,7 @@ const { Kakao } = window;
 
 const PostIdPageHeader = () => {
   // recipient 데이터 전부
-  const { recipient, messages } = useMessages()
+  const { recipient, messages } = useMessages();
   const { showToast } = useToast();
 
   // 카카오톡 공유용 배포 사이트
@@ -86,7 +86,7 @@ const PostIdPageHeader = () => {
   return (
     <div css={ListPageHeaderStyle}>
       <div className="header-container">
-        <h2 className="recipient-name">To.{recipient?.name || ""}</h2>
+        <h2 className="recipient-name">To. {recipient?.name || ""}</h2>
         <ul className="recipient-panel">
           <li className="li-message-author-count">
             <MessageAuthorCount messages={messages} />

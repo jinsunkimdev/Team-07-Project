@@ -24,4 +24,5 @@ const AddMessageCardButtonStyle = css`
   ${MessageCardStyle}
 
   align-items: center;
+  min-height: 230px;
 `;

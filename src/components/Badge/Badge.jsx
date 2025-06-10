@@ -35,6 +35,7 @@ const badgeStyle = css`
   width: 41px;
   height: 20px;
   border-radius: 4px;
+  font-family: "Pretendard", sans-serif !important;
 `;
 
 export default Badge;
