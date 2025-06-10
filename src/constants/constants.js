@@ -59,6 +59,7 @@ export const FONTS_ITEMS = [
 ];
 
 export const SLIDER_GAP = 20;
+export const SLIDER_GAP_MOBILE = 12;
 export const CARD_WIDTH_DESKTOP = 275;
 export const CARD_WIDTH_TABLET = 275;
 export const CARD_WIDTH_MOBILE = 208;

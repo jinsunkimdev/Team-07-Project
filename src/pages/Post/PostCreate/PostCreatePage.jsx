@@ -54,7 +54,7 @@ const PostCreatePage = () => {
       team: "16-7",
       name: toInputValue,
       backgroundColor: background.backgroundColor,
-      backgroundImageURL: background.backgroundImageURL,
+      backgroundImageURL: background.backgroundImageURL || null,
     };
 
     try {

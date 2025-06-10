@@ -10,6 +10,7 @@ import {
   CARD_WIDTH_MOBILE,
   SLIDER_GAP,
   SLIDER_MAX_WIDTH,
+  SLIDER_GAP_MOBILE,
 } from "../../constants/constants";
 import Card from "./Card";
 import React from "react";
@@ -25,26 +26,29 @@ const SETTINGS = {
   desktop: {
     cardWidth: CARD_WIDTH_DESKTOP, // 데스크탑 카드 너비 (275px)
     visibleCount: 4, // 한 번에 보이는 카드 개수
+    gap: SLIDER_GAP,
   },
   tablet: {
     cardWidth: CARD_WIDTH_TABLET, // 태블릿 카드 너비
     visibleCount: 2.5, // 한 번에 보이는 카드 개수 (2.5개)
+    gap: SLIDER_GAP,
   },
   mobile: {
     cardWidth: CARD_WIDTH_MOBILE, // 모바일 카드 너비 (208px)
     visibleCount: 1.5, // 한 번에 보이는 카드 개수 (1.5개)
+    gap: SLIDER_GAP_MOBILE,
   },
 };
 
 const Slider = ({ items }) => {
   // 뷰포트에 따른 설정 가져오기
   const breakpoint = useResponsive();
-  const { cardWidth, visibleCount } = SETTINGS[breakpoint] || SETTINGS.desktop;
+  const { cardWidth, visibleCount, gap } =
+    SETTINGS[breakpoint] || SETTINGS.desktop;
 
   // 슬라이드 범위 계산
   const TOTAL_COUNT = items.length;
   const maxIndex = Math.max(0, Math.ceil(TOTAL_COUNT - visibleCount));
-  const gap = SLIDER_GAP;
   const isDesktop = breakpoint === "desktop";
   const showPagination = isDesktop && items.length > visibleCount;
 
@@ -92,10 +96,14 @@ const Slider = ({ items }) => {
 
       {/* 스크롤 영역: 항상 카로 스크롤 + 스냅*/}
       <div css={sliderWrapper} ref={wrapperRef} onScroll={handleScroll}>
-        <div css={sliderTrack}>
-          {items.map((item) => (
-            <MemoizedCardItem key={item.id} item={item} />
-          ))}
+        <div css={sliderTrackWrapper}>
+          <div css={spacer} /> {/* 왼쪽 여백 */}
+          <div css={sliderTrack}>
+            {items.map((item) => (
+              <MemoizedCardItem key={item.id} item={item} />
+            ))}
+          </div>
+          <div css={spacer} /> {/* 오른쪽 여백 */}
         </div>
       </div>
     </div>
@@ -111,6 +119,16 @@ const sliderOuter = css`
   max-width: ${SLIDER_MAX_WIDTH}px;
   margin: 0 auto;
   position: relative;
+`;
+
+const sliderTrackWrapper = css`
+  display: flex;
+  align-items: stretch;
+`;
+
+const spacer = css`
+  flex-shrink: 0;
+  width: 20px;
 `;
 
 // 래퍼: 가로 스크롤 + 스냅 + 스크롤바 숨김
@@ -134,7 +152,11 @@ const sliderWrapper = css`
 // 트랙: flex 레이아웃 + 카드 간격
 const sliderTrack = css`
   display: flex;
-  gap: ${SLIDER_GAP}px;
+  gap: ${SLIDER_GAP_MOBILE}px;
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    gap: ${SLIDER_GAP}px;
+  }
 `;
 
 // 카드: 크기, 스냅 정렬, 기본 스타일

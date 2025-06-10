@@ -27,12 +27,18 @@ const SelectBackground = ({ onChange }) => {
 
   const handleColorClick = (color) => {
     setSelectedColor(color);
-    onChange?.({ backgroundColor: color, backgroundImageURL: selectedImage });
+    onChange?.({
+      backgroundColor: color,
+      backgroundImageURL: mode === "color" ? null : selectedImage, // 색상 모드일 때 이미지 제거
+    });
   };
 
   const handleImageClick = (url) => {
     setSelectedImage(url);
-    onChange?.({ backgroundColor: selectedColor, backgroundImageURL: url });
+    onChange?.({
+      backgroundColor: selectedColor,
+      backgroundImageURL: mode === "image" ? url : null, // 이미지 모드일 때만 설정
+    });
   };
 
   const handleChangeMode = (newMode) => {
@@ -40,13 +46,14 @@ const SelectBackground = ({ onChange }) => {
 
     if (newMode === "color") {
       setSelectedColor(FIRST_COLOR);
+      setSelectedImage(null);
     } else if (newMode === "image" && images.length > 0) {
       setSelectedImage(firstImage);
     }
 
     onChange?.({
-      backgroundColor: FIRST_COLOR,
-      backgroundImageURL: firstImage,
+      backgroundColor: newMode === "color" ? FIRST_COLOR : selectedColor,
+      backgroundImageURL: newMode === "image" ? firstImage : null,
     });
   };
 
