@@ -19,10 +19,6 @@ const MessageCardListStyle = css`
     grid-template-columns: repeat(3, 1fr);
     gap: 28px 24px;
   }
-
-  .empty-message {
-    font-size: var(--font-size-18);
-  }
 `;
 
 export default MessageCardListStyle;
