@@ -1,27 +1,39 @@
 import { Link } from "react-router-dom";
 import { css } from "@emotion/react";
-
+import { useEffect, useState, useMemo } from "react";
+import { getCardListItem } from "../../api/get/getCardListItem";
 import Button from "../../components/Button/Button";
 import GlobalHeader from "../../components/Header/GlobalHeader";
 import Slider from "./Slider";
 import { BREAKPOINTS } from "../../constants/constants";
 
 //  슬라이더에 들어갈 목업 아이템
-export const mockItems = [
-  { id: 1, title: "Card 1" },
-  { id: 2, title: "Card 2" },
-  { id: 3, title: "Card 3" },
-  { id: 4, title: "Card 4" },
-  { id: 5, title: "Card 5" },
-  { id: 6, title: "Card 6" },
-  { id: 7, title: "Card 7" },
-  { id: 8, title: "Card 8" },
-  { id: 9, title: "Card 9" },
-  { id: 10, title: "Card 10" },
-];
 
 //  리스트 페이지 컴포넌트
 function ListPage() {
+  const [newCards, setNewCards] = useState([]);
+  const [bestCards, setBestCards] = useState([]);
+
+  const newestCards = useMemo(() => newCards, [newCards]);
+  const popularCards = useMemo(() => bestCards, [bestCards]);
+
+  useEffect(() => {
+    const fetchCards = async () => {
+      try {
+        const [newest, popular] = await Promise.all([
+          getCardListItem({ limit: 20, ordering: "-createdAt" }),
+          getCardListItem({ limit: 20, ordering: "-reactionCount" }),
+        ]);
+        setNewCards(Array.isArray(newest.results) ? newest.results : []);
+        setBestCards(Array.isArray(popular.results) ? popular.results : []);
+      } catch (err) {
+        console.error("불러오기 실패:", err);
+      }
+    };
+
+    fetchCards();
+  }, []);
+
   return (
     <div>
       {/* 상단 글로벌 헤더 + CTA 버튼 */}
@@ -40,8 +52,11 @@ function ListPage() {
       <main css={pageWrapper} role="main">
         {/* 슬라이더 섹션 */}
         <section css={section}>
-          <SliderSection title="인기 롤링 페이퍼 🔥" items={mockItems} />
-          <SliderSection title="최근에 만든 롤링 페이퍼⭐️" items={mockItems} />
+          <SliderSection title="인기 롤링 페이퍼 🔥" items={popularCards} />
+          <SliderSection
+            title="최근에 만든 롤링 페이퍼⭐️"
+            items={newestCards}
+          />
         </section>
         {/* 하단 CTA 버튼 */}
         <div css={ctaWrapper}>
