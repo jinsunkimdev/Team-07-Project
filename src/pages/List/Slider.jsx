@@ -11,6 +11,14 @@ import {
   SLIDER_GAP,
   SLIDER_MAX_WIDTH,
 } from "../../constants/constants";
+import Card from "./Card";
+import React from "react";
+
+const MemoizedCardItem = React.memo(({ item }) => (
+  <Link css={card} to={`/post/${item.id}`}>
+    <Card item={item} />
+  </Link>
+));
 
 // 브레이크포인트별 카드 설정
 const SETTINGS = {
@@ -48,7 +56,10 @@ const Slider = ({ items }) => {
   const handleScroll = () => {
     const scrollLeft = wrapperRef.current?.scrollLeft || 0;
     const idx = Math.round(scrollLeft / (cardWidth + gap));
-    setSlideIndex(idx);
+
+    if (idx !== slideIndex) {
+      setSlideIndex(idx);
+    }
   };
 
   // 이전/다음 버튼 클릭 시 스크롤 이동 (only 데스크탑)
@@ -83,9 +94,7 @@ const Slider = ({ items }) => {
       <div css={sliderWrapper} ref={wrapperRef} onScroll={handleScroll}>
         <div css={sliderTrack}>
           {items.map((item) => (
-            <Link key={item.id} to={`/post/${item.id}`} css={card}>
-              {item.title}
-            </Link>
+            <MemoizedCardItem key={item.id} item={item} />
           ))}
         </div>
       </div>
@@ -107,7 +116,6 @@ const sliderOuter = css`
 // 래퍼: 가로 스크롤 + 스냅 + 스크롤바 숨김
 const sliderWrapper = css`
   width: 100%;
-  border: 1px solid #666;
   overflow-x: auto;
   overflow-y: hidden;
   -webkit-overflow-scrolling: touch;
@@ -131,7 +139,6 @@ const sliderTrack = css`
 
 // 카드: 크기, 스냅 정렬, 기본 스타일
 const card = css`
-  border: 1px solid #333;
   flex-shrink: 0;
 
   /* 스냅 정렬 */
@@ -140,12 +147,13 @@ const card = css`
 
   /* 모바일 기본 크기 */
   width: ${CARD_WIDTH_MOBILE}px;
-  height: 232px;
+  height: 256px;
+  padding: 12px 0;
 
   /* 반응형 크기 조절 */
   @media (min-width: ${BREAKPOINTS.md}px) {
     width: ${CARD_WIDTH_DESKTOP}px;
-    height: 260px;
+    height: 284px;
   }
 
   /* 데스크탑에서 스냅 강제 적용 */

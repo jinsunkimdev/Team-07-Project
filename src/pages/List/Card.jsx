@@ -1,6 +1,7 @@
 import MessageAuthorCount from "../../components/MessageAuthorCount";
 import EmojiBadge from "../../components/Badge/EmojiBadge";
 import { css } from "@emotion/react";
+import React from "react";
 
 const TopReactions = ({ reactions, customStyle }) => {
   if (!reactions || reactions.length === 0) return null;
@@ -22,9 +23,9 @@ const TopReactions = ({ reactions, customStyle }) => {
 const Card = ({ item }) => {
   return (
     <div css={cardStyle(item)}>
-      <div css={cardWrapper}>
+      <div css={cardWrapper(item)}>
         <div css={textBox}>
-          <h2>{item.name}</h2>
+          <h2>To. {item.name}</h2>
           <MessageAuthorCount
             items={item.recentMessages}
             customStyle={authorCount}
@@ -39,7 +40,7 @@ const Card = ({ item }) => {
   );
 };
 
-export default Card;
+export default React.memo(Card);
 
 const cardStyle = ({ backgroundColor, backgroundImageURL }) => css`
   width: 100%;
@@ -54,14 +55,20 @@ const cardStyle = ({ backgroundColor, backgroundImageURL }) => css`
   background-position: center;
   display: flex;
   flex-direction: column;
+  color: ${backgroundImageURL ? "#fff" : "#000"};
+  overflow: hidden;
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.14);
 `;
 
-const cardWrapper = css`
+const cardWrapper = ({ backgroundImageURL }) => css`
   height: 100%;
   padding: 30px 0 0 24px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  background-color: ${backgroundImageURL
+    ? "rgba(0, 0, 0, 0.5)"
+    : "transparent"};
 `;
 
 const textBox = css`
@@ -81,5 +88,6 @@ const topReactions = css`
   font-size: var(--font-size-14);
   gap: 4px;
   padding: 17px 0;
+  margin-right: 24px;
   border-top: 1px solid rgba(0, 0, 0, 0.12);
 `;
