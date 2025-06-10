@@ -56,7 +56,7 @@ const PostMessagePage = () => {
 
   const handleFromInputBlur = () => {
     if (fromInputValue.trim() === "") {
-      setFromInputError("값을 입력해 주세요.");
+      setFromInputError("이름을 한 글자 이상 입력해 주세요.");
     } else if (fromInputValue.trim().length >= NAME_MAX_LENGTH) {
       setFromInputError(`이름은 ${NAME_MAX_LENGTH}자 이상 입력할 수 없어요.`);
     } else setFromInputError("");
@@ -65,14 +65,30 @@ const PostMessagePage = () => {
   const handleMessageInputBlur = (_range, _source, editor) => {
     const textOnly = editor.getText().trim(); // Quill의 실제 텍스트 추출
     if (!textOnly) {
-      setMessageValueError("값을 입력해 주세요.");
+      setMessageValueError("내용을 한 글자 이상 입력해 주세요.");
     } else {
       setMessageValueError("");
     }
   };
 
   const handleProfileImage = (selectedImageSrc) => {
+    console.log(selectedImageSrc);
     setProfileImageSrc(selectedImageSrc);
+  };
+
+  const handleEditorTextChange = (value, _delta, _source, editor) => {
+    setMessageValue(value);
+
+    const editorInnerText = editor?.getText().trim();
+    const editorEl = textEditorRef.current?.editor?.root;
+
+    if (editorEl) {
+      if (editorInnerText.length > 0) {
+        editorEl.setAttribute("data-placeholder", "");
+      } else {
+        editorEl.setAttribute("data-placeholder", "하고 싶은 말을 적어보세요.");
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -141,13 +157,13 @@ const PostMessagePage = () => {
             />
           </div>
           <div className="form-control">
-            <Label value="내용을 입력해 주세요" />
+            <Label value="내용을 입력해 주세요." />
             <ReactQuill
               ref={textEditorRef}
               theme="snow"
               value={messageValue}
-              placeholder="하고 싶은 말을 적어보세요..."
-              onChange={setMessageValue}
+              placeholder="하고 싶은 말을 적어보세요."
+              onChange={handleEditorTextChange}
               onBlur={handleMessageInputBlur}
             />
             {messageValueError && (
