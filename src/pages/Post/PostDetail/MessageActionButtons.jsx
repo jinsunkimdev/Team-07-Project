@@ -35,6 +35,10 @@ const ButtonGroupStyle = css`
   justify-content: flex-end;
   gap: 10px;
   margin: 0 0 16px 0;
+
+  button {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.2);
+  }
 `;
 
 export default MessageActionButtons;
