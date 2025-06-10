@@ -72,7 +72,7 @@ const PostCreatePage = () => {
   const isCreateEnabled = toInputValue.trim() !== "" && isBackgroundSelected;
 
   return (
-    <div>
+    <section>
       <GlobalHeader />
 
       <form css={PostCreateFormStyle} onSubmit={(e) => e.preventDefault()}>
@@ -103,7 +103,7 @@ const PostCreatePage = () => {
           </Button>
         </div>
       </form>
-    </div>
+    </section>
   );
 };
 
