@@ -44,7 +44,6 @@ const Avatar = ({
           e.target.src = avatarDefaultImg;
           setIsLoaded(true);   // ← 실패했어도 로딩 완료 처리
         }}
-        loading="lazy"
       />
     </div>
   );
