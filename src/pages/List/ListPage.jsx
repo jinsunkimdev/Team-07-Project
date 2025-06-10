@@ -21,8 +21,8 @@ function ListPage() {
     const fetchCards = async () => {
       try {
         const [newest, popular] = await Promise.all([
-          getCardListItem({ limit: 20, ordering: "-createdAt" }),
-          getCardListItem({ limit: 20, ordering: "-reactionCount" }),
+          getCardListItem({ limit: 20 }),
+          getCardListItem({ limit: 20, sort: "like" }),
         ]);
         setNewCards(Array.isArray(newest.results) ? newest.results : []);
         setBestCards(Array.isArray(popular.results) ? popular.results : []);
