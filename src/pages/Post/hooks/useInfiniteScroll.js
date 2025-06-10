@@ -8,7 +8,7 @@ const useInfiniteScroll = ({ ref, callback, isLast }) => {
       ([entry]) => {
         if (entry.isIntersecting) callback();
       },
-      { threshold: 1.0, rootMargin: "300px 0px" }
+      { threshold: 1.0, rootMargin: "100px 0px" }
     );
 
     observer.observe(ref.current);

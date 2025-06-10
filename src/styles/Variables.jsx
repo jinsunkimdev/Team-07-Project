@@ -104,7 +104,7 @@ export const Variables = () => (
         --content-padding: 24px 20px;
 
         /* header */
-        --header-padding: 16px;
+        --header-padding: 11px;
 
         /* modal */
         --modal-width: 600px;
@@ -113,7 +113,7 @@ export const Variables = () => (
       @media (min-width: ${BREAKPOINTS.md}px) {
         :root {
           /* header */
-          --header-padding: 16px 24px;
+          --header-padding: 11px 24px;
         }
       }
 
@@ -124,7 +124,7 @@ export const Variables = () => (
           --content-padding: 0;
 
           /* header */
-          --header-padding: 16px 0;
+          --header-padding: 11px 0;
         }
       }
     `}

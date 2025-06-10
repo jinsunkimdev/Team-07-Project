@@ -41,13 +41,14 @@ const MessagesPage = () => {
           }
         />
         {error && <p css={errorTextStyle}>{error}</p>}
-        <div ref={observerRef} css={observerSpacerStyle} />
       </div>
+        <div ref={observerRef} css={observerSpacerStyle} />
     </section>
   );
 };
 
 const MessagesPageStyle = ({ recipient }) => css`
+  position: relative;
   min-height: 100vh;
   background-color: ${BACKGROUND_COLORS[recipient?.backgroundColor] || "#fff"};
 
@@ -58,6 +59,19 @@ const MessagesPageStyle = ({ recipient }) => css`
     background-position: center;
     background-size: cover;
   `}
+
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    ${recipient?.backgroundImageURL && "display: block"};
+  }
 
   .messages-container {
     position: relative;
@@ -84,7 +98,13 @@ const errorTextStyle = css`
 
 const observerSpacerStyle = css`
   height: 1px;
-  margin-top: 40px;
+  margin-top: 60px;
+    @media (min-width: ${BREAKPOINTS.md}px) {
+      margin-top: 100px; 
+    }
+    @media (min-width: ${BREAKPOINTS.lg}px) {
+      margin-top: 150px; 
+    }
 `;
 
 export default MessagesPage;

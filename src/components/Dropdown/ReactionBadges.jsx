@@ -49,7 +49,11 @@ const ReactionBadges = ({ refreshTrigger }) => {
 
   return (
     <div ref={dropdownSelectRef} css={ReactionsWrapper}>
-      <div onClick={toggle}>
+      <div
+        onClick={() => {
+          if (sortReactions.length > 0) toggle();
+        }}
+      >
         <div css={topCountReaction}>
           {sortReactions &&
             sortReactions
