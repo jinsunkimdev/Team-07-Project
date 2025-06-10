@@ -41,8 +41,8 @@ const MessagesPage = () => {
           }
         />
         {error && <p css={errorTextStyle}>{error}</p>}
-        <div ref={observerRef} css={observerSpacerStyle} />
       </div>
+        <div ref={observerRef} css={observerSpacerStyle} />
     </section>
   );
 };
@@ -98,7 +98,13 @@ const errorTextStyle = css`
 
 const observerSpacerStyle = css`
   height: 1px;
-  margin-top: 40px;
+  margin-top: 60px;
+    @media (min-width: ${BREAKPOINTS.md}px) {
+      margin-top: 100px; 
+    }
+    @media (min-width: ${BREAKPOINTS.lg}px) {
+      margin-top: 150px; 
+    }
 `;
 
 export default MessagesPage;
