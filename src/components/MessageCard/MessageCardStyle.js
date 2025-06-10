@@ -43,9 +43,12 @@ export default MessageCardStyle;
 export const MessageCardProfileStyle = css`
   display: flex;
   gap: 14px;
+  align-items: center;
 
   .sender-name {
     display: block;
+    margin-bottom: 8px;
+    line-height: 1;
     font-size: var(--font-size-16);
   }
 
