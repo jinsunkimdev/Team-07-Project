@@ -68,11 +68,10 @@ const HeaderButton = () => (
     variant="outlined"
     size="md"
     css={css`
-      width: 157px;
-      height: 40px;
+      width: auto;
+      height: auto;
       display: block;
       @media (max-width: ${BREAKPOINTS.md}px) {
-        width: 142px;
         font-size: var(--font-size-14);
       }
     `}
@@ -120,10 +119,12 @@ const pageWrapper = css`
   margin-top: 24px;
   @media (min-width: ${BREAKPOINTS.md}px) {
     gap: 30px;
+    margin-top: 50px;
+    padding-bottom: 24px;
   }
   @media (min-width: ${BREAKPOINTS.lg}px) {
-    margin-top: 48px;
-    padding-bottom: 48px;
+    margin-top: 60px;
+    padding-bottom: 174px;
   }
 `;
 
@@ -241,7 +242,11 @@ const breakLine = css`
 
 export const responsiveBox = css`
   width: 100%;
-  max-width: clamp(320px, 90vw, 1200px);
+  max-width: clamp(320px, 100%, 1200px);
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    max-width: clamp(320px, 90vw, 1200px);
+  }
 `;
 
 // 하단 '구경해보기' 버튼 스타일 (정렬 + 반응형 너비)
