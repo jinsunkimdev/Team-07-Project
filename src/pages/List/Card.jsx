@@ -16,6 +16,11 @@ const TopReactions = ({ reactions, customStyle }) => {
           id={reaction.id}
           emoji={reaction.emoji}
           count={Number(reaction.count) > 99 ? "99+" : reaction.count}
+          customStyle={css`
+            @media (max-width: ${BREAKPOINTS.md}px) {
+              padding: 6px 8px;
+            }
+          `}
         />
       ))}
     </div>
