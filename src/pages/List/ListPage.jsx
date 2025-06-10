@@ -14,47 +14,56 @@ import { getMessages } from "../../api/get/getMessages";
 function ListPage() {
   const [newCards, setNewCards] = useState([]);
   const [bestCards, setBestCards] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const newestCards = useMemo(() => newCards, [newCards]);
   const popularCards = useMemo(() => bestCards, [bestCards]);
 
   useEffect(() => {
-  const fetchCards = async () => {
-    try {
-      const [newest, popular] = await Promise.all([
-        getCardListItem({ limit: 20 }),
-        getCardListItem({ limit: 20, sort: "like" }),
-      ]);
+    const fetchCards = async () => {
+      try {
+        const [newest, popular] = await Promise.all([
+          getCardListItem({ limit: 20 }),
+          getCardListItem({ limit: 20, sort: "like" }),
+        ]);
 
-      const newestWithMessages = await Promise.all(
-        newest.results.map(async (item) => {
-          const res = await getMessages({ id: item.id, limit: item.messageCount });
-          return {
-            ...item,
-            recentMessages: res.results || [],
-          };
-        })
-      );
+        const newestWithMessages = await Promise.all(
+          newest.results.map(async (item) => {
+            const res = await getMessages({
+              id: item.id,
+              limit: item.messageCount,
+            });
+            return {
+              ...item,
+              recentMessages: res.results || [],
+            };
+          })
+        );
 
-      const popularWithMessages = await Promise.all(
-        popular.results.map(async (item) => {
-          const res = await getMessages({ id: item.id, limit: item.messageCount });
-          return {
-            ...item,
-            recentMessages: res.results || [],
-          };
-        })
-      );
+        const popularWithMessages = await Promise.all(
+          popular.results.map(async (item) => {
+            const res = await getMessages({
+              id: item.id,
+              limit: item.messageCount,
+            });
+            return {
+              ...item,
+              recentMessages: res.results || [],
+            };
+          })
+        );
 
-      setNewCards(newestWithMessages);
-      setBestCards(popularWithMessages);
-    } catch (err) {
-      console.error("불러오기 실패:", err);
-    }
-  };
+        setNewCards(newestWithMessages);
+        setBestCards(popularWithMessages);
+      } catch (err) {
+        console.error("불러오기 실패:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  fetchCards();
-}, []);
+    fetchCards();
+  }, []);
 
   return (
     <div>
@@ -74,10 +83,15 @@ function ListPage() {
       <main css={pageWrapper} role="main">
         {/* 슬라이더 섹션 */}
         <section css={section}>
-          <SliderSection title="인기 롤링 페이퍼 🔥" items={popularCards} />
+          <SliderSection
+            title="인기 롤링 페이퍼 🔥"
+            items={popularCards}
+            isLoading={isLoading}
+          />
           <SliderSection
             title="최근에 만든 롤링 페이퍼⭐️"
             items={newestCards}
+            isLoading={isLoading}
           />
         </section>
         {/* 하단 CTA 버튼 */}
@@ -96,11 +110,11 @@ function ListPage() {
     </div>
   );
 
-  function SliderSection({ title, items }) {
+  function SliderSection({ title, items, isLoading }) {
     return (
       <div css={sliderBlock}>
         <h2 css={sliderTitle}>{title}</h2>
-        <Slider items={items} />
+        <Slider items={items} isLoading={isLoading} />
       </div>
     );
   }
