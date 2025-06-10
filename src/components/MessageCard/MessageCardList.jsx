@@ -1,3 +1,4 @@
+import { css } from "@emotion/react";
 import MessageCardListStyle from "./MessageCardListStyle";
 import MessageCard from "./MessageCard";
 import AddMessageCardButton from "./AddMessageCardButton";
@@ -63,10 +64,24 @@ function EmptyMessageCardList({ editMode }) {
   }
 
   return (
-    <div css={MessageCardListStyle}>
-      <p className="empty-message">아직 등록된 메시지가 없어요!</p>
+    <div css={EmptyMessageListStyle}>
+      <div className="empty-message">등록된 메시지가 없습니다.</div>
     </div>
   );
 }
 
 export default MessageCardList;
+
+const EmptyMessageListStyle = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background-color: var(--white);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+
+  .empty-message {
+    font-size: var(--font-size-18);
+  }
+`;

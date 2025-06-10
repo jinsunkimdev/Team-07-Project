@@ -39,7 +39,7 @@ const useInfiniteMessages = ({ sort = "", limit = 6 }) => {
       setError(""); // 성공했으면 에러 없앰
     } catch (error) {
       console.error("메시지를 불러오지 못했습니다:", error);
-      setError("유효하지 않은 사용자 ID입니다.");
+      setError("등록되어 있지 않은 사용자 ID입니다.");
       setIsLast(true); // 에러 발생 시 무한스크롤 멈추기
     } finally {
       setLoading(false);
