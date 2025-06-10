@@ -1,4 +1,5 @@
 import { css } from "@emotion/react";
+import { useEffect } from "react";
 
 const TabButtons = ({ btns, onClick }) => {
   const handleTabButtonClick = (e) => {
@@ -20,6 +21,11 @@ const TabButtons = ({ btns, onClick }) => {
     // 부모 컴포넌트로 버튼 텍스트 전달
     onClick(targetBtn.value);
   };
+
+  useEffect(() => {
+    const firstTabBtn = document.querySelector(".tab-btns-container button");
+    firstTabBtn.classList.add("active");
+  }, []);
 
   return (
     <div css={TabButtonsStyle}>
