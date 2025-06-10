@@ -48,6 +48,7 @@ const MessagesPage = () => {
 };
 
 const MessagesPageStyle = ({ recipient }) => css`
+  position: relative;
   min-height: 100vh;
   background-color: ${BACKGROUND_COLORS[recipient?.backgroundColor] || "#fff"};
 
@@ -58,6 +59,19 @@ const MessagesPageStyle = ({ recipient }) => css`
     background-position: center;
     background-size: cover;
   `}
+
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
+    ${recipient?.backgroundImageURL && "display: block"};
+  }
 
   .messages-container {
     position: relative;
