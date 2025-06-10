@@ -92,10 +92,14 @@ const Slider = ({ items }) => {
 
       {/* 스크롤 영역: 항상 카로 스크롤 + 스냅*/}
       <div css={sliderWrapper} ref={wrapperRef} onScroll={handleScroll}>
-        <div css={sliderTrack}>
-          {items.map((item) => (
-            <MemoizedCardItem key={item.id} item={item} />
-          ))}
+        <div css={sliderTrackWrapper}>
+          <div css={spacer} /> {/* 왼쪽 여백 */}
+          <div css={sliderTrack}>
+            {items.map((item) => (
+              <MemoizedCardItem key={item.id} item={item} />
+            ))}
+          </div>
+          <div css={spacer} /> {/* 오른쪽 여백 */}
         </div>
       </div>
     </div>
@@ -111,6 +115,16 @@ const sliderOuter = css`
   max-width: ${SLIDER_MAX_WIDTH}px;
   margin: 0 auto;
   position: relative;
+`;
+
+const sliderTrackWrapper = css`
+  display: flex;
+  align-items: stretch;
+`;
+
+const spacer = css`
+  flex-shrink: 0;
+  width: 20px;
 `;
 
 // 래퍼: 가로 스크롤 + 스냅 + 스크롤바 숨김
