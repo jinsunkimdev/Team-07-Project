@@ -9,6 +9,13 @@ import useInfiniteScroll from "../hooks/useInfiniteScroll";
 import MessageActionButtons from "./MessageActionButtons";
 import { useMessages } from "../context/MessagesContext";
 
+const backgroundColorMap = {
+  beige: "var(--beige-200)",
+  purple: "var(--purple-200)",
+  blue: "var(--blue-200)",
+  green: "var(--green-200)",
+};
+
 const MessagesPage = () => {
   const {
     recipient,
@@ -24,25 +31,10 @@ const MessagesPage = () => {
 
   const observerRef = useRef();
 
-const backgroundStyle = css`
-  min-height: 100vh;
-  background-color: ${recipient?.backgroundColor || "#fff"};
-
-  ${recipient?.backgroundImageURL &&
-  css`
-    background-image: url(${recipient.backgroundImageURL});
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: cover;
-  `}
-`;
-
-
-
   useInfiniteScroll({ ref: observerRef, callback: fetchMore, isLast });
 
   return (
-    <section css={backgroundStyle}>
+    <section css={backgroundStyle({ recipient })}>
       <MessageActionButtons />
       <MessageCardList
         messages={messages}
@@ -58,6 +50,19 @@ const backgroundStyle = css`
     </section>
   );
 };
+
+const backgroundStyle = ({ recipient }) => css`
+  min-height: 100vh;
+  background-color: ${backgroundColorMap[recipient?.backgroundColor] || "#fff"};
+
+  ${recipient?.backgroundImageURL &&
+  css`
+    background-image: url(${recipient.backgroundImageURL});
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+  `}
+`;
 
 const errorTextStyle = css`
   color: red;
