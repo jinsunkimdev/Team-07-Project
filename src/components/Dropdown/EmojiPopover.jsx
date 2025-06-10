@@ -23,9 +23,6 @@ const EmojiPopover = ({ setRefreshTrigger }) => {
     } catch (error) {
       console.log("이모지 post 실패!", error);
     } finally {
-      console.log(" id:", id);
-      console.log(" emoji:", emoji.native);
-
       close();
     }
   };
