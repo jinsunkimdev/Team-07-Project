@@ -22,6 +22,8 @@ export const GlobalHeaderStyle = css`
   position: sticky;
   top: 0;
   z-index: 99;
+  display: flex;
+  align-items: center;
   height: 64px;
   padding: var(--header-padding);
   background-color: var(--white);
