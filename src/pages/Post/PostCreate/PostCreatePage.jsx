@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import styled from "@emotion/styled";
+import { css } from "@emotion/react";
 import Label from "../../../components/Form/Label";
 import Input from "../../../components/Form/Input";
 import SelectBackground from "../components/SelectBackground";
 import GlobalHeader from "../../../components/Header/GlobalHeader";
 import Button from "../../../components/Button";
 import createRecipient from "../../../api/post/createRecipient";
-import { BACKGROUND_COLORS } from "../../../constants/constants";
+import { BACKGROUND_COLORS, BREAKPOINTS } from "../../../constants/constants";
 
 const MAX_TO_LENGTH = 20;
 
@@ -72,12 +72,10 @@ const PostCreatePage = () => {
   const isCreateEnabled = toInputValue.trim() !== "" && isBackgroundSelected;
 
   return (
-    <div>
-      <HeaderWrapper>
-        <GlobalHeader />
-      </HeaderWrapper>
+    <section>
+      <GlobalHeader />
 
-      <Container>
+      <form css={PostCreateFormStyle} onSubmit={(e) => e.preventDefault()}>
         <Label value="To." />
         <Input
           value={toInputValue}
@@ -89,9 +87,9 @@ const PostCreatePage = () => {
           autoFocus
         />
 
-        <Background>
+        <div css={SelectBackgroundStyle}>
           <SelectBackground onChange={setBackground} />
-        </Background>
+        </div>
 
         <div>
           <Button
@@ -104,26 +102,33 @@ const PostCreatePage = () => {
             생성하기
           </Button>
         </div>
-      </Container>
-    </div>
+      </form>
+    </section>
   );
 };
 
 export default PostCreatePage;
 
-const Container = styled.div`
+const PostCreateFormStyle = css`
   max-width: 600px;
-  margin: 57px auto 340px;
-  padding: 0 24px;
+  margin: 26px auto 0;
+  padding: 24px 20px;
+
+  @media (min-width: ${BREAKPOINTS.lg}px) {
+    margin: 60px auto 0;
+    padding: 0 24px 60px;
+  }
 `;
 
 // 배경 선택 영역
-const Background = styled.div`
-  margin: 50px 0px;
-`;
+const SelectBackgroundStyle = css`
+  margin: 28px 0;
 
-const HeaderWrapper = styled.div`
-  @media (max-width: 768px) {
-    display: none;
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    margin: 40px 0px;
+  }
+
+  @media (min-width: ${BREAKPOINTS.lg}px) {
+    margin: 46px 0px;
   }
 `;
