@@ -28,7 +28,7 @@ const Card = ({ item }) => {
         <div css={textBox}>
           <h2 css={toName}>To. {item.name}</h2>
           <MessageAuthorCount
-            items={item.recentMessages}
+            messages={item.recentMessages}
             customStyle={authorCount}
           />
         </div>
