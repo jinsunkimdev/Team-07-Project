@@ -14,6 +14,7 @@ import {
 } from "../../constants/constants";
 import Card from "./Card";
 import React from "react";
+import Skeleton from "../../components/Skeleton";
 
 const MemoizedCardItem = React.memo(({ item }) => (
   <Link css={card} to={`/post/${item.id}`}>
@@ -40,7 +41,7 @@ const SETTINGS = {
   },
 };
 
-const Slider = ({ items }) => {
+const Slider = ({ items, isLoading }) => {
   // 뷰포트에 따른 설정 가져오기
   const breakpoint = useResponsive();
   const { cardWidth, visibleCount, gap } =
@@ -99,9 +100,21 @@ const Slider = ({ items }) => {
         <div css={sliderTrackWrapper}>
           <div css={spacer} /> {/* 왼쪽 여백 */}
           <div css={sliderTrack}>
-            {items.map((item) => (
-              <MemoizedCardItem key={item.id} item={item} />
-            ))}
+            {isLoading
+              ? Array.from({ length: Math.ceil(visibleCount) + 1 }).map(
+                  (_, index) => (
+                    <div css={card} key={`skeleton-${index}`}>
+                      <Skeleton
+                        width="100%"
+                        height="100%"
+                        borderRadius="16px"
+                      />
+                    </div>
+                  )
+                )
+              : items.map((item) => (
+                  <MemoizedCardItem key={item.id} item={item} />
+                ))}
           </div>
           <div css={spacer} /> {/* 오른쪽 여백 */}
         </div>
