@@ -1,8 +1,8 @@
 import { css } from "@emotion/react";
 
-const EmojiBadge = ({ emoji, count }) => {
+const EmojiBadge = ({ emoji, count, customStyle }) => {
   return (
-    <div css={emojiBadgeStyle}>
+    <div css={[emojiBadgeStyle, customStyle]}>
       <span css={EMOJI_SIZE}>{emoji}</span>
       <span>{count}</span>
     </div>
