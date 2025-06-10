@@ -24,21 +24,23 @@ export const GlobalHeaderStyle = css`
   z-index: 99;
   display: flex;
   align-items: center;
-  height: 64px;
+  height: auto;
   padding: var(--header-padding);
   background-color: var(--white);
   border-bottom: 1px solid #ededed;
+
+  @media (min-width: ${BREAKPOINTS.lg}px) {
+    height: 64px;
+
+    .header-container {
+      margin: 0 auto;
+    }
+  }
 
   .header-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: var(--content-width);
-  }
-
-  @media (min-width: ${BREAKPOINTS.lg}px) {
-    .header-container {
-      margin: 0 auto;
-    }
   }
 `;
