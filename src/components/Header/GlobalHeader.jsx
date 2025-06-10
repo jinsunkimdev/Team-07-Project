@@ -21,7 +21,8 @@ export default GlobalHeader;
 export const GlobalHeaderStyle = css`
   position: sticky;
   top: 0;
-  z-index: 99;
+  z-index: 999;
+  height: 64px;
   padding: var(--header-padding);
   background-color: var(--white);
   border-bottom: 1px solid #ededed;
