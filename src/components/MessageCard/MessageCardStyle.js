@@ -42,11 +42,14 @@ export default MessageCardStyle;
 
 export const MessageCardProfileStyle = css`
   display: flex;
-  gap: 10px;
+  gap: 14px;
+  align-items: center;
 
   .sender-name {
     display: block;
-    font-size: var(--font-size-18);
+    margin-bottom: 8px;
+    line-height: 1;
+    font-size: var(--font-size-16);
   }
 
   @media (min-width: ${BREAKPOINTS.md}px) {

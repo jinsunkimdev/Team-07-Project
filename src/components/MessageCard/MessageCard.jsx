@@ -11,6 +11,7 @@ import Avatar from "../Avatar";
 import { IconDeleteButton } from "./../Button/IconButtons";
 import formatDate from "../../utils/formatDate";
 import getFontValueByLabel from "../../utils/getFontValueByLabel";
+import Badge from "../Badge/Badge";
 
 const MessageCard = ({
   messageData = {},
@@ -86,8 +87,7 @@ export const MessageCardProfile = ({
           From. <b>{sender}</b>
         </span>
         <span className="relationship">
-          {/* badge 컴포넌트로 교체 예정 */}
-          {relationship}
+          <Badge relationshipLabel={relationship} />
         </span>
       </div>
     </div>
