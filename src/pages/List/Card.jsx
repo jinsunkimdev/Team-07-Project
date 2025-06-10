@@ -2,6 +2,7 @@ import MessageAuthorCount from "../../components/MessageAuthorCount";
 import EmojiBadge from "../../components/Badge/EmojiBadge";
 import { css } from "@emotion/react";
 import React from "react";
+import { BREAKPOINTS } from "../../constants/constants";
 
 const TopReactions = ({ reactions, customStyle }) => {
   if (!reactions || reactions.length === 0) return null;
@@ -25,7 +26,7 @@ const Card = ({ item }) => {
     <div css={cardStyle(item)}>
       <div css={cardWrapper(item)}>
         <div css={textBox}>
-          <h2>To. {item.name}</h2>
+          <h2 css={toName}>To. {item.name}</h2>
           <MessageAuthorCount
             items={item.recentMessages}
             customStyle={authorCount}
@@ -57,7 +58,7 @@ const cardStyle = ({ backgroundColor, backgroundImageURL }) => css`
   flex-direction: column;
   color: ${backgroundImageURL ? "#fff" : "#000"};
   overflow: hidden;
-  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.14);
+  box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
 `;
 
 const cardWrapper = ({ backgroundImageURL }) => css`
@@ -77,10 +78,23 @@ const textBox = css`
   gap: 12px;
 `;
 
+const toName = css`
+  font-size: var(--font-size-18);
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    font-size: var(--font-size-24);
+  }
+`;
+
 const authorCount = css`
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+  font-size: var(--font-size-14);
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    font-size: var(--font-size-16);
+  }
 `;
 
 const topReactions = css`
@@ -90,4 +104,8 @@ const topReactions = css`
   padding: 17px 0;
   margin-right: 24px;
   border-top: 1px solid rgba(0, 0, 0, 0.12);
+
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    font-size: var(--font-size-16);
+  }
 `;
