@@ -27,7 +27,6 @@ const SelectBackground = ({ onChange }) => {
 
   const handleColorClick = (color) => {
     setSelectedColor(color);
-    // onChange?.({ backgroundColor: color, backgroundImageURL: selectedImage });
     onChange?.({
       backgroundColor: color,
       backgroundImageURL: mode === "color" ? null : selectedImage, // 색상 모드일 때 이미지 제거
@@ -36,7 +35,6 @@ const SelectBackground = ({ onChange }) => {
 
   const handleImageClick = (url) => {
     setSelectedImage(url);
-    // onChange?.({ backgroundColor: selectedColor, backgroundImageURL: url });
     onChange?.({
       backgroundColor: selectedColor,
       backgroundImageURL: mode === "image" ? url : null, // 이미지 모드일 때만 설정
