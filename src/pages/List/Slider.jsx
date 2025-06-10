@@ -101,7 +101,7 @@ const Slider = ({ items, isLoading }) => {
           <div css={spacer} /> {/* 왼쪽 여백 */}
           <div css={sliderTrack}>
             {isLoading
-              ? Array.from({ length: Math.ceil(visibleCount) }).map(
+              ? Array.from({ length: Math.ceil(visibleCount) + 1 }).map(
                   (_, index) => (
                     <div css={card} key={`skeleton-${index}`}>
                       <Skeleton
