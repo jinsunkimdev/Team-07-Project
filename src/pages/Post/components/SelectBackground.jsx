@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Suspense } from "react";
 import { css } from "@emotion/react";
 import { useEffect, useState } from "react";
 import { getImages } from "../../../api/get/getImages";
@@ -6,6 +7,7 @@ import { IconCheckButton } from "../../../components/Button/IconButtons";
 import { BACKGROUND_COLORS } from "../../../constants/constants";
 import useFetch from "./../../../api/useFetch";
 import Skeleton from "../../../components/Skeleton/Skeleton";
+import SkeletonImage from "../../../components/Skeleton/SkeletonImage";
 
 // 백그라운드 컬러
 const AVAILABLE_COLORS = Object.keys(BACKGROUND_COLORS);
@@ -20,10 +22,16 @@ const SelectBackground = ({ onChange }) => {
   const [mode, setMode] = useState("color");
 
   const { fetchError, fetchAsync } = useFetch(getImages);
-  const [isImageReady, setIsImageReady] = useState(false);
-
   const isImageFetchError = mode === "image" && fetchError;
   const isImageFetched = mode === "image" && !fetchError;
+
+  useEffect(() => {
+    const fetchImages = async () => {
+      const result = await fetchAsync();
+      setImages(result);
+    };
+    fetchImages();
+  }, [fetchAsync]);
 
   const handleColorClick = (color) => {
     setSelectedColor(color);
@@ -56,41 +64,6 @@ const SelectBackground = ({ onChange }) => {
       backgroundImageURL: newMode === "image" ? firstImage : null,
     });
   };
-
-  // 배경 이미지 로딩 상태 관리 (스켈레톤 적용 준비)
-  useEffect(() => {
-    const loadImages = async () => {
-      try {
-        const imagesData = await fetchAsync();
-        if (!imagesData) return;
-
-        // 이미지 프리로드
-        const urlsToLoad = imagesData;
-        const preloadPromises = urlsToLoad.map(
-          (src) =>
-            new Promise((resolve) => {
-              const img = new Image();
-              img.src = src;
-              img.onload = () => resolve(src);
-              img.onerror = () => resolve(null);
-            })
-        );
-
-        const results = await Promise.allSettled(preloadPromises);
-
-        const successfullyLoaded = results
-          .filter((result) => result.status === "fulfilled")
-          .map((result) => result.value);
-        setImages(successfullyLoaded);
-
-        setIsImageReady(true);
-      } catch (err) {
-        console.error(err);
-      }
-    };
-
-    loadImages();
-  }, [fetchAsync]);
 
   // 배경/컬러 미설정시 기본값으로 첫번째 값 전송 (api 유효값 설정용)
   useEffect(() => {
@@ -152,28 +125,24 @@ const SelectBackground = ({ onChange }) => {
         )}
         {isImageFetched && (
           <ImageList>
-            {!isImageReady
-              ? Array.from({ length: AVAILABLE_COLORS.length }).map(
-                  (_, idx) => (
-                    <ImageOption key={idx}>
-                      <Skeleton borderRadius="var(--radius-lg)" />
-                    </ImageOption>
-                  )
-                )
-              : images.map((url, idx) => (
-                  <ImageOption
-                    key={idx}
-                    onClick={() => handleImageClick(url)}
-                    selected={selectedImage === url}
-                  >
-                    <img src={url} alt="" />
-                    {selectedImage === url && (
-                      <CheckIconWrapper>
-                        <IconCheckButton />
-                      </CheckIconWrapper>
-                    )}
-                  </ImageOption>
-                ))}
+            {images.map((url, idx) => (
+              <ImageOption
+                key={idx}
+                onClick={() => handleImageClick(url)}
+                selected={selectedImage === url}
+              >
+                <Suspense
+                  fallback={<Skeleton borderRadius="var(--radius-lg)" />}
+                >
+                  <SkeletonImage src={url} borderRadius="var(--radius-lg)" />
+                </Suspense>
+                {selectedImage === url && (
+                  <CheckIconWrapper>
+                    <IconCheckButton />
+                  </CheckIconWrapper>
+                )}
+              </ImageOption>
+            ))}
           </ImageList>
         )}
       </TabsContentWrapper>
@@ -190,7 +159,6 @@ const imageFetchErrorStyle = css`
   justify-content: center;
 `;
 
-// 스타일 컴포넌트
 const TabsContentWrapper = styled.div`
   min-height: 220px;
 `;
