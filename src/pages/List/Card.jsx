@@ -1,7 +1,7 @@
+import React from "react";
 import MessageAuthorCount from "../../components/MessageAuthorCount";
 import EmojiBadge from "../../components/Badge/EmojiBadge";
 import { css } from "@emotion/react";
-import React from "react";
 import { BREAKPOINTS } from "../../constants/constants";
 
 const TopReactions = ({ reactions, customStyle }) => {
@@ -28,7 +28,7 @@ const Card = ({ item }) => {
         <div css={textBox}>
           <h2 css={toName}>To. {item.name}</h2>
           <MessageAuthorCount
-            items={item.recentMessages}
+            messages={item.recentMessages}
             customStyle={authorCount}
           />
         </div>
@@ -40,7 +40,6 @@ const Card = ({ item }) => {
     </div>
   );
 };
-
 export default React.memo(Card);
 
 const cardStyle = ({ backgroundColor, backgroundImageURL }) => css`

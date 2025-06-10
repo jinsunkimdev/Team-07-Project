@@ -6,6 +6,7 @@ import Button from "../../components/Button/Button";
 import GlobalHeader from "../../components/Header/GlobalHeader";
 import Slider from "./Slider";
 import { BREAKPOINTS } from "../../constants/constants";
+import { getMessages } from "../../api/get/getMessages";
 
 //  슬라이더에 들어갈 목업 아이템
 
@@ -18,21 +19,42 @@ function ListPage() {
   const popularCards = useMemo(() => bestCards, [bestCards]);
 
   useEffect(() => {
-    const fetchCards = async () => {
-      try {
-        const [newest, popular] = await Promise.all([
-          getCardListItem({ limit: 20 }),
-          getCardListItem({ limit: 20, sort: "like" }),
-        ]);
-        setNewCards(Array.isArray(newest.results) ? newest.results : []);
-        setBestCards(Array.isArray(popular.results) ? popular.results : []);
-      } catch (err) {
-        console.error("불러오기 실패:", err);
-      }
-    };
+  const fetchCards = async () => {
+    try {
+      const [newest, popular] = await Promise.all([
+        getCardListItem({ limit: 20 }),
+        getCardListItem({ limit: 20, sort: "like" }),
+      ]);
 
-    fetchCards();
-  }, []);
+      const newestWithMessages = await Promise.all(
+        newest.results.map(async (item) => {
+          const res = await getMessages({ id: item.id, limit: item.messageCount });
+          return {
+            ...item,
+            recentMessages: res.results || [],
+          };
+        })
+      );
+
+      const popularWithMessages = await Promise.all(
+        popular.results.map(async (item) => {
+          const res = await getMessages({ id: item.id, limit: item.messageCount });
+          return {
+            ...item,
+            recentMessages: res.results || [],
+          };
+        })
+      );
+
+      setNewCards(newestWithMessages);
+      setBestCards(popularWithMessages);
+    } catch (err) {
+      console.error("불러오기 실패:", err);
+    }
+  };
+
+  fetchCards();
+}, []);
 
   return (
     <div>

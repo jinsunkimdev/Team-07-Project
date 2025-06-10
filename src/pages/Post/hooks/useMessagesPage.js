@@ -7,6 +7,7 @@ import useInfiniteMessages from "./useInfiniteMessages";
 import useModal from "../../../components/Modal/useModal";
 import { deleteMessages } from "../../../api/delete/deleteMessages";
 import { getRecipient } from "../../../api/get/getRecipient";
+import useAllMessages from "./useAllMessages";
 
 const useMessagesPage = () => {
   const { id: recipientId } = useParams();
@@ -21,6 +22,7 @@ const useMessagesPage = () => {
     isLast,
     error: fetchError,
   } = useInfiniteMessages({ id: recipientId, limit: editMode ? 6 : 5 });
+  const { allMessages, setAllMessages } = useAllMessages(recipientId);
   const [error, setError] = useState("");
   const [recipient, setRecipient] = useState(null);
 
@@ -55,10 +57,15 @@ const useMessagesPage = () => {
 
   const handleDeleteSelected = async () => {
     try {
+
       await Promise.all(selectedIds.map((id) => deleteMessages({ id })));
       setMessages((prev) =>
         prev.filter((msg) => !selectedIds.includes(msg.id))
       );
+
+      setAllMessages?.((prev) =>
+      prev.filter((msg) => !selectedIds.includes(msg.id))
+    );
       setSelectedIds([]);
     } catch (err) {
       console.error("삭제 실패", err);
@@ -84,6 +91,8 @@ const useMessagesPage = () => {
     toggleSelection,
     messages,
     setMessages,
+    allMessages,
+    setAllMessages,
     showModal,
     fetchMore,
     isLast,
