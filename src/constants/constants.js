@@ -78,3 +78,8 @@ export const BACKGROUND_COLORS = {
   blue: "var(--blue-200)",
   green: "var(--green-200)",
 };
+
+export const BACKGROUND_MODES_MAP = {
+  컬러: "color",
+  이미지: "image",
+};
