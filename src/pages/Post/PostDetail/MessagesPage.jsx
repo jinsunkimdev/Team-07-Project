@@ -8,13 +8,7 @@ import MessageCardModal from "../../../components/Modal/MessageCardModal";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
 import MessageActionButtons from "./MessageActionButtons";
 import { useMessages } from "../context/MessagesContext";
-
-const backgroundColorMap = {
-  beige: "var(--beige-200)",
-  purple: "var(--purple-200)",
-  blue: "var(--blue-200)",
-  green: "var(--green-200)",
-};
+import { BACKGROUND_COLORS, BREAKPOINTS } from "../../../constants/constants";
 
 const MessagesPage = () => {
   const {
@@ -34,26 +28,28 @@ const MessagesPage = () => {
   useInfiniteScroll({ ref: observerRef, callback: fetchMore, isLast });
 
   return (
-    <section css={backgroundStyle({ recipient })}>
-      <MessageActionButtons />
-      <MessageCardList
-        messages={messages}
-        editMode={editMode}
-        selectedIds={selectedIds}
-        onToggle={toggleSelection}
-        openMessageCardModal={(data) =>
-          showModal(<MessageCardModal data={data} />)
-        }
-      />
-      {error && <p css={errorTextStyle}>{error}</p>}
-      <div ref={observerRef} css={observerSpacerStyle} />
+    <section css={MessagesPageStyle({ recipient })}>
+      <div className="messages-container">
+        <MessageActionButtons />
+        <MessageCardList
+          messages={messages}
+          editMode={editMode}
+          selectedIds={selectedIds}
+          onToggle={toggleSelection}
+          openMessageCardModal={(data) =>
+            showModal(<MessageCardModal data={data} />)
+          }
+        />
+        {error && <p css={errorTextStyle}>{error}</p>}
+        <div ref={observerRef} css={observerSpacerStyle} />
+      </div>
     </section>
   );
 };
 
-const backgroundStyle = ({ recipient }) => css`
+const MessagesPageStyle = ({ recipient }) => css`
   min-height: 100vh;
-  background-color: ${backgroundColorMap[recipient?.backgroundColor] || "#fff"};
+  background-color: ${BACKGROUND_COLORS[recipient?.backgroundColor] || "#fff"};
 
   ${recipient?.backgroundImageURL &&
   css`
@@ -62,6 +58,21 @@ const backgroundStyle = ({ recipient }) => css`
     background-position: center;
     background-size: cover;
   `}
+
+  .messages-container {
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    padding: 64px 20px;
+
+    @media (min-width: ${BREAKPOINTS.md}px) {
+      padding: 64px 24px;
+    }
+    @media (min-width: ${BREAKPOINTS.lg}px) {
+      width: var(--content-width);
+      padding: 64px 0;
+    }
+  }
 `;
 
 const errorTextStyle = css`
