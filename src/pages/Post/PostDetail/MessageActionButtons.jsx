@@ -5,6 +5,7 @@ import useModal from "../../../components/Modal/useModal";
 import { useContext, useEffect, useRef } from "react";
 import ToastContext from "../../../components/Toast/ToastContext";
 import ConfirmModal from "../../../components/Modal/ConfirmModal";
+import { useNavigate } from "react-router-dom";
 
 const MessageActionButtons = () => {
   const {
@@ -19,7 +20,7 @@ const MessageActionButtons = () => {
   const { showModal, hideModal } = useModal();
   const { showToast } = useContext(ToastContext);
   const prevEditModeRef = useRef(editMode);
-
+  const navigate = useNavigate(); // 네비게이트 훅
   const onDeleteRequest = () => {
     const modalId = showModal(
       <ConfirmModal
@@ -70,6 +71,7 @@ const MessageActionButtons = () => {
       ) : (
         <Button onClick={handleEditButton}>✏️ 편집하기</Button>
       )}
+    <Button onClick={()=>{navigate("/list")}}>🔗 목록으로</Button>
     </div>
   );
 };
