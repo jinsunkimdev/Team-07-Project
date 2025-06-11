@@ -11,6 +11,7 @@ const MessageCardStyle = css`
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
   word-break: keep-all;
   cursor: pointer;
+  min-width: 0;
 
   @media (min-width: ${BREAKPOINTS.md}px) {
     height: 284px;

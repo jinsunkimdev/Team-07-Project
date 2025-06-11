@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { css } from "@emotion/react";
 import { GlobalHeaderStyle } from "../../components/Header/GlobalHeader";
 import { IconShareButton } from "../../components/Button/IconButtons";
@@ -8,19 +8,10 @@ import DropdownSelect from "../../components/Dropdown/Dropdown";
 import { SHARE_DROPDOWN_ITEMS } from "../../constants/constants";
 import useToast from "../../components/Toast/useToast";
 import ReactionBox from "../../components/Header/ReactionBox";
-
-// MessageAuthors 컴포넌트용 mockData
-import avatarSampleImg1 from "../../assets/images/img-avatar-sample.jpg";
-import avatarSampleImg2 from "../../assets/images/img-avatar-default.png";
 import { useMessages } from "../Post/context/MessagesContext";
+import useGetScrollTopPos from "../../hooks/useGetScrollTopPos";
 
-const mockAvatarData = [
-  { id: "avatar1", profileImageURL: avatarSampleImg1 },
-  { id: "avatar2", profileImageURL: avatarSampleImg2 },
-  { id: "avatar3", profileImageURL: avatarSampleImg1 },
-  { id: "avatar4", profileImageURL: avatarSampleImg2 },
-  { id: "avatar5", profileImageURL: avatarSampleImg2 },
-];
+const HEADER_Y_OFFSET = 100;
 
 // 카카오톡 공유
 const { Kakao } = window;
@@ -33,10 +24,9 @@ const PostIdPageHeader = () => {
   // 카카오톡 공유용 배포 사이트
   const realUrl = `https://team-07-project.vercel.app/${location.pathname}`;
 
-  useEffect(() => {
-    Kakao.init(import.meta.env.VITE_KAKAO_API_KEY);
-    return () => Kakao.cleanup();
-  }, []);
+  // 일정 스크롤 내려가면 header에 shadow 추가
+  const scTop = useGetScrollTopPos();
+  const [addHeaderShadow, setAddHeaderShadow] = useState(false);
 
   const changeShareOption = (option) => {
     if (!option) return;
@@ -83,8 +73,20 @@ const PostIdPageHeader = () => {
     }
   };
 
+  // 카카오톡 공유 환경 설정
+  useEffect(() => {
+    Kakao.init(import.meta.env.VITE_KAKAO_API_KEY);
+    return () => Kakao.cleanup();
+  }, []);
+
+  useEffect(() => {
+    scTop > HEADER_Y_OFFSET
+      ? setAddHeaderShadow(true)
+      : setAddHeaderShadow(false);
+  }, [scTop]);
+
   return (
-    <div css={ListPageHeaderStyle}>
+    <div css={PostIdHeaderStyle({ addHeaderShadow })}>
       <div className="header-container">
         <h2 className="recipient-name">To. {recipient?.name || ""}</h2>
         <ul className="recipient-panel">
@@ -109,8 +111,10 @@ const PostIdPageHeader = () => {
 
 export default PostIdPageHeader;
 
-const ListPageHeaderStyle = css`
+const PostIdHeaderStyle = ({ addHeaderShadow }) => css`
   ${GlobalHeaderStyle};
+
+  box-shadow: ${addHeaderShadow ? "0 2px 12px rgba(0,0,0,.08)" : ""};
 
   .li-message-author-count {
     display: none;
