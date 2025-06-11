@@ -9,6 +9,7 @@ import Button from "../../../components/Button";
 import createRecipient from "../../../api/post/createRecipient";
 import { BACKGROUND_COLORS, BREAKPOINTS } from "../../../constants/constants";
 import useFocusFirstField from "../../../hooks/useFocusFirstField";
+import useToast from "./../../../components/Toast/useToast";
 
 const MAX_TO_LENGTH = 20;
 
@@ -24,6 +25,8 @@ const PostCreatePage = () => {
   });
 
   const navigate = useNavigate();
+
+  const { showToast } = useToast();
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -60,7 +63,7 @@ const PostCreatePage = () => {
 
     try {
       const result = await createRecipient(formData);
-      console.log("롤링페이퍼 생성 성공!: ", result);
+      showToast({ message: "롤링페이퍼를 만들었어요! 🎉" });
       navigate(`/post/${result.id}`);
     } catch (err) {
       console.log(err.message);
@@ -114,7 +117,7 @@ const PostCreatePage = () => {
 export default PostCreatePage;
 
 const PostCreateFormStyle = css`
-  max-width: 600px;
+  max-width: 720px;
   margin: 26px auto 0;
   padding: 24px 20px;
 
