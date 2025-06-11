@@ -9,16 +9,24 @@ const Modal = ({ children, visible }) => {
   );
 };
 
-const ModalHeader = ({ children }) => {
-  return <div css={ModalHeaderStyle}>{children}</div>;
+const ModalHeader = ({ children, ...props }) => {
+  return (
+    <div css={ModalHeaderStyle} {...props}>
+      {children}
+    </div>
+  );
 };
 
 const ModalBody = ({ children }) => {
   return <div css={ModalBodyStyle}>{children}</div>;
 };
 
-const ModalActions = ({ children }) => {
-  return <div css={ModalActionsStyle}>{children}</div>;
+const ModalActions = ({ children, ...props }) => {
+  return (
+    <div css={ModalActionsStyle} {...props}>
+      {children}
+    </div>
+  );
 };
 
 const ModalDivider = () => {
