@@ -10,15 +10,15 @@ import ModalProvider from "./components/Modal/ModalProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <ModalProvider>
-      <ToastProvider>
-        <Reset />
-        <Variables />
-        <Fonts />
-        <BrowserRouter>
+    <BrowserRouter>
+      <ModalProvider>
+        <ToastProvider>
+          <Reset />
+          <Variables />
+          <Fonts />
           <App />
-        </BrowserRouter>
-      </ToastProvider>
-    </ModalProvider>
+        </ToastProvider>
+      </ModalProvider>
+    </BrowserRouter>
   </StrictMode>
 );
