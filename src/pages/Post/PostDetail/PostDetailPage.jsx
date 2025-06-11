@@ -13,7 +13,7 @@ const PostDetailPage = () => {
 
   return (
     <>
-      {width > BREAKPOINTS.md && <GlobalHeader />}
+      {width >= BREAKPOINTS.md && <GlobalHeader />}
       <MessagesProvider>
         <PostIdPageHeader />
         <MessagesPage />
