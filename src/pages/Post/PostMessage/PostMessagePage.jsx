@@ -17,6 +17,7 @@ import {
 import SelectProfileImage from "./SelectProfileImage";
 import useBreakpoint from "../../List/hooks/useResponsive";
 import createMessage from "../../../api/post/createMessage";
+import useFocusFirstField from "../../../hooks/useFocusFirstField";
 
 const PostMessagePage = () => {
   // From. Input
@@ -132,6 +133,9 @@ const PostMessagePage = () => {
       editorEl.style.fontFamily = fontValue.value;
     }
   }, [fontValue]);
+
+  // 첫번째 필드 autofocus
+  useFocusFirstField();
 
   return (
     <>
