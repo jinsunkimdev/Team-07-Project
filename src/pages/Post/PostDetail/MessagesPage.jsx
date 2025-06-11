@@ -2,13 +2,15 @@
  * UI만 담당하는 페이지
  */
 import { css } from "@emotion/react";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import MessageCardList from "../../../components/MessageCard/MessageCardList";
 import MessageCardModal from "../../../components/Modal/MessageCardModal";
 import useInfiniteScroll from "../hooks/useInfiniteScroll";
 import MessageActionButtons from "./MessageActionButtons";
 import { useMessages } from "../context/MessagesContext";
 import { BACKGROUND_COLORS, BREAKPOINTS } from "../../../constants/constants";
+import ScrollToTopButton from "../../../components/Button/ScrollToTopButton";
+import useToast from "../../../components/Toast/useToast";
 
 const MessagesPage = () => {
   const {
@@ -23,7 +25,15 @@ const MessagesPage = () => {
     error,
   } = useMessages();
 
+  const { showToast } = useToast();
   const observerRef = useRef();
+
+   // error가 바뀔 때마다 toast로 출력
+  useEffect(() => {
+    if (error) {
+      showToast({ state: "error", message: error });
+    }
+  }, [error]);
 
   useInfiniteScroll({ ref: observerRef, callback: fetchMore, isLast });
 
@@ -43,6 +53,7 @@ const MessagesPage = () => {
         {error && <p css={errorTextStyle}>{error}</p>}
       </div>
         <div ref={observerRef} css={observerSpacerStyle} />
+        <ScrollToTopButton/>
     </section>
   );
 };
@@ -91,9 +102,9 @@ const MessagesPageStyle = ({ recipient }) => css`
 `;
 
 const errorTextStyle = css`
-  color: red;
-  margin-top: 12px;
-  font-size: 14px;
+  color: var(--error);
+  margin-top: 32px;
+  font-size: var(--font-size-16);
   text-align: center;
 `;
 
