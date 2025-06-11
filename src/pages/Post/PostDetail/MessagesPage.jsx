@@ -9,6 +9,7 @@ import useInfiniteScroll from "../hooks/useInfiniteScroll";
 import MessageActionButtons from "./MessageActionButtons";
 import { useMessages } from "../context/MessagesContext";
 import { BACKGROUND_COLORS, BREAKPOINTS } from "../../../constants/constants";
+import ScrollToTopButton from "../../../components/Button/ScrollToTopButton";
 
 const MessagesPage = () => {
   const {
@@ -43,6 +44,7 @@ const MessagesPage = () => {
         {error && <p css={errorTextStyle}>{error}</p>}
       </div>
         <div ref={observerRef} css={observerSpacerStyle} />
+        <ScrollToTopButton/>
     </section>
   );
 };
