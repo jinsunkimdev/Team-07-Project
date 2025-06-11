@@ -47,7 +47,7 @@ const MainPage = () => {
           <Button
             as={Link}
             to="/list"
-            css={ctaButton}
+            css={[ctaButton, fadeUp]}
             variant="primary"
             size="lg"
           >
@@ -321,6 +321,23 @@ const slideInLeft = css`
     100% {
       opacity: 1;
       transform: translateX(0);
+    }
+  }
+`;
+
+const fadeUp = css`
+  opacity: 0;
+  animation: fadeUp 0.6s ease-out 1 forwards;
+  animation-delay: 1s;
+
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 `;
