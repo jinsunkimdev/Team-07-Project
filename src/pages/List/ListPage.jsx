@@ -171,6 +171,9 @@ const sliderTitle = css`
     font-size: var(--font-size-24);
     font-weight: var(--font-weight-bold);
   }
+  @media (min-width: ${BREAKPOINTS.lg}px) {
+    padding-left: 0;
+  }
 `;
 
 //버튼 style
