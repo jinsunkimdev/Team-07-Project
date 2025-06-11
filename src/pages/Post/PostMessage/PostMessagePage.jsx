@@ -231,6 +231,18 @@ const PostMessageFormStyle = ({ messageValueError }) => css`
     border: ${!messageValueError
       ? "1px solid var(--gray-300)"
       : "1px solid var(--error)"};
+    transition: border-color 0.3s;
+
+    &:hover {
+      border: 1px solid var(--gray-500);
+      color: var(--gray-900);
+    }
+
+    &:focus,
+    :active {
+      border: 1px solid var(--gray-500);
+      color: var(--gray-900);
+    }
   }
 
   .ql-toolbar {
