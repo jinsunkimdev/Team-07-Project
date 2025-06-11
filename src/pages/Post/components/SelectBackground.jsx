@@ -130,7 +130,7 @@ const SelectBackground = ({ onChange }) => {
         {mode === "color" && (
           <div className="color-list-area">
             <ColorList>
-              {bgColors.map((color) => (
+              {AVAILABLE_COLORS.map((color) => (
                 <ColorOption
                   key={color}
                   color={BACKGROUND_COLORS[color]}
