@@ -14,6 +14,7 @@ const AddMessageCardButton = () => {
   return (
     <div css={AddMessageCardButtonStyle} onClick={goToPostPage}>
       <IconPlusButton />
+      <h3>메시지 작성하기</h3>
     </div>
   );
 };
@@ -25,4 +26,5 @@ const AddMessageCardButtonStyle = css`
 
   align-items: center;
   min-height: 230px;
+  gap: 16px;
 `;

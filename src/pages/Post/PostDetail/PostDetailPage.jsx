@@ -2,7 +2,6 @@
  * 진입점 페이지
  */
 import GlobalHeader from "../../../components/Header/GlobalHeader";
-import { BREAKPOINTS } from "../../../constants/constants";
 import useWindowWidth from "../../../utils/useWindowWidth";
 import PostIdPageHeader from "../../List/PostIdPageHeader";
 import { MessagesProvider } from "../context/MessagesProvider";
