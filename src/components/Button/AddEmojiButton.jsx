@@ -51,7 +51,7 @@ const AddEmojiButtonStyle = (props) => css`
     }
   }
 
-  @media (max-width: ${BREAKPOINTS.md}px) {
+  @media (max-width: ${BREAKPOINTS.md - 1}px) {
     width: 36px;
     height: 32px;
     padding: 0 !important;
