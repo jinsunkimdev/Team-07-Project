@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 import { Suspense } from "react";
 import { css } from "@emotion/react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { getImages } from "../../../api/get/getImages";
 import { IconCheckButton } from "../../../components/Button/IconButtons";
 import {
@@ -12,6 +12,8 @@ import useFetch from "./../../../api/useFetch";
 import Skeleton from "../../../components/Skeleton/Skeleton";
 import SkeletonImage from "../../../components/Skeleton/SkeletonImage";
 import TabButtons from "./../../../components/TabButtons/TabButtons";
+import Button from "../../../components/Button";
+import { uploadToUploadcare } from "../../../api/get/getNewImageUrl";
 
 // 백그라운드 컬러
 const AVAILABLE_COLORS = Object.keys(BACKGROUND_COLORS);
@@ -27,6 +29,9 @@ const SelectBackground = ({ onChange }) => {
   const { fetchError, fetchAsync } = useFetch(getImages);
   const isImageFetchError = mode === "image" && fetchError;
   const isImageFetched = mode === "image" && !fetchError;
+
+  const fileInputRef = useRef();
+  const [isImgUploading, setIsImgUploading] = useState(false);
 
   const handleColorClick = (color) => {
     setSelectedColor(color);
@@ -64,6 +69,34 @@ const SelectBackground = ({ onChange }) => {
     handleChangeMode(BACKGROUND_MODES_MAP[btnValue]);
   };
 
+  const addNewImage = () => {
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsImgUploading(true);
+
+    try {
+      const uploadedURL = await uploadToUploadcare(file);
+      setImages((prev) => [...prev, uploadedURL]);
+      setSelectedImage(uploadedURL);
+      onChange?.({
+        backgroundColor: selectedColor,
+        backgroundImageURL: uploadedURL,
+      });
+      setIsImgUploading(false);
+    } catch (error) {
+      console.log("이미지 업로드 실패: ", error);
+    } finally {
+      setIsImgUploading(false);
+    }
+
+    fileInputRef.current.value = null;
+  };
+
   // 배경 이미지 api 호출
   useEffect(() => {
     const fetchImages = async () => {
@@ -87,7 +120,7 @@ const SelectBackground = ({ onChange }) => {
   }, [onChange, images]);
 
   return (
-    <div>
+    <>
       <BackgroundLabel>배경화면을 선택해 주세요.</BackgroundLabel>
       <SubText>컬러를 선택하거나, 이미지를 선택할 수 있습니다.</SubText>
 
@@ -95,22 +128,25 @@ const SelectBackground = ({ onChange }) => {
 
       <TabsContentWrapper>
         {mode === "color" && (
-          <ColorList>
-            {AVAILABLE_COLORS.map((color) => (
-              <ColorOption
-                key={color}
-                color={BACKGROUND_COLORS[color]}
-                selected={selectedColor === color}
-                onClick={() => handleColorClick(color)}
-              >
-                {selectedColor === color && (
-                  <CheckIconWrapper>
-                    <IconCheckButton />
-                  </CheckIconWrapper>
-                )}
-              </ColorOption>
-            ))}
-          </ColorList>
+          <div className="color-list-area">
+            <ColorList>
+              {AVAILABLE_COLORS.map((color) => (
+                <ColorOption
+                  key={color}
+                  color={BACKGROUND_COLORS[color]}
+                  newColor={color}
+                  selected={selectedColor === color}
+                  onClick={() => handleColorClick(color)}
+                >
+                  {selectedColor === color && (
+                    <CheckIconWrapper>
+                      <IconCheckButton />
+                    </CheckIconWrapper>
+                  )}
+                </ColorOption>
+              ))}
+            </ColorList>
+          </div>
         )}
 
         {isImageFetchError && (
@@ -119,29 +155,47 @@ const SelectBackground = ({ onChange }) => {
           </div>
         )}
         {isImageFetched && (
-          <ImageList>
-            {images.map((url, idx) => (
-              <ImageOption
-                key={idx}
-                onClick={() => handleImageClick(url)}
-                selected={selectedImage === url}
-              >
-                <Suspense
-                  fallback={<Skeleton borderRadius="var(--radius-lg)" />}
+          <div className="image-list-area">
+            <ImageList>
+              {images.map((url, idx) => (
+                <ImageOption
+                  key={idx}
+                  onClick={() => handleImageClick(url)}
+                  selected={selectedImage === url}
                 >
-                  <SkeletonImage src={url} borderRadius="var(--radius-lg)" />
-                </Suspense>
-                {selectedImage === url && (
-                  <CheckIconWrapper>
-                    <IconCheckButton />
-                  </CheckIconWrapper>
-                )}
-              </ImageOption>
-            ))}
-          </ImageList>
+                  <Suspense
+                    fallback={<Skeleton borderRadius="var(--radius-lg)" />}
+                  >
+                    <SkeletonImage src={url} borderRadius="var(--radius-lg)" />
+                  </Suspense>
+                  {selectedImage === url && (
+                    <CheckIconWrapper>
+                      <IconCheckButton />
+                    </CheckIconWrapper>
+                  )}
+                </ImageOption>
+              ))}
+            </ImageList>
+            {/* 배경 이미지 추가 */}
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={addNewImage}
+              disabled={isImgUploading}
+            >
+              {isImgUploading ? "업로드 중..." : "이미지 추가"}
+            </Button>
+            <input
+              type="file"
+              accept="image/*"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileChange}
+            />
+          </div>
         )}
       </TabsContentWrapper>
-    </div>
+    </>
   );
 };
 
@@ -158,48 +212,7 @@ const TabsContentWrapper = styled.div`
   min-height: 220px;
 `;
 
-// const TabButtons = styled.div`
-//   display: flex;
-//   margin-top: 12px;
-
-//   .tab-btns-container {
-//     position: relative;
-//     border-radius: var(--radius-md);
-//     overflow: hidden;
-//     background: var(--gray-100);
-//   }
-
-//   .indicator {
-//     position: absolute;
-//     bottom: 0;
-//     left: 0;
-//     width: 112px;
-//     height: 100%;
-//     background-color: var(--white);
-//     transition: 0.3s ease-in-out;
-//     z-index: 0;
-//     border-radius: var(--radius-md);
-//     border: 2px solid var(--primary);
-//   }
-
-//   button {
-//     position: relative;
-//     width: 112px;
-//     height: 40px;
-//     padding: 8px 16px;
-//     border-radius: 6px;
-//     background-color: transparent;
-//     cursor: pointer;
-//     z-index: 1;
-
-//     &.active {
-//       color: var(--primary);
-//       font-weight: var(--font-weight-medium);
-//     }
-//   }
-// `;
-
-const ColorList = styled.div`
+const ColorList = styled.ul`
   padding: 40px 0px;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -211,7 +224,7 @@ const ColorList = styled.div`
   }
 `;
 
-const ColorOption = styled.div`
+const ColorOption = styled.li`
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 12px;
