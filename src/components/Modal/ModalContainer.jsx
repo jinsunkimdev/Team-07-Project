@@ -73,7 +73,7 @@ const ModalContainer = ({ modals, visible, hideModal }) => {
       tabIndex="-1"
       css={ModalContainerStyle}
     >
-      <div css={ModalLayerStyle} className={visible && "visible"}></div>
+      <div css={ModalLayerStyle} className={visible ? "visible" : ""}></div>
       <div ref={modalRef} className="modal-area">
         {modals?.map(({ id, element, visible }) => (
           <Modal key={id} visible={visible} onClose={() => hideModal(id)}>

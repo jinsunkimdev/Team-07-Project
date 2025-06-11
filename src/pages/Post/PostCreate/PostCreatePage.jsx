@@ -8,6 +8,7 @@ import GlobalHeader from "../../../components/Header/GlobalHeader";
 import Button from "../../../components/Button";
 import createRecipient from "../../../api/post/createRecipient";
 import { BACKGROUND_COLORS, BREAKPOINTS } from "../../../constants/constants";
+import useFocusFirstField from "../../../hooks/useFocusFirstField";
 
 const MAX_TO_LENGTH = 20;
 
@@ -70,6 +71,9 @@ const PostCreatePage = () => {
     background.backgroundColor || background.backgroundImageURL;
 
   const isCreateEnabled = toInputValue.trim() !== "" && isBackgroundSelected;
+
+  // 첫번째 필드 autofocus
+  useFocusFirstField();
 
   return (
     <section>
