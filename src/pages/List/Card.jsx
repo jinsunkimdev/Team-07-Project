@@ -64,6 +64,13 @@ const cardStyle = ({ backgroundColor, backgroundImageURL }) => css`
   color: ${backgroundImageURL ? "#fff" : "#000"};
   overflow: hidden;
   box-shadow: 0px 2px 12px rgba(0, 0, 0, 0.08);
+
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
+  }
 `;
 
 const cardWrapper = ({ backgroundImageURL }) => css`
