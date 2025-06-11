@@ -98,6 +98,18 @@ export const MessageCardContent = ({ content, font, customCss }) => {
   const contentStyles = css`
     ${MessageCardContentStyle};
     ${customCss || ""};
+
+    li[data-list="bullet"] {
+      list-style-type: disc;
+      display: list-item;
+      margin-left: 1.5rem;
+    }
+
+    li[data-list="ordered"] {
+      list-style-type: decimal;
+      display: list-item;
+      margin-left: 1.5rem;
+    }
   `;
 
   // content === null || undefined

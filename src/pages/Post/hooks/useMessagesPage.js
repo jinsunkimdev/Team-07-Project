@@ -43,15 +43,8 @@ const useMessagesPage = () => {
     }
   }, [recipientId]);
 
-  useEffect(() => {
-    if (!editMode) {
-      setSelectedIds([]);
-    }
-  }, [editMode]);
-
   const handleEditButton = () => {
     const baseUrl = `/post/${recipientId}`;
-    setSelectedIds([]);
     navigate(editMode ? baseUrl : `${baseUrl}/edit`);
   };
 
