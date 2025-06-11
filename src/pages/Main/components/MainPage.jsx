@@ -47,7 +47,7 @@ const MainPage = () => {
           <Button
             as={Link}
             to="/list"
-            css={ctaButton}
+            css={[ctaButton, fadeUp]}
             variant="primary"
             size="lg"
           >
@@ -88,7 +88,14 @@ const PointSection = ({
   image,
   reverse = false,
 }) => (
-  <section css={[pointSection, responsiveBox, reverse && reverseStyle]}>
+  <section
+    css={[
+      pointSection,
+      responsiveBox,
+      reverse && reverseStyle,
+      pointNumber === "02" ? slideInLeft : slideInRight,
+    ]}
+  >
     <div css={pointContent}>
       <span css={pointBadge}>Point. {pointNumber}</span>
       <h2 css={pointTitle}>{title}</h2>
@@ -281,4 +288,56 @@ const flexCenter = css`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+// 애니메이션
+
+const slideInRight = css`
+  opacity: 0;
+  animation: slideRight 0.6s ease-out forwards;
+  animation-delay: 0.3s;
+  @keyframes slideRight {
+    0% {
+      opacity: 0;
+      transform: translateX(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+`;
+
+const slideInLeft = css`
+  opacity: 0;
+  animation: slideLeft 0.6s ease-out forwards;
+  animation-delay: 0.6s;
+
+  @keyframes slideLeft {
+    0% {
+      opacity: 0;
+      transform: translateX(-40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateX(0);
+    }
+  }
+`;
+
+const fadeUp = css`
+  opacity: 0;
+  animation: fadeUp 0.6s ease-out 1 forwards;
+  animation-delay: 1s;
+
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 `;
