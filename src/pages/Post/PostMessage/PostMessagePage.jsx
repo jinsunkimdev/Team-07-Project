@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { css } from "@emotion/react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
@@ -142,6 +142,14 @@ const PostMessagePage = () => {
       <GlobalHeader />
       <section css={PostMessagePageStyle}>
         <form css={PostMessageFormStyle({ messageValueError })}>
+          <Button
+            as={Link}
+            to={`/post/${recipientId}`}
+            variant="outlined"
+            size="md"
+          >
+            ← 뒤로가기
+          </Button>
           <div className="form-control">
             <Label inputId="fromInput" value="From." />
             <Input
