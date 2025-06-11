@@ -6,7 +6,7 @@ export default function ConfirmModal({ count, onConfirm, onCancel }) {
   return (
     <div css={modalContainer}>
       <Modal.header css={headerStyle}>
-        {count}개 항목을 삭제하시겠습니까?
+        선택한 {count}개의 항목을 삭제하시겠습니까?
       </Modal.header>
 
       <Modal.actions css={actionsStyle}>
@@ -32,32 +32,32 @@ export default function ConfirmModal({ count, onConfirm, onCancel }) {
 }
 
 const modalContainer = css`
-  width: 400px;
+  width: 100%;
   height: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   align-items: center;
-  gap: 16px;         /* ← header와 actions 사이 16px 간격 */
+  gap: 30px; /* ← header와 actions 사이 16px 간격 */
 `;
 
 const headerStyle = css`
-  font-size: 1.125rem;     /* 18px */
+  font-size: 1.5rem;
   font-weight: 500;
   color: var(--gray-900);
-  text-align: center;      
+  text-align: center;
 `;
 
- const actionsStyle = css`
+const actionsStyle = css`
   display: flex;
   justify-content: center;
-  gap: 16px;         /* 버튼들 사이 간격 */
- `;
+  gap: 8px; /* 버튼들 사이 간격 */
+`;
 
 const buttonStyle = css`
-  width: 100px;            
-  height: 40px;            
+  width: 100px;
+  height: 40px;
   border-radius: 8px;
   font-size: 1rem;
 `;
