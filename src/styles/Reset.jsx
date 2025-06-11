@@ -69,6 +69,7 @@ export const Reset = () => (
         text-decoration: none;
         color: inherit;
         cursor: pointer;
+        transition: 0.2s;
       }
       input {
         border: none;
