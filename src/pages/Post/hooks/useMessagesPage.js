@@ -45,7 +45,6 @@ const useMessagesPage = () => {
 
   const handleEditButton = () => {
     const baseUrl = `/post/${recipientId}`;
-    setSelectedIds([]);
     navigate(editMode ? baseUrl : `${baseUrl}/edit`);
   };
 
@@ -57,15 +56,14 @@ const useMessagesPage = () => {
 
   const handleDeleteSelected = async () => {
     try {
-
       await Promise.all(selectedIds.map((id) => deleteMessages({ id })));
       setMessages((prev) =>
         prev.filter((msg) => !selectedIds.includes(msg.id))
       );
 
       setAllMessages?.((prev) =>
-      prev.filter((msg) => !selectedIds.includes(msg.id))
-    );
+        prev.filter((msg) => !selectedIds.includes(msg.id))
+      );
       setSelectedIds([]);
     } catch (err) {
       console.error("삭제 실패", err);

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { css } from "@emotion/react";
 import ReactQuill from "react-quill-new";
 import "react-quill-new/dist/quill.snow.css";
@@ -17,6 +17,7 @@ import {
 import SelectProfileImage from "./SelectProfileImage";
 import useBreakpoint from "../../List/hooks/useResponsive";
 import createMessage from "../../../api/post/createMessage";
+import useFocusFirstField from "../../../hooks/useFocusFirstField";
 
 const PostMessagePage = () => {
   // From. Input
@@ -45,6 +46,16 @@ const PostMessagePage = () => {
   // params
   const { id: recipientId } = useParams();
   const navigate = useNavigate();
+
+  // 에디터 옵션 설정
+  const editorModules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike"], // 링크 제외
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["blockquote", "code-block"],
+    ],
+  };
 
   const handleFromInputChange = (value) => {
     setFromInputValue(value);
@@ -123,11 +134,22 @@ const PostMessagePage = () => {
     }
   }, [fontValue]);
 
+  // 첫번째 필드 autofocus
+  useFocusFirstField();
+
   return (
     <>
       <GlobalHeader />
       <section css={PostMessagePageStyle}>
         <form css={PostMessageFormStyle({ messageValueError })}>
+          <Button
+            as={Link}
+            to={`/post/${recipientId}`}
+            variant="outlined"
+            size="md"
+          >
+            ← 뒤로가기
+          </Button>
           <div className="form-control">
             <Label inputId="fromInput" value="From." />
             <Input
@@ -161,6 +183,7 @@ const PostMessagePage = () => {
             <ReactQuill
               ref={textEditorRef}
               theme="snow"
+              modules={editorModules}
               value={messageValue}
               placeholder="하고 싶은 말을 적어보세요."
               onChange={handleEditorTextChange}
@@ -231,6 +254,18 @@ const PostMessageFormStyle = ({ messageValueError }) => css`
     border: ${!messageValueError
       ? "1px solid var(--gray-300)"
       : "1px solid var(--error)"};
+    transition: border-color 0.3s;
+
+    &:hover {
+      border: 1px solid var(--gray-500);
+      color: var(--gray-900);
+    }
+
+    &:focus,
+    :active {
+      border: 1px solid var(--gray-500);
+      color: var(--gray-900);
+    }
   }
 
   .ql-toolbar {

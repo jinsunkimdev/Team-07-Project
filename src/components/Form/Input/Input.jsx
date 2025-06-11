@@ -11,7 +11,7 @@ const Input = ({
 }) => {
   return (
     <>
-      <div css={InputAreaStyle({ error })}>
+      <div css={InputAreaStyle}>
         <input
           id={id}
           type="text"
@@ -19,7 +19,7 @@ const Input = ({
           onChange={onChange}
           onBlur={onBlur}
           placeholder={placeholder}
-          css={InputStyle}
+          css={InputStyle({ error })}
           {...props}
         />
       </div>
@@ -31,24 +31,35 @@ const Input = ({
 
 export default Input;
 
-const InputAreaStyle = ({ error }) => css`
+const InputAreaStyle = css`
   display: flex;
   width: 100%;
   height: 50px;
-  border: ${!error ? "1px solid var(--gray-300)" : "1px solid var(--error)"};
-  border-radius: var(--radius-md);
   overflow: hidden;
 `;
 
-const InputStyle = css`
+const InputStyle = ({ error }) => css`
   box-sizing: border-box;
   width: 100%;
   font-size: var(--font-size-16);
   color: var(--gray-500);
   padding: 12px;
-  border: none;
+  border: ${error ? "1px solid var(--error)" : "1px solid var(--gray-300)"};
   height: 100%;
   outline: none;
+  border-radius: var(--radius-md);
+  transition: border-color 0.3s;
+
+  &:hover {
+    border: 1px solid var(--gray-500);
+    color: var(--gray-900);
+  }
+
+  &:focus,
+  :active {
+    border: 2px solid var(--gray-500);
+    color: var(--gray-900);
+  }
 `;
 
 const ErrorMessageStyle = css`
