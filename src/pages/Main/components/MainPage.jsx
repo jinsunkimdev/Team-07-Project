@@ -140,13 +140,13 @@ const pointSection = css`
   flex-direction: column;
   overflow: hidden;
   @media (min-width: ${BREAKPOINTS.md}px) {
-    padding: 40px;
+    padding: 40px 0;
     height: 440px;
   }
   @media (min-width: ${BREAKPOINTS.lg}px) {
     height: 324px;
     flex-direction: row;
-    padding: 60px;
+    padding: 60px 0 60px 60px;
     align-items: flex-start;
   }
 `;
@@ -157,7 +157,11 @@ const pointContent = css`
   flex-direction: column;
   width: 100%;
   gap: 4px;
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    padding: 0 40px;
+  }
   @media (min-width: ${BREAKPOINTS.lg}px) {
+    padding: 0;
     gap: 16px;
   }
 `;
@@ -206,10 +210,15 @@ const pointPreview = css`
   width: 395px;
   padding-bottom: 24px;
 
+  img {
+    width: 100%;
+    object-fit: contain;
+    object-position: center;
+  }
+
   @media (min-width: ${BREAKPOINTS.md}px) {
     width: 100%;
-    max-width: 640px;
-    height: auto;
+    height: 204px;
     padding-bottom: 0px;
   }
   @media (min-width: ${BREAKPOINTS.lg}px) {
@@ -221,8 +230,6 @@ const pointPreview = css`
 const emojiImageStyle = css`
   width: 100%;
   height: 113px;
-  object-fit: cover;
-  object-position: center;
 
   @media (min-width: ${BREAKPOINTS.md}px) {
     height: 204px;
