@@ -46,6 +46,16 @@ const PostMessagePage = () => {
   const { id: recipientId } = useParams();
   const navigate = useNavigate();
 
+  // 에디터 옵션 설정
+  const editorModules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ["bold", "italic", "underline", "strike"], // 링크 제외
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["blockquote", "code-block"],
+    ],
+  };
+
   const handleFromInputChange = (value) => {
     setFromInputValue(value);
 
@@ -161,6 +171,7 @@ const PostMessagePage = () => {
             <ReactQuill
               ref={textEditorRef}
               theme="snow"
+              modules={editorModules}
               value={messageValue}
               placeholder="하고 싶은 말을 적어보세요."
               onChange={handleEditorTextChange}
