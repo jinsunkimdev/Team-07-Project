@@ -25,7 +25,6 @@ const SelectBackground = ({ onChange }) => {
   const [selectedColor, setSelectedColor] = useState(FIRST_COLOR);
   const [selectedImage, setSelectedImage] = useState("");
   const [mode, setMode] = useState("color");
-  const [bgColors, setBgColors] = useState(AVAILABLE_COLORS);
 
   const { fetchError, fetchAsync } = useFetch(getImages);
   const isImageFetchError = mode === "image" && fetchError;
