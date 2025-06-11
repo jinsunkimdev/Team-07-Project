@@ -6,12 +6,12 @@ const MessageCardListStyle = css`
   grid-template-columns: 1fr;
   gap: 16px;
 
-  @media (min-width: 600px) {
-    grid-template-columns: repeat(2, 1fr);
+  @media (min-width: ${BREAKPOINTS.sm}px) {
+    grid-template-columns: repeat(1, 1fr);
   }
 
-  @media (min-width: 820px) {
-    grid-template-columns: repeat(3, 1fr);
+  @media (min-width: ${BREAKPOINTS.md}px) {
+    grid-template-columns: repeat(2, 1fr);
     gap: 28px 24px;
   }
 
