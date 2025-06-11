@@ -25,7 +25,7 @@ export default Pagination;
 // Prev 버튼 위치 (왼쪽 중앙 바깥)
 const prevBtn = css`
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   left: 0;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -34,7 +34,7 @@ const prevBtn = css`
 // Next 버튼 위치 (오른쪽 중앙 바깥)
 const nextBtn = css`
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   right: 0;
   top: 50%;
   transform: translate(50%, -50%);
