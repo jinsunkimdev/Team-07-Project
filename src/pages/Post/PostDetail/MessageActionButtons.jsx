@@ -2,7 +2,7 @@ import { css } from "@emotion/react";
 import Button from "../../../components/Button";
 import { useMessages } from "../context/MessagesContext";
 import useModal from "../../../components/Modal/useModal";
-import { useContext } from "react";
+import { useContext, useEffect, useRef } from "react";
 import ToastContext from "../../../components/Toast/ToastContext";
 import ConfirmModal from "../../../components/Modal/ConfirmModal";
 
@@ -13,10 +13,12 @@ const MessageActionButtons = () => {
     handleDeleteSelected,
     handleEditButton,
     handleToggleSelectAll,
+    setSelectedIds,
   } = useMessages();
 
   const { showModal, hideModal } = useModal();
   const { showToast } = useContext(ToastContext);
+  const prevEditModeRef = useRef(editMode);
 
   const onDeleteRequest = () => {
     const modalId = showModal(
@@ -36,15 +38,22 @@ const MessageActionButtons = () => {
     );
   };
 
-  const onEditToggle = () => {
-    handleEditButton();
-    showToast({
-      state: "success",
-      message: editMode
-        ? "편집 모드를 종료했습니다."
-        : "편집 모드를 시작했습니다.",
-    });
-  };
+  useEffect(() => {
+    if (prevEditModeRef.current !== editMode) {
+      showToast({
+        state: "success",
+        message: editMode
+          ? "편집 모드를 시작했습니다."
+          : "편집 모드를 종료했습니다.",
+      });
+
+      if (!editMode) {
+        setSelectedIds([]);
+      }
+
+      prevEditModeRef.current = editMode;
+    }
+  }, [editMode]);
 
   return (
     <div css={ButtonGroupStyle}>
@@ -56,10 +65,10 @@ const MessageActionButtons = () => {
           <Button onClick={onDeleteRequest} disabled={!selectedIds.length}>
             🗑 선택 삭제 ({selectedIds.length}개)
           </Button>
-          <Button onClick={onEditToggle}>❌ 편집 종료</Button>
+          <Button onClick={handleEditButton}>❌ 편집 종료</Button>
         </>
       ) : (
-        <Button onClick={onEditToggle}>✏️ 편집하기</Button>
+        <Button onClick={handleEditButton}>✏️ 편집하기</Button>
       )}
     </div>
   );
