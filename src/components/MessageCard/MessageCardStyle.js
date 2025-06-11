@@ -12,6 +12,12 @@ const MessageCardStyle = css`
   word-break: keep-all;
   cursor: pointer;
   min-width: 0;
+  // hovering시에 애니메이션 추가
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
 
   @media (min-width: ${BREAKPOINTS.md}px) {
     height: 284px;

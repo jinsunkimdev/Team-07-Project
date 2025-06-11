@@ -46,28 +46,26 @@ const ReactionBadges = ({ refreshTrigger }) => {
   const sortReactions = [...reactions].sort(
     (a, b) => Number(b.count) - Number(a.count)
   );
+  // 리액션이 하나도 없으면 disable
+  const disableToggle = sortReactions.length === 0;
 
   return (
     <div ref={dropdownSelectRef} css={ReactionsWrapper}>
       <div
+        css={[topCountReaction(disableToggle)]}
         onClick={() => {
-          if (sortReactions.length > 0) toggle();
+          if (!disableToggle) toggle();
         }}
       >
-        <div css={topCountReaction}>
-          {sortReactions &&
-            sortReactions
-              .slice(0, 3)
-              .map((reaction) => (
-                <EmojiBadge
-                  key={reaction.id}
-                  id={reaction.id}
-                  emoji={reaction.emoji}
-                  count={Number(reaction.count) > 99 ? "99+" : reaction.count}
-                />
-              ))}
-          <img src={isOpen ? iconArrowTop : iconArrowDown} alt="toggle" />
-        </div>
+        {sortReactions.slice(0, 3).map((reaction) => (
+          <EmojiBadge
+            key={reaction.id}
+            id={reaction.id}
+            emoji={reaction.emoji}
+            count={Number(reaction.count) > 99 ? "99+" : reaction.count}
+          />
+        ))}
+        <img src={isOpen ? iconArrowTop : iconArrowDown} alt="toggle" />
         {isOpen && (
           <div css={reactionDropdown}>
             {sortReactions.slice(0, visibleCount).map((reaction) => (
@@ -94,17 +92,16 @@ const ReactionsWrapper = css`
   padding: 0 6px 0 6px;
 `;
 
-const topCountReaction = css`
+const topCountReaction = (disabled) => css`
   display: flex;
   gap: 8px;
   font-size: var(--font-size-14);
-  cursor: pointer;
-
+  cursor: ${disabled ? "not-allowed" : "pointer"};
+  opacity: ${disabled ? 0.2 : 1};
   img {
     width: 24px;
     padding: 2px;
   }
-
   @media (min-width: ${BREAKPOINTS.md}px) {
     font-size: var(--font-size-16);
   }
