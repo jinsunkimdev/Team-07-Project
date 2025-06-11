@@ -30,6 +30,7 @@ const ModalProvider = ({ children }) => {
     setTimeout(() => {
       setModalsVisibleFn({ id, visible: true });
     }, MODAL_ANIM_READY_MS);
+    return id;
   };
 
   const hideModal = useCallback((id) => {
