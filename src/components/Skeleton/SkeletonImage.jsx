@@ -11,7 +11,7 @@ const SkeletonImage = ({ src, borderRadius }) => {
   }, [src]);
 
   return loaded ? (
-    <img src={src} alt="" />
+    <img src={src} alt={src} />
   ) : (
     <Skeleton borderRadius={borderRadius} />
   );

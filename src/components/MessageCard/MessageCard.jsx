@@ -114,6 +114,12 @@ export const MessageCardProfile = ({
   const profileStyles = css`
     ${MessageCardProfileStyle};
     ${customCss || ""};
+
+    max-width: 80%;
+
+    .sender-profile {
+      max-width: 80%;
+    }
   `;
 
   return (
