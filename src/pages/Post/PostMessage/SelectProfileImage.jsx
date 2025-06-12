@@ -1,20 +1,16 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { css } from "@emotion/react";
 import Avatar from "../../../components/Avatar";
 import getProfileImages from "../../../api/get/getProfileImages";
 import useFetch from "../../../api/useFetch";
 import avatarDefaultImg from "../../../assets/images/img-avatar-default.png";
-import {
-  BREAKPOINTS,
-  PROFILE_IMAGE_LENGTH,
-} from "../../../constants/constants";
+import { BREAKPOINTS } from "../../../constants/constants";
 import Skeleton from "../../../components/Skeleton/Skeleton";
 
 const SelectProfileImage = ({ onChange, onResponsive }) => {
-  const [loadedImages, setLoadedImages] = useState([]);
+  const [images, setImages] = useState([]);
   const [profileImageUrl, setProfileImageUrl] = useState(avatarDefaultImg);
   const [isImageDefault, setIsImageDefault] = useState(true);
-  const [isImageReady, setIsImageReady] = useState(false);
 
   const { fetchError, fetchAsync } = useFetch(getProfileImages);
 
@@ -35,37 +31,12 @@ const SelectProfileImage = ({ onChange, onResponsive }) => {
   };
 
   useEffect(() => {
-    const loadImages = async () => {
-      try {
-        const { imageUrls } = await fetchAsync();
-        if (!imageUrls) return;
-
-        // 이미지 프리로드
-        const urlsToLoad = imageUrls.slice(1); // 첫번째(기본) 이미지 제외
-        const preloadPromises = urlsToLoad.map(
-          (src) =>
-            new Promise((resolve) => {
-              const img = new Image();
-              img.src = src;
-              img.onload = () => resolve(src);
-              img.onerror = () => resolve(null);
-            })
-        );
-
-        const results = await Promise.allSettled(preloadPromises);
-
-        const successfullyLoaded = results
-          .filter((result) => result.status === "fulfilled")
-          .map((result) => result.value);
-        setLoadedImages(successfullyLoaded);
-
-        setIsImageReady(true);
-      } catch (err) {
-        console.error(err);
-      }
+    const fetchImages = async () => {
+      const { imageUrls } = await fetchAsync();
+      if (!imageUrls) return;
+      setImages(imageUrls);
     };
-
-    loadImages();
+    fetchImages();
   }, [fetchAsync]);
 
   return (
@@ -79,23 +50,24 @@ const SelectProfileImage = ({ onChange, onResponsive }) => {
       <div className="select-profile-img-area">
         {fetchError && <p>이미지를 불러오는 데 실패했어요.. 😢</p>}
         <ul className="select-profile-img">
-          {!isImageReady
-            ? Array.from({ length: PROFILE_IMAGE_LENGTH }).map((_, idx) => (
+          {images?.slice(1).map((imgSrc, i) => (
+            <Suspense
+              fallback={
                 <Skeleton
-                  key={idx}
+                  key={i}
                   width={avatarSkeletonSize}
                   height={avatarSkeletonSize}
-                  variant="circle"
                 />
-              ))
-            : loadedImages.map((imageUrl) => (
-                <Avatar
-                  key={imageUrl}
-                  imgSrc={imageUrl}
-                  size={isMobile ? "sm" : "md"}
-                  onClick={changeProfileImageUrl}
-                />
-              ))}
+              }
+            >
+              <Avatar
+                key={i}
+                imgSrc={imgSrc}
+                size={isMobile ? "sm" : "md"}
+                onClick={changeProfileImageUrl}
+              />
+            </Suspense>
+          ))}
         </ul>
       </div>
     </div>
