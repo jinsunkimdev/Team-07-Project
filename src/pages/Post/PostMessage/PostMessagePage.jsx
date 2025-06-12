@@ -18,6 +18,7 @@ import SelectProfileImage from "./SelectProfileImage";
 import useBreakpoint from "../../List/hooks/useResponsive";
 import createMessage from "../../../api/post/createMessage";
 import useFocusFirstField from "../../../hooks/useFocusFirstField";
+import avatarDefaultImg from "../../../assets/images/img-avatar-default.png";
 
 const PostMessagePage = () => {
   // From. Input
@@ -25,7 +26,7 @@ const PostMessagePage = () => {
   const [fromInputError, setFromInputError] = useState("");
 
   // 프로필 이미지 선택
-  const [profileImageSrc, setProfileImageSrc] = useState("");
+  const [profileImageSrc, setProfileImageSrc] = useState(avatarDefaultImg);
 
   // 관계 선택
   const [relationshipValue, setRelationshipValue] = useState(
@@ -83,7 +84,6 @@ const PostMessagePage = () => {
   };
 
   const handleProfileImage = (selectedImageSrc) => {
-    console.log(selectedImageSrc);
     setProfileImageSrc(selectedImageSrc);
   };
 
