@@ -50,35 +50,35 @@ const ReactionBadges = ({ refreshTrigger }) => {
   const disableToggle = sortReactions.length === 0;
 
   return (
-    <div ref={dropdownSelectRef} css={ReactionsWrapper}>
-      <div
-        css={[topCountReaction(disableToggle)]}
-        onClick={() => {
-          if (!disableToggle) toggle();
-        }}
-      >
-        {sortReactions.slice(0, 3).map((reaction) => (
-          <EmojiBadge
-            key={reaction.id}
-            id={reaction.id}
-            emoji={reaction.emoji}
-            count={Number(reaction.count) > 99 ? "99+" : reaction.count}
-          />
-        ))}
-        <img src={isOpen ? iconArrowTop : iconArrowDown} alt="toggle" />
-        {isOpen && (
-          <div css={reactionDropdown}>
-            {sortReactions.slice(0, visibleCount).map((reaction) => (
-              <EmojiBadge
-                key={reaction.id}
-                id={reaction.id}
-                emoji={reaction.emoji}
-                count={Number(reaction.count) > 99 ? "99+" : reaction.count}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+    <div
+      ref={dropdownSelectRef}
+      css={ReactionsWrapper}
+      onClick={() => {
+        if (!disableToggle) toggle();
+      }}
+    >
+      <div css={[topCountReaction(disableToggle)]} />
+      {sortReactions.slice(0, 3).map((reaction) => (
+        <EmojiBadge
+          key={reaction.id}
+          id={reaction.id}
+          emoji={reaction.emoji}
+          count={Number(reaction.count) > 99 ? "99+" : reaction.count}
+        />
+      ))}
+      <img src={isOpen ? iconArrowTop : iconArrowDown} alt="toggle" />
+      {isOpen && (
+        <div css={reactionDropdown}>
+          {sortReactions.slice(0, visibleCount).map((reaction) => (
+            <EmojiBadge
+              key={reaction.id}
+              id={reaction.id}
+              emoji={reaction.emoji}
+              count={Number(reaction.count) > 99 ? "99+" : reaction.count}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };
@@ -87,14 +87,14 @@ export default ReactionBadges;
 
 /**     Style     */
 const ReactionsWrapper = css`
-  display: inline-block;
+  display: flex;
   position: relative;
+  gap: 8px;
   padding: 0 6px 0 6px;
 `;
 
 const topCountReaction = (disabled) => css`
   display: flex;
-  gap: 8px;
   font-size: var(--font-size-14);
   cursor: ${disabled ? "not-allowed" : "pointer"};
   opacity: ${disabled ? 0.2 : 1};
@@ -112,7 +112,7 @@ const reactionDropdown = css`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   right: 0;
-  margin-top: 12px;
+  margin-top: 44px;
   border: 1px solid var(--gray-300);
   border-radius: var(--radius-lg);
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
