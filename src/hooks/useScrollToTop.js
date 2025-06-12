@@ -5,7 +5,7 @@ const useScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    const excludedPaths = ["/list", "/post/:id"];
+    const excludedPaths = ["/post/:id"];
     const shouldExclude = excludedPaths.some((path) =>
       matchPath(path, pathname)
     );
