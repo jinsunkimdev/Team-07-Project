@@ -83,3 +83,6 @@ export const BACKGROUND_MODES_MAP = {
   컬러: "color",
   이미지: "image",
 };
+
+export const DEFAULT_PROFILE_IMAGE_URL =
+  "https://ucarecdn.com/82005ae5-e2dc-4835-9de6-ad51ee3dc6a9/-/preview/80x80/";
