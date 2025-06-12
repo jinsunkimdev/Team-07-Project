@@ -71,6 +71,20 @@ const useMessagesPage = () => {
     }
   };
 
+ // **단일 메시지 삭제**
+ const handleDeleteMessage = async (id) => {
+   try {
+     await deleteMessages({ id });
+    setMessages((prev) => prev.filter((msg) => msg.id !== id));
+    setAllMessages?.((prev) => prev.filter((msg) => msg.id !== id));
+     // 혹시 선택된 상태였다면 해제
+     setSelectedIds((prev) => prev.filter((x) => x !== id));
+   } catch (err) {
+     console.error("단일 삭제 실패", err);
+     setError("메시지 삭제 중 문제가 발생했습니다.");
+   }
+ };
+
   const handleToggleSelectAll = () => {
     const allIds = messages.map((m) => m.id);
     if (selectedIds.length > 0) {
@@ -97,6 +111,7 @@ const useMessagesPage = () => {
     error: fetchError || error,
     handleEditButton,
     handleDeleteSelected,
+    handleDeleteMessage,
     handleToggleSelectAll,
   };
 };

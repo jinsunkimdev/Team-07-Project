@@ -12,6 +12,10 @@ import { IconDeleteButton } from "./../Button/IconButtons";
 import formatDate from "../../utils/formatDate";
 import getFontValueByLabel from "../../utils/getFontValueByLabel";
 import Badge from "../Badge/Badge";
+import useModal from "../Modal/useModal";
+import useToast from "../Toast/useToast";
+import { useMessages } from "../../pages/Post/context/MessagesContext";
+import ConfirmModal from "../Modal/ConfirmModal";
 
 const MessageCard = ({
   messageData = {},
@@ -21,6 +25,7 @@ const MessageCard = ({
   openModal = () => {},
 }) => {
   const {
+    id,
     sender,
     profileImageURL,
     relationship = "친구",
@@ -29,11 +34,9 @@ const MessageCard = ({
     createdAt,
   } = messageData || {};
   const fontValue = getFontValueByLabel(font);
-
-  const handleDelete = (e) => {
-    e.stopPropagation();
-    onToggleSelect();
-  };
+  const { showModal, hideModal } = useModal();
+  const { showToast } = useToast();
+  const { handleDeleteMessage } = useMessages();
 
   return (
     <div
@@ -53,7 +56,41 @@ const MessageCard = ({
           relationship={relationship}
           font={fontValue}
         />
-        {isEditable && <IconDeleteButton onClick={handleDelete} />}
+        {isEditable && (
+          <IconDeleteButton
+            css={css`
+              cursor: pointer;
+              &:hover {
+                background-color: var(--card-selected-bg);
+                border: 1px solid var(--error);
+              }
+            `}
+            onClick={(e) => {
+              e.stopPropagation();
+              const modalId = showModal(
+                <ConfirmModal
+                  count={1}
+                  onCancel={() => hideModal(modalId)}
+                  onConfirm={async () => {
+                    hideModal(modalId);
+                    try {
+                      await handleDeleteMessage(id);
+                      showToast({
+                        state: "success",
+                        message: "삭제되었습니다.",
+                      });
+                    } catch {
+                      showToast({
+                        state: "error",
+                        message: `삭제에 실패했습니다.`,
+                      });
+                    }
+                  }}
+                />
+              );
+            }}
+          />
+        )}
       </div>
       <div className="card-body">
         <MessageCard.Content content={content} font={fontValue} />
