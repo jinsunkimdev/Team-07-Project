@@ -13,6 +13,7 @@ import {
   FONTS_ITEMS,
   BREAKPOINTS,
   NAME_MAX_LENGTH,
+  DEFAULT_PROFILE_IMAGE_URL,
 } from "../../../constants/constants";
 import SelectProfileImage from "./SelectProfileImage";
 import useBreakpoint from "../../List/hooks/useResponsive";
@@ -25,7 +26,9 @@ const PostMessagePage = () => {
   const [fromInputError, setFromInputError] = useState("");
 
   // 프로필 이미지 선택
-  const [profileImageSrc, setProfileImageSrc] = useState("");
+  const [profileImageSrc, setProfileImageSrc] = useState(
+    DEFAULT_PROFILE_IMAGE_URL
+  );
 
   // 관계 선택
   const [relationshipValue, setRelationshipValue] = useState(
@@ -281,6 +284,7 @@ const PostMessageFormStyle = ({ messageValueError }) => css`
   .ql-editor {
     min-height: 200px;
     font-size: var(--font-size-16);
+    cursor: text;
   }
 `;
 
