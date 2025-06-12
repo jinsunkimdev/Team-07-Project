@@ -18,7 +18,7 @@ import SelectProfileImage from "./SelectProfileImage";
 import useBreakpoint from "../../List/hooks/useResponsive";
 import createMessage from "../../../api/post/createMessage";
 import useFocusFirstField from "../../../hooks/useFocusFirstField";
-import avatarDefaultImg from "../../../assets/images/img-avatar-default.png";
+import avatarDefaultImg from "https://team-07-project.vercel.app/img-avatar-default.png";
 
 const PostMessagePage = () => {
   // From. Input
