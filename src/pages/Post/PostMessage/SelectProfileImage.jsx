@@ -29,7 +29,6 @@ const SelectProfileImage = ({ onChange, onResponsive }) => {
   };
 
   const initializeImage = () => {
-    if (profileImageUrl === avatarDefaultImg) return;
     setIsImageDefault(true);
     setProfileImageUrl(avatarDefaultImg);
   };
